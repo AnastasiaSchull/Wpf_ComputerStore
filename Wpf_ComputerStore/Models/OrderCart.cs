@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Wpf_ComputerStore.Models
 {
-    class OrderBucket
+    class OrderCart
     {
         public int ID { get; set; }
         public string CustomerName { get; set; }
