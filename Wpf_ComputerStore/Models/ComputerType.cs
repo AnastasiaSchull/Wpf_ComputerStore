@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Wpf_ComputerStore.Models
 {
-    class ComputerType
+    public class ComputerType
     {
         public int ID { get; set; }
         public string Name { get; set; }
