@@ -12,5 +12,7 @@ namespace Wpf_ComputerStore.Models
         public string CustomerName { get; set; }
         public DateTime Date { get; set; }
         public List<ComputerDetail> ComputerDetails { get; set; }
+        public virtual List<Peripherals> Peripherals { get; set; }
+        public virtual List<Computer> Computers { get; set; }
     }
 }
