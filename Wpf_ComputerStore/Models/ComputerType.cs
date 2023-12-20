@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace Wpf_ComputerStore.Models
 {
-     class Computer
+    class ComputerType
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public int Quantity { get; set; }
-        public List<ComputerDetail> ComputerDetails { get; set; }
-
-        public virtual ComputerType ComputerType { get; set; }
+        public virtual List<Computer> Computers { get; set; }
     }
 }
