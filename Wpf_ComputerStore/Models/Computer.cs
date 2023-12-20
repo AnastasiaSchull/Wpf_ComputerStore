@@ -12,5 +12,7 @@ namespace Wpf_ComputerStore.Models
         public string Name { get; set; }
         public int Quantity { get; set; }
         public List<ComputerDetail> ComputerDetails { get; set; }
+
+        public virtual ComputerType ComputerType { get; set; }
     }
 }
