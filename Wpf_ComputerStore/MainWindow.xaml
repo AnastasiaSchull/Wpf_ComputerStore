@@ -4,8 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_ComputerStore"
+         xmlns:VM="clr-namespace:Wpf_ComputerStore.ViewModels"
         mc:Ignorable="d"
                      Title="Computer store" Height="450" Width="800">
+    <Window.DataContext>
+        <VM:MainWindowViewModel/>
+    </Window.DataContext>
     <Grid>
         <TabControl>
             <TabItem Header="Computer">
@@ -54,7 +58,7 @@
                 </Grid>
             </TabItem>
            
-            <TabItem Header="Components">
+            <TabItem Header="Computer Details">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50"/>
@@ -81,9 +85,14 @@
                     </ComboBox>
                     <TextBox Grid.Row="1" Grid.Column="2" Margin="10,10,10,10" ></TextBox>
                     <Button Grid.Column="3" Grid.Row="1" Margin="10,10,10,10" Content="Find"/>
-                    <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Margin="10,10,10,10"  BorderThickness="0 2 0 0">
+                    <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding ComputerDetailsList}">
                         <ListView.View>
                             <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Components Information" >
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
+                                <GridViewColumn Header="Number" DisplayMemberBinding="{Binding Path=ID}"/>
+                                <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Path=Category.Name}"/>
+                                <GridViewColumn Header="Quantity" DisplayMemberBinding="{Binding Path=Quantity}"/>
+                                <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Path=Description}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -107,10 +116,10 @@
                     <Button Grid.Column="1" Grid.Row="0" Content="Edit Category" Margin="10" />
                     <Button Grid.Column="2" Grid.Row="0" Content="Delete Category" Margin="10" />
 
-                    <ListView  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="10"  BorderThickness="0 2 0 0" HorizontalAlignment="Stretch">
+                    <ListView  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="10"  BorderThickness="0 2 0 0" HorizontalAlignment="Stretch" ItemsSource="{Binding CategoriesList}">
                         <ListView.View>
                             <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Category Information" >
-                                <GridViewColumn Width ="100" Header=" Name "/>
+                                <GridViewColumn Width ="100" Header=" Name " DisplayMemberBinding="{Binding Path=Name}"/>
                             </GridView>
                         </ListView.View>
 

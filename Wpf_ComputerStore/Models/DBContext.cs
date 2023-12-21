@@ -6,17 +6,17 @@ using System.IO;
 
 namespace Wpf_ComputerStore.Models
 {
-    class DBContext : DbContext
+    public class DBContext : DbContext
     {
         static DbContextOptions<DBContext> _options;
-        static private string connectionString;
+        //static private string connectionString;
         static DBContext()
         {
             var builder = new ConfigurationBuilder();
             builder.SetBasePath(Directory.GetCurrentDirectory());
             builder.AddJsonFile("appsettings.json");
             var config = builder.Build();
-            connectionString = config.GetConnectionString("DefaultConnection");
+            string connectionString = config.GetConnectionString("DefaultConnection");
 
             var optionsBuilder = new DbContextOptionsBuilder<DBContext>();
             _options = optionsBuilder.UseSqlServer(connectionString).Options;
@@ -120,33 +120,33 @@ namespace Wpf_ComputerStore.Models
                 ComputerTypes.Add(ct1);
                 ComputerTypes.Add(ct2);
 
-                Computer comp1 = new Computer { Name = "Tor AMD Ryzen", ComputerType = ct1, Quantity = 5 };
-                Computer comp2 = new Computer { Name = "ARTLINE Business", ComputerType = ct1, Quantity = 5 };
-                Computer comp3 = new Computer { Name = "Lenovo IdeaCentre ", ComputerType = ct1, Quantity = 5 };
-                Computer comp4 = new Computer { Name = "ASUS TUF", ComputerType = ct2, Quantity = 10 };
-                Computer comp5 = new Computer { Name = "Apple MacBook Air 13.6", ComputerType = ct2, Quantity = 10 };
-                Computer comp6 = new Computer { Name = "ASUS Vivobook 15X OLED", ComputerType = ct2, Quantity = 8 };
+                //Computer comp1 = new Computer { Name = "Tor AMD Ryzen", ComputerType = ct1, Quantity = 5 };
+                //Computer comp2 = new Computer { Name = "ARTLINE Business", ComputerType = ct1, Quantity = 5 };
+                //Computer comp3 = new Computer { Name = "Lenovo IdeaCentre ", ComputerType = ct1, Quantity = 5 };
+                //Computer comp4 = new Computer { Name = "ASUS TUF", ComputerType = ct2, Quantity = 10 };
+                //Computer comp5 = new Computer { Name = "Apple MacBook Air 13.6", ComputerType = ct2, Quantity = 10 };
+                //Computer comp6 = new Computer { Name = "ASUS Vivobook 15X OLED", ComputerType = ct2, Quantity = 8 };
 
-                comp1.ComputerDetails.Add(cd2);
-                comp1.ComputerDetails.Add(cd1);
-                comp1.ComputerDetails.Add(cd3);
-                comp2.ComputerDetails.Add(cd4);
-                comp2.ComputerDetails.Add(cd1);
-                comp2.ComputerDetails.Add(cd2);
-                comp2.ComputerDetails.Add(cd5);
-                comp3.ComputerDetails.Add(cd1);
-                comp3.ComputerDetails.Add(cd2);
-                comp3.ComputerDetails.Add(cd9);
-                comp4.ComputerDetails.Add(cd1);
-                comp4.ComputerDetails.Add(cd8);
-                comp4.ComputerDetails.Add(cd9);
+                //comp1.ComputerDetails.Add(cd2);
+                //comp1.ComputerDetails.Add(cd1);
+                //comp1.ComputerDetails.Add(cd3);
+                //comp2.ComputerDetails.Add(cd4);
+                //comp2.ComputerDetails.Add(cd1);
+                //comp2.ComputerDetails.Add(cd2);
+                //comp2.ComputerDetails.Add(cd5);
+                //comp3.ComputerDetails.Add(cd1);
+                //comp3.ComputerDetails.Add(cd2);
+                //comp3.ComputerDetails.Add(cd9);
+                //comp4.ComputerDetails.Add(cd1);
+                //comp4.ComputerDetails.Add(cd8);
+                //comp4.ComputerDetails.Add(cd9);
 
-                Computers.Add(comp1);
-                Computers.Add(comp2);
-                Computers.Add(comp3);
-                Computers.Add(comp4);
-                Computers.Add(comp5);
-                Computers.Add(comp6);
+                //Computers.Add(comp1);
+                //Computers.Add(comp2);
+                //Computers.Add(comp3);
+                //Computers.Add(comp4);
+                //Computers.Add(comp5);
+                //Computers.Add(comp6);
 
                 SaveChanges();
             }
@@ -166,8 +166,8 @@ namespace Wpf_ComputerStore.Models
         {
             //if (!optionsBuilder.IsConfigured)
             //{
-            optionsBuilder.UseLazyLoadingProxies().UseSqlServer(connectionString);//@"Server=LAPTOP-DG4K3PMR;Database=ComputerStore;Integrated Security=SSPI;TrustServerCertificate=true", options => options.EnableRetryOnFailure());
-            //}
+                optionsBuilder.UseLazyLoadingProxies();//@"Server=LAPTOP-DG4K3PMR;Database=ComputerStore;Integrated Security=SSPI;TrustServerCertificate=true", options => options.EnableRetryOnFailure());
+           // }
         }
     }
 
