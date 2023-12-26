@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="static\about_us.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.14" />
@@ -22,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="static\" />
+    <Resource Include="static\about_us.jpg" />
   </ItemGroup>
 
 </Project>
