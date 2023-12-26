@@ -116,10 +116,10 @@
                     <Button Grid.Column="1" Grid.Row="0" Content="Edit Category" Margin="10" />
                     <Button Grid.Column="2" Grid.Row="0" Content="Delete Category" Margin="10" />
 
-                    <ListView  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="10"  BorderThickness="0 2 0 0" HorizontalAlignment="Stretch">
+                    <ListView  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="10"  BorderThickness="0 2 0 0" HorizontalAlignment="Stretch" ItemsSource="{Binding CategoriesList}">
                         <ListView.View>
                             <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Category Information" >
-                                <GridViewColumn Width ="100" Header=" Name "/>
+                                <GridViewColumn Width ="100" Header=" Name " DisplayMemberBinding="{Binding Path=Name}"/>
                             </GridView>
                         </ListView.View>
 
