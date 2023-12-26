@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="static\about_us.jpg" />
+    <None Remove="static\contact_us.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +28,7 @@
 
   <ItemGroup>
     <Resource Include="static\about_us.jpg" />
+    <Resource Include="static\contact_us.jpg" />
   </ItemGroup>
 
 </Project>
