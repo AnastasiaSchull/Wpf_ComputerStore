@@ -195,7 +195,24 @@
                     </Label>
                 </Grid>
             </TabItem>
+            <TabItem Header="About us">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
 
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="150"/>
+
+                    </Grid.ColumnDefinitions>
+                   
+                </Grid>
+            </TabItem>
         </TabControl>
 
 
