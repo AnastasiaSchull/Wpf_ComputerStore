@@ -13,6 +13,18 @@ namespace Wpf_ComputerStore.ViewModels
         private List<ComputerDetail> computerDetailsList = new List<ComputerDetail>();
         private List<Category> categoriesList = new List<Category>();
         private List<Computer> computersList = new List<Computer>();
+        private List<Peripherals> peripheralsList = new List<Peripherals>();
+
+        public List<Peripherals> PeripheralsList
+        {
+            get { return peripheralsList; }
+
+            set
+            { 
+                peripheralsList = value;
+                NotifyPropertyChanged("PeripheralsList");
+            }
+        }
 
         public List<ComputerDetail> ComputerDetailsList
         {
@@ -47,9 +59,25 @@ namespace Wpf_ComputerStore.ViewModels
 
         public MainWindowViewModel()
         {
+            getPeripherals();
             getComputers();
             getComputerDetails();
             getCategoriesList();
+        }
+
+        public void getPeripherals()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    PeripheralsList = db.Peripheralss.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         public void getComputerDetails()

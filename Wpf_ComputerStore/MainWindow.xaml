@@ -153,15 +153,15 @@
                     <Button Grid.Column="1" Grid.Row="0" Content="Edit Peripheral" Margin="10,10,10,10" />
                     <Button Grid.Column="2" Grid.Row="0" Content="Delete Peripheral" Margin="10,10,10,10" />
                     <Button Grid.Column="3" Grid.Row="0" Content="Sale Peripheral" Margin="10,10,10,10" />
-                    <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Margin="10,10,10,10"  BorderThickness="0 2 0 0">
+                    <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding PeripheralsList}">
                         <ListView.View>
 
                             <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Peripheral Information" >
-                                <GridViewColumn  Header=" Name "/>
-                                <GridViewColumn  Header=" Quantity "/>
-                                <GridViewColumn  Header=" PeripheriaType "/>
-                                <GridViewColumn  Header=" Price "/>
-                                <GridViewColumn  Header="Description"/>
+                                <GridViewColumn  Header=" Name " DisplayMemberBinding="{Binding Path=Name}"/>
+                                <GridViewColumn  Header=" Quantity " DisplayMemberBinding="{Binding Path=Quantity}"/>
+                                <GridViewColumn  Header=" PeripheriaType " DisplayMemberBinding="{Binding Path=PeripheralsType.Name}"/>
+                                <GridViewColumn  Header=" Price " DisplayMemberBinding="{Binding Path=Price}"/>
+                                <GridViewColumn  Header="Description" DisplayMemberBinding="{Binding Path=Description}"/>
                             </GridView>
                         </ListView.View>
 
