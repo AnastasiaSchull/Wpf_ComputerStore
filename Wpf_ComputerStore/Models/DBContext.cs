@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Intrinsics.Arm;
 using System.Security.Cryptography;
 using System.Windows.Media;
 
@@ -312,22 +313,48 @@ namespace Wpf_ComputerStore.Models
                 ComputerTypes.Add(ct1);
                 ComputerTypes.Add(ct2);
                
+                List<ComputerDetail> list1 = new List<ComputerDetail>();
+                list1.Add(cd1_RAM);
+                list1.Add(cd1_Motherboard);
+                list1.Add(cd1_CPU);
+                list1.Add(cd1_HD);
+                list1.Add(cd1_SSD);
+                list1.Add(cd1_VC);
+                list1.Add(cd1_SP);
 
-                Computer comp1 = new Computer { Name = "Tor AMD Ryzen", ComputerType = ct1, RAM = cd1_RAM, Motherboard= cd1_Motherboard, CPU = cd1_CPU, HardDrive= cd1_HD, SSD= cd1_SSD, VideoCard = cd1_VC, PowerSupply= cd1_SP,  Quantity = 5 , Price= 100000};
-                Computer comp2 = new Computer { Name = "ARTLINE Business", ComputerType = ct2, RAM = cd2_RAM, Motherboard = cd2_Motherboard, CPU = cd2_CPU, HardDrive = cd2_HD, SSD = cd2_SSD, VideoCard = cd2_VC, PowerSupply = cd2_SP, Quantity = 5, Price = 100000 };
-                Computer comp3 = new Computer { Name = "Lenovo IdeaCentre ", ComputerType = ct1, RAM = cd3_RAM, Motherboard = cd3_Motherboard, CPU = cd3_CPU, HardDrive = cd3_HD, SSD = cd3_SSD, VideoCard = cd3_VC, PowerSupply = cd3_SP, Quantity = 5, Price = 100000 };
-                Computer comp4 = new Computer { Name = "ASUS TUF", ComputerType = ct2, RAM = cd4_RAM, Motherboard = cd4_Motherboard, CPU = cd4_CPU, HardDrive = cd4_HD, SSD = cd4_SSD, VideoCard = cd4_VC, PowerSupply = cd4_SP, Quantity = 5, Price = 100000 };
-                Computer comp5 = new Computer { Name = "Apple MacBook Air 13.6", ComputerType = ct1, RAM = cd5_RAM, Motherboard = cd5_Motherboard, CPU = cd5_CPU, HardDrive = cd5_HD, SSD = cd5_SSD, VideoCard = cd5_VC, PowerSupply = cd5_SP, Quantity = 5, Price = 100000 };
-                Computer comp6 = new Computer { Name = "ASUS Vivobook 15X OLED", ComputerType = ct1, RAM = cd6_RAM, Motherboard = cd6_Motherboard, CPU = cd6_CPU, HardDrive = cd6_HD, SSD = cd6_SSD, VideoCard = cd6_VC, PowerSupply = cd6_SP, Quantity = 5, Price = 100000 };
+                List<ComputerDetail> list2 = new List<ComputerDetail>();
+                list2.Add(cd2_RAM);
+                list2.Add(cd2_Motherboard);
+                list2.Add(cd2_CPU);
+                list2.Add(cd2_HD);
+                list2.Add(cd2_SSD);
+                list2.Add(cd2_VC);
+                list2.Add(cd2_SP);
+
+                List<ComputerDetail> list3 = new List<ComputerDetail>();
+                list3.Add(cd3_RAM);
+                list3.Add(cd3_Motherboard);
+                list3.Add(cd3_CPU);
+                list3.Add(cd3_HD);
+                list3.Add(cd3_SSD);
+                list3.Add(cd3_VC);
+                list3.Add(cd3_SP);
+
+                Computer comp1 = new Computer { Name = "Tor AMD Ryzen", ComputerType = ct1, ComputerDetails= list1, Quantity = 5 , Price= 100000};
+                Computer comp2 = new Computer { Name = "ARTLINE Business", ComputerType = ct2, ComputerDetails = list2, Quantity = 5, Price = 100000 };
+                Computer comp3 = new Computer { Name = "Lenovo IdeaCentre ", ComputerType = ct1, ComputerDetails = list3, Quantity = 5, Price = 100000 };
+                //Computer comp4 = new Computer { Name = "ASUS TUF", ComputerType = ct2, RAM = cd4_RAM, Motherboard = cd4_Motherboard, CPU = cd4_CPU, HardDrive = cd4_HD, SSD = cd4_SSD, VideoCard = cd4_VC, PowerSupply = cd4_SP, Quantity = 5, Price = 100000 };
+                //Computer comp5 = new Computer { Name = "Apple MacBook Air 13.6", ComputerType = ct1, RAM = cd5_RAM, Motherboard = cd5_Motherboard, CPU = cd5_CPU, HardDrive = cd5_HD, SSD = cd5_SSD, VideoCard = cd5_VC, PowerSupply = cd5_SP, Quantity = 5, Price = 100000 };
+                //Computer comp6 = new Computer { Name = "ASUS Vivobook 15X OLED", ComputerType = ct1, RAM = cd6_RAM, Motherboard = cd6_Motherboard, CPU = cd6_CPU, HardDrive = cd6_HD, SSD = cd6_SSD, VideoCard = cd6_VC, PowerSupply = cd6_SP, Quantity = 5, Price = 100000 };
 
 
 
                 Computers.Add(comp1);
                 Computers.Add(comp2);
                 Computers.Add(comp3);
-                Computers.Add(comp4);
-                Computers.Add(comp5);
-                Computers.Add(comp6);
+                //Computers.Add(comp4);
+                //Computers.Add(comp5);
+                //Computers.Add(comp6);
 
                 SaveChanges();
             }
