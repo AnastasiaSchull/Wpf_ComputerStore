@@ -195,7 +195,43 @@
                     </Label>
                 </Grid>
             </TabItem>
+            <TabItem Header="About us">
+                <Grid HorizontalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Content="About Us" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Row="1" Width="500" TextWrapping="Wrap">We are young company! We have a lot of Computer details.In our shop you can buy ready to use computer,  
+                        any of computer detail,  accessors such as keyboard, headphone, microphone and a lot of others. Our consultants tell you all information that you need. You are always welcome!!!</TextBlock>
+                    <Image Grid.Row="2" Source="/static/about_us.jpg" Margin="0,10,0,10"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Contact us" >
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
 
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Contact Us" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                    <Label Grid.Row="2" Grid.Column="0"  Content="email:    computer.store@gmail.com" FontSize="20"/>
+                    <Label Grid.Row="3"  Grid.Column="0" Content="telegram: @computer_store" FontSize="20"/>
+                    <Label Grid.Row="4"  Grid.Column="0" Content="phone:    +380676767777" FontSize="20"/>
+
+                    <Image Grid.Row="1"  Grid.Column="1" Grid.RowSpan="5" Source="/static/contact_us.jpg" Margin="0,0,10,0"/>
+                </Grid>
+            </TabItem>
         </TabControl>
 
 
