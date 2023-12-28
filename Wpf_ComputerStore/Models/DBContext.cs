@@ -154,51 +154,51 @@ namespace Wpf_ComputerStore.Models
 
                 ComputerDetail cd1_HD = new ComputerDetail { Name = "Western Digital Purple 4TB", Category = c4, Quantity = 80, Price = 4029, Description = "Жорсткий диск Western Digital Purple 4TB \r\n5400rpm 256MB WD43PURZ 3.5 SATA III" };
                 ComputerDetail cd2_HD = new ComputerDetail { Name = "Toshiba P300 500GB", Category = c4, Quantity = 50, Price = 849, Description = " Жорсткий диск Toshiba P300 500GB \r\n7200rpm 64MB HDWD105UZSVA 3.5 SATA III" };
-                ComputerDetail cd3_HD = new ComputerDetail { Name = "Western Digital Purple 4TB", Category = c4, Quantity = 80, Price = 4029, Description = "Жорсткий диск Western Digital Purple 4TB \r\n5400rpm 256MB WD43PURZ 3.5 SATA III" };
-                ComputerDetail cd4_HD = new ComputerDetail { Name = "Toshiba P300 500GB", Category = c4, Quantity = 50, Price = 849, Description = " Жорсткий диск Toshiba P300 500GB \r\n7200rpm 64MB HDWD105UZSVA 3.5 SATA III" };
-                ComputerDetail cd5_HD = new ComputerDetail { Name = "Western Digital Purple 4TB", Category = c4, Quantity = 80, Price = 4029, Description = "Жорсткий диск Western Digital Purple 4TB \r\n5400rpm 256MB WD43PURZ 3.5 SATA III" };
-                ComputerDetail cd6_HD = new ComputerDetail { Name = "Toshiba P300 500GB", Category = c4, Quantity = 50, Price = 849, Description = " Жорсткий диск Toshiba P300 500GB \r\n7200rpm 64MB HDWD105UZSVA 3.5 SATA III" };
-                ComputerDetail cd7_HD = new ComputerDetail { Name = "Western Digital Purple 4TB", Category = c4, Quantity = 80, Price = 4029, Description = "Жорсткий диск Western Digital Purple 4TB \r\n5400rpm 256MB WD43PURZ 3.5 SATA III" };
-                ComputerDetail cd8_HD = new ComputerDetail { Name = "Toshiba P300 500GB", Category = c4, Quantity = 50, Price = 849, Description = " Жорсткий диск Toshiba P300 500GB \r\n7200rpm 64MB HDWD105UZSVA 3.5 SATA III" };
-                ComputerDetail cd9_HD = new ComputerDetail { Name = "Western Digital Purple 4TB", Category = c4, Quantity = 80, Price = 4029, Description = "Жорсткий диск Western Digital Purple 4TB \r\n5400rpm 256MB WD43PURZ 3.5 SATA III" };
-                ComputerDetail cd10_HD = new ComputerDetail { Name = "Toshiba P300 500GB", Category = c4, Quantity = 50, Price = 849, Description = " Жорсткий диск Toshiba P300 500GB \r\n7200rpm 64MB HDWD105UZSVA 3.5 SATA III" };
-                ComputerDetail cd11_HD = new ComputerDetail { Name = "Western Digital Purple 4TB", Category = c4, Quantity = 80, Price = 4029, Description = "Жорсткий диск Western Digital Purple 4TB \r\n5400rpm 256MB WD43PURZ 3.5 SATA III" };
-                ComputerDetail cd12_HD = new ComputerDetail { Name = "Toshiba P300 500GB", Category = c4, Quantity = 50, Price = 849, Description = " Жорсткий диск Toshiba P300 500GB \r\n7200rpm 64MB HDWD105UZSVA 3.5 SATA III" };
-                ComputerDetail cd13_HD = new ComputerDetail { Name = "Western Digital Purple 4TB", Category = c4, Quantity = 80, Price = 4029, Description = "Жорсткий диск Western Digital Purple 4TB \r\n5400rpm 256MB WD43PURZ 3.5 SATA III" };
-                ComputerDetail cd14_HD = new ComputerDetail { Name = "Toshiba P300 500GB", Category = c4, Quantity = 50, Price = 849, Description = " Жорсткий диск Toshiba P300 500GB \r\n7200rpm 64MB HDWD105UZSVA 3.5 SATA III" };
+                ComputerDetail cd3_HD = new ComputerDetail { Name = "Seagate Basic 2TB ", Category = c4, Quantity = 80, Price = 2699, Description = "Жорсткий диск Seagate Basic 2TB \r\n STJL2000400 2.5 USB 3.0 External Gray" };
+                ComputerDetail cd4_HD = new ComputerDetail { Name = "Verbatim Store n Go 1TB", Category = c4, Quantity = 50, Price = 1999, Description = " Жорсткий диск Verbatim Store n Go 1TB 53023 2.5 \r\n USB 3.0 External Blister Black" };
+                ComputerDetail cd5_HD = new ComputerDetail { Name = "Transcend StoreJet 25M3S 1TB", Category = c4, Quantity = 89, Price = 2849, Description = " Жорсткий диск Transcend StoreJet 25M3S 1TB  \r\n TS1TSJ25M3S 2.5 \r\n USB 3.1 Gen 1 External Iron Gray" };
+                ComputerDetail cd6_HD = new ComputerDetail { Name = "Western Digital Ultrastar DC HC550 18TB", Category = c4, Quantity = 57, Price = 15849, Description = " Жорсткий диск Western Digital Ultrastar DC HC550 18TB \r\n 7200rpm 512MB WUH721818ALE6L4_0F38459 3.5\r\n SATA III" };
+                ComputerDetail cd7_HD = new ComputerDetail { Name = "Toshiba Canvio Basics 4TB", Category = c4, Quantity = 83, Price = 4239, Description = "Жорсткий диск Toshiba Canvio Basics 4TB HDTB540EK3CA 2.5\r\n USB 3.2 External Black" };
+                ComputerDetail cd8_HD = new ComputerDetail { Name = "Western Digital Red Pro NAS 18 TB", Category = c4, Quantity = 60, Price = 15819, Description = " Жорсткий диск Western Digital Red Pro \r\n NAS 18 TB 7200 rpm 512 MB WD181KFGX 3.5\r\n SATA III" };
+                ComputerDetail cd9_HD = new ComputerDetail { Name = "Transcend StoreJet 25M3G 2TB", Category = c4, Quantity = 80, Price = 3599, Description = "Жорсткий диск Transcend StoreJet \r\n 25M3G 2TB TS2TSJ25M3G 2.5\r\n USB 3.1 Gen1 External Military Green" };
+                ComputerDetail cd10_HD = new ComputerDetail { Name = "Apacer AC236 1TB 5400rpm 8MB", Category = c4, Quantity = 55, Price = 1959, Description = " Жорсткий диск Apacer AC236 1TB \r\n 5400rpm 8MB AP1TBAC236U-1 2.5 \r\n USB 3.1 External Blue" };
+                ComputerDetail cd11_HD = new ComputerDetail { Name = "Transcend StoreJet 25H3P 1TB", Category = c4, Quantity = 80, Price = 2849, Description = " Жорсткий диск Transcend StoreJet 25H3P 1TB  \r\n TS1TSJ25H3B 2.5 USB 3.0 External" };
+                ComputerDetail cd12_HD = new ComputerDetail { Name = "Seagate SkyHawk 4TB", Category = c4, Quantity = 50, Price = 3859, Description = " Жорсткий диск Seagate SkyHawk 4TB \r\n256MB ST4000VX016 3.5\" SATAIII" };
+                ComputerDetail cd13_HD = new ComputerDetail { Name = "Silicon Power Armor A30 1TB", Category = c4, Quantity = 80, Price = 2109, Description = " Жорсткий диск Silicon Power Armor A66 1TB\r\n SP010TBPHD66SS3B 2.5 USB 3.2 External Blue" };
+                ComputerDetail cd14_HD = new ComputerDetail { Name = "Western Digital Purple 1TB", Category = c4, Quantity = 50, Price = 2059, Description = " Жорсткий диск Western Digital Purple 1TB  \r\n 64MB 5400rpm WD10PURZ 3.5 SATA III" };
                
 
                 ComputerDetail cd1_SSD = new ComputerDetail { Name = "SSD Western Digital", Category = c5, Quantity = 70, Price = 3495, Description = "SSD Western Digital PC SN740 1Tb\r\n M.2 2230 PCIE Gen4 x4 NVME \r\n(SDDPTQD-1T00) OEM" };
-                ComputerDetail cd2_SSD = new ComputerDetail { Name = "SSD Western Digital", Category = c5, Quantity = 70, Price = 3495, Description = "SSD Western Digital PC SN740 1Tb\r\n M.2 2230 PCIE Gen4 x4 NVME \r\n(SDDPTQD-1T00) OEM" };
-                ComputerDetail cd3_SSD = new ComputerDetail { Name = "SSD Western Digital", Category = c5, Quantity = 70, Price = 3495, Description = "SSD Western Digital PC SN740 1Tb\r\n M.2 2230 PCIE Gen4 x4 NVME \r\n(SDDPTQD-1T00) OEM" };
-                ComputerDetail cd4_SSD = new ComputerDetail { Name = "SSD Western Digital", Category = c5, Quantity = 70, Price = 3495, Description = "SSD Western Digital PC SN740 1Tb\r\n M.2 2230 PCIE Gen4 x4 NVME \r\n(SDDPTQD-1T00) OEM" };
-                ComputerDetail cd5_SSD = new ComputerDetail { Name = "SSD Western Digital", Category = c5, Quantity = 70, Price = 3495, Description = "SSD Western Digital PC SN740 1Tb\r\n M.2 2230 PCIE Gen4 x4 NVME \r\n(SDDPTQD-1T00) OEM" };
-                ComputerDetail cd6_SSD = new ComputerDetail { Name = "SSD Western Digital", Category = c5, Quantity = 70, Price = 3495, Description = "SSD Western Digital PC SN740 1Tb\r\n M.2 2230 PCIE Gen4 x4 NVME \r\n(SDDPTQD-1T00) OEM" };
-                ComputerDetail cd7_SSD = new ComputerDetail { Name = "SSD Western Digital", Category = c5, Quantity = 70, Price = 3495, Description = "SSD Western Digital PC SN740 1Tb\r\n M.2 2230 PCIE Gen4 x4 NVME \r\n(SDDPTQD-1T00) OEM" };
-                ComputerDetail cd8_SSD = new ComputerDetail { Name = "SSD Western Digital", Category = c5, Quantity = 70, Price = 3495, Description = "SSD Western Digital PC SN740 1Tb\r\n M.2 2230 PCIE Gen4 x4 NVME \r\n(SDDPTQD-1T00) OEM" };
-                ComputerDetail cd9_SSD = new ComputerDetail { Name = "SSD Western Digital", Category = c5, Quantity = 70, Price = 3495, Description = "SSD Western Digital PC SN740 1Tb\r\n M.2 2230 PCIE Gen4 x4 NVME \r\n(SDDPTQD-1T00) OEM" };
-                ComputerDetail cd10_SSD = new ComputerDetail { Name = "SSD Western Digital", Category = c5, Quantity = 70, Price = 3495, Description = "SSD Western Digital PC SN740 1Tb\r\n M.2 2230 PCIE Gen4 x4 NVME \r\n(SDDPTQD-1T00) OEM" };
-                ComputerDetail cd11_SSD = new ComputerDetail { Name = "SSD Western Digital", Category = c5, Quantity = 70, Price = 3495, Description = "SSD Western Digital PC SN740 1Tb\r\n M.2 2230 PCIE Gen4 x4 NVME \r\n(SDDPTQD-1T00) OEM" };
-                ComputerDetail cd12_SSD = new ComputerDetail { Name = "SSD Western Digital", Category = c5, Quantity = 70, Price = 3495, Description = "SSD Western Digital PC SN740 1Tb\r\n M.2 2230 PCIE Gen4 x4 NVME \r\n(SDDPTQD-1T00) OEM" };
-                ComputerDetail cd13_SSD = new ComputerDetail { Name = "SSD Western Digital", Category = c5, Quantity = 70, Price = 3495, Description = "SSD Western Digital PC SN740 1Tb\r\n M.2 2230 PCIE Gen4 x4 NVME \r\n(SDDPTQD-1T00) OEM" };
-                ComputerDetail cd14_SSD = new ComputerDetail { Name = "SSD Western Digital", Category = c5, Quantity = 70, Price = 3495, Description = "SSD Western Digital PC SN740 1Tb\r\n M.2 2230 PCIE Gen4 x4 NVME \r\n(SDDPTQD-1T00) OEM" };
+                ComputerDetail cd2_SSD = new ComputerDetail { Name = "Apacer AS340X 120GB", Category = c5, Quantity = 80, Price = 479, Description = "SSD диск Apacer AS340X 120GB 2.5 \r\n SATAIII 3D NAND (AP120GAS340XC-1)" };
+                ComputerDetail cd3_SSD = new ComputerDetail { Name = "Kingston SSDNow A400", Category = c5, Quantity = 70, Price = 1349, Description = "SSD диск Kingston SSDNow A400 480GB \r\n 2.5\" SATAIII 3D V-NAND (SA400S37/480G)" };
+                ComputerDetail cd4_SSD = new ComputerDetail { Name = "Gigabyte 240GB", Category = c5, Quantity = 75, Price = 899, Description = "SSD диск Gigabyte 240GB 2.5 \r\n SATAIII NAND TLC (GP-GSTFS31240GNTD)" };
+                ComputerDetail cd5_SSD = new ComputerDetail { Name = "Goodram CX400 Gen.2 128GB", Category = c5, Quantity = 70, Price = 489, Description = "SSD диск Goodram CX400 Gen.2 128GB \r\n 2.5 SATAIII 3D NAND TLC (SSDPR-CX400-128-G2)" };
+                ComputerDetail cd6_SSD = new ComputerDetail { Name = "Patriot Burst Elite 120GB", Category = c5, Quantity = 70, Price = 439, Description = "SSD диск Patriot Burst Elite 120GB \r\n 2.5 SATAIII TLC (PBE120GS25SSDR)" };
+                ComputerDetail cd7_SSD = new ComputerDetail { Name = "Kingston KC600 256GB", Category = c5, Quantity = 70, Price = 1109, Description = "SSD диск Kingston KC600 256GB 2.5 \r\n SATAIII 3D NAND TLC (SKC600/256G)" };
+                ComputerDetail cd8_SSD = new ComputerDetail { Name = "Kingston XS2000 Portable 1TB", Category = c5, Quantity = 70, Price = 3799, Description = "SSD диск Kingston XS2000 Portable 1TB \r\n USB 3.2 Gen2 (2x2) Type-C IP55 3D NAND  \r\n (SXS2000/1000G)" };
+                ComputerDetail cd9_SSD = new ComputerDetail { Name = "Kingston FURY Renegade 2TB", Category = c5, Quantity = 65, Price = 5999, Description = "SSD диск Kingston FURY Renegade 2TB \r\n M.2 2280 NVMe PCIe Gen 4.0 x4 3D TLC NAND \r\n (SFYRD/2000G)" };
+                ComputerDetail cd10_SSD = new ComputerDetail { Name = "Transcend ESD380C 2TB", Category = c5, Quantity = 90, Price = 5299, Description = "SSD диск Transcend ESD380C 2TB \r\n USB 3.1 Type-C 3D NAND TLC Military Green \r\n (TS2TESD380C) External" };
+                ComputerDetail cd11_SSD = new ComputerDetail { Name = "Kingston XS1000 Portable 1000GB", Category = c5, Quantity = 70, Price = 3179, Description = "SSD диск Kingston XS1000 Portable 1000GB \r\n USB 3.2 Gen 2 (SXS1000/1000G)" };
+                ComputerDetail cd12_SSD = new ComputerDetail { Name = "Kingston XS2000 Portable 4TB", Category = c5, Quantity = 70, Price = 11999, Description = "SSD диск Kingston XS2000 Portable 4TB USB  \r\n 3.2 Gen2 (2x2) Type-C IP55 3D NAND (SXS2000/4000G)" };
+                ComputerDetail cd13_SSD = new ComputerDetail { Name = "Samsung 980 Pro 500GB", Category = c5, Quantity = 87, Price = 2949, Description = "SSD диск Samsung 980 Pro 500GB \r\n M.2 PCIe 4.0 x4 V-NAND 3bit MLC \r\n (MZ-V8P500BW)" };
+                ComputerDetail cd14_SSD = new ComputerDetail { Name = "Kingston FURY Renegade with Heatsink 4TB", Category = c5, Quantity = 70, Price = 16599, Description = "SSD диск Kingston FURY Renegade with Heatsink 4TB \r\n  NVMe M.2 2280 PCIe 4.0 x4 3D NAND TLC \r\n (SFYRDK/4000G)" };
                 
 
 
                 ComputerDetail cd1_SP = new ComputerDetail { Name = "DeepCool PF750 750W ", Category = c7, Quantity = 100, Price = 2299, Description = "Блок живлення DeepCool PF750 \r\n750W (R-PF750D-HA0B-EU)" };
                 ComputerDetail cd2_SP = new ComputerDetail { Name = "System Power 10 750W", Category = c7, Quantity = 50, Price = 3349, Description = "Блок живлення System Power 10 750W (BN329)" };
-                ComputerDetail cd3_SP = new ComputerDetail { Name = "DeepCool PF750 750W ", Category = c7, Quantity = 100, Price = 2299, Description = "Блок живлення DeepCool PF750 \r\n750W (R-PF750D-HA0B-EU)" };
-                ComputerDetail cd4_SP = new ComputerDetail { Name = "System Power 10 750W", Category = c7, Quantity = 50, Price = 3349, Description = "Блок живлення System Power 10 750W (BN329)" };
-                ComputerDetail cd5_SP = new ComputerDetail { Name = "DeepCool PF750 750W ", Category = c7, Quantity = 100, Price = 2299, Description = "Блок живлення DeepCool PF750 \r\n750W (R-PF750D-HA0B-EU)" };
-                ComputerDetail cd6_SP = new ComputerDetail { Name = "System Power 10 750W", Category = c7, Quantity = 50, Price = 3349, Description = "Блок живлення System Power 10 750W (BN329)" };
-                ComputerDetail cd7_SP = new ComputerDetail { Name = "DeepCool PF750 750W ", Category = c7, Quantity = 100, Price = 2299, Description = "Блок живлення DeepCool PF750 \r\n750W (R-PF750D-HA0B-EU)" };
-                ComputerDetail cd8_SP = new ComputerDetail { Name = "System Power 10 750W", Category = c7, Quantity = 50, Price = 3349, Description = "Блок живлення System Power 10 750W (BN329)" };
-                ComputerDetail cd9_SP = new ComputerDetail { Name = "DeepCool PF750 750W ", Category = c7, Quantity = 100, Price = 2299, Description = "Блок живлення DeepCool PF750 \r\n750W (R-PF750D-HA0B-EU)" };
-                ComputerDetail cd10_SP = new ComputerDetail { Name = "System Power 10 750W", Category = c7, Quantity = 50, Price = 3349, Description = "Блок живлення System Power 10 750W (BN329)" };
-                ComputerDetail cd11_SP = new ComputerDetail { Name = "DeepCool PF750 750W ", Category = c7, Quantity = 100, Price = 2299, Description = "Блок живлення DeepCool PF750 \r\n750W (R-PF750D-HA0B-EU)" };
-                ComputerDetail cd12_SP = new ComputerDetail { Name = "System Power 10 750W", Category = c7, Quantity = 50, Price = 3349, Description = "Блок живлення System Power 10 750W (BN329)" };
-                ComputerDetail cd13_SP = new ComputerDetail { Name = "DeepCool PF750 750W ", Category = c7, Quantity = 100, Price = 2299, Description = "Блок живлення DeepCool PF750 \r\n750W (R-PF750D-HA0B-EU)" };
-                ComputerDetail cd14_SP = new ComputerDetail { Name = "System Power 10 750W", Category = c7, Quantity = 50, Price = 3349, Description = "Блок живлення System Power 10 750W (BN329)" };
+                ComputerDetail cd3_SP = new ComputerDetail { Name = "RZTK PcCooler HW600", Category = c7, Quantity = 100, Price = 1499, Description = "Блок живлення RZTK PcCooler HW600-NP 600W" };
+                ComputerDetail cd4_SP = new ComputerDetail { Name = "Chieftec GPS-600A8", Category = c7, Quantity = 80, Price = 1989, Description = "Блок живлення Chieftec GPS-600A8 600W" };
+                ComputerDetail cd5_SP = new ComputerDetail { Name = "be quiet! Straight Power 12 1200 Вт", Category = c7, Quantity = 100, Price = 10449, Description = "Блок живлення be quiet!\r\n Straight Power 12 1200 Вт (BN339)" };
+                ComputerDetail cd6_SP = new ComputerDetail { Name = "ASUS TUF Gaming 1000 Вт", Category = c7, Quantity = 50, Price = 8069, Description = "Блок живлення ASUS TUF Gaming 1000 Вт\r\n Gold (TUF-GAMING-1000G)" };
+                ComputerDetail cd7_SP = new ComputerDetail { Name = "MSI MAG A550BN", Category = c7, Quantity = 100, Price = 1999, Description = "Блок живлення MSI MAG A550BN 550W" };
+                ComputerDetail cd8_SP = new ComputerDetail { Name = "Chieftec Proton", Category = c7, Quantity = 50, Price = 5109, Description = "Блок живлення Chieftec Proton BDF-1000C 1000W" };
+                ComputerDetail cd9_SP = new ComputerDetail { Name = "Gigabyte 750W 80+ Gold", Category = c7, Quantity = 100, Price = 4099, Description = "Блок живлення Gigabyte 750W \r\n 80+ Gold (UD750GM)" };
+                ComputerDetail cd10_SP = new ComputerDetail { Name = "ASUS ROG Strix 850W", Category = c7, Quantity = 50, Price = 6399, Description = "Блок живлення ASUS ROG Strix 850W \r\n Gold PSU (ROG-STRIX-850G)" };
+                ComputerDetail cd11_SP = new ComputerDetail { Name = "be quiet! Straight Power 11 1000W", Category = c7, Quantity = 100, Price = 6799, Description = "Блок живлення be quiet! \r\n Straight Power 11 1000W (BN285)" };
+                ComputerDetail cd12_SP = new ComputerDetail { Name = "ASUS ROG-THOR-1200P2", Category = c7, Quantity = 50, Price = 20479, Description = "Блок живлення ASUS ROG-THOR-1200P2-GAMING" };
+                ComputerDetail cd13_SP = new ComputerDetail { Name = "LogicPower ATX-800W", Category = c7, Quantity = 100, Price = 1689, Description = "Блок живлення LogicPower ATX-800W \r\n APFC 80+ Bronze (LP10228)" };
+                ComputerDetail cd14_SP = new ComputerDetail { Name = "Chieftec Chieftronic PowerUp GPX-850FC", Category = c7, Quantity = 50, Price = 3699, Description = "Блок живлення Chieftec Chieftronic \r\n PowerUp GPX-850FC 850W 80PLUS Gold" };
 
 
                
@@ -343,18 +343,13 @@ namespace Wpf_ComputerStore.Models
                 Computer comp1 = new Computer { Name = "Tor AMD Ryzen", ComputerType = ct1, ComputerDetails= list1, Quantity = 5 , Price= 100000};
                 Computer comp2 = new Computer { Name = "ARTLINE Business", ComputerType = ct2, ComputerDetails = list2, Quantity = 5, Price = 100000 };
                 Computer comp3 = new Computer { Name = "Lenovo IdeaCentre ", ComputerType = ct1, ComputerDetails = list3, Quantity = 5, Price = 100000 };
-                //Computer comp4 = new Computer { Name = "ASUS TUF", ComputerType = ct2, RAM = cd4_RAM, Motherboard = cd4_Motherboard, CPU = cd4_CPU, HardDrive = cd4_HD, SSD = cd4_SSD, VideoCard = cd4_VC, PowerSupply = cd4_SP, Quantity = 5, Price = 100000 };
-                //Computer comp5 = new Computer { Name = "Apple MacBook Air 13.6", ComputerType = ct1, RAM = cd5_RAM, Motherboard = cd5_Motherboard, CPU = cd5_CPU, HardDrive = cd5_HD, SSD = cd5_SSD, VideoCard = cd5_VC, PowerSupply = cd5_SP, Quantity = 5, Price = 100000 };
-                //Computer comp6 = new Computer { Name = "ASUS Vivobook 15X OLED", ComputerType = ct1, RAM = cd6_RAM, Motherboard = cd6_Motherboard, CPU = cd6_CPU, HardDrive = cd6_HD, SSD = cd6_SSD, VideoCard = cd6_VC, PowerSupply = cd6_SP, Quantity = 5, Price = 100000 };
-
+                
 
 
                 Computers.Add(comp1);
                 Computers.Add(comp2);
                 Computers.Add(comp3);
-                //Computers.Add(comp4);
-                //Computers.Add(comp5);
-                //Computers.Add(comp6);
+               
 
                 SaveChanges();
             }
