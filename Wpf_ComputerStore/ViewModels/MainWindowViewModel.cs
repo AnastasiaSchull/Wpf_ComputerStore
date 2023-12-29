@@ -4,16 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
+using Wpf_ComputerStore.Commands;
 using Wpf_ComputerStore.Models;
+using Wpf_ComputerStore.Services;
 
 namespace Wpf_ComputerStore.ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
     {
+
+
         private List<ComputerDetail> computerDetailsList = new List<ComputerDetail>();
         private List<Category> categoriesList = new List<Category>();
         private List<Computer> computersList = new List<Computer>();
         private List<Peripherals> peripheralsList = new List<Peripherals>();
+
+       
+        public ICommand cmdAddComputerDetail { get; set; }
+
+        public void AddComputerDetail()
+        {
+            windowService.openComputerDetailWindow(new ComputerDetailViewModel());
+            getComputerDetails();
+        }
 
         public List<Peripherals> PeripheralsList
         {
@@ -63,6 +77,8 @@ namespace Wpf_ComputerStore.ViewModels
             getComputers();
             getComputerDetails();
             getCategoriesList();
+            windowService = new WindowService();
+            cmdAddComputerDetail = new RelayCommand(AddComputerDetail);
         }
 
         public void getPeripherals()
@@ -87,6 +103,12 @@ namespace Wpf_ComputerStore.ViewModels
                 using (DBContext db = new DBContext())
                 {
                     ComputerDetailsList = db.ComputerDetails.ToList();
+                    string res = "";
+                    foreach (ComputerDetail cd in ComputerDetailsList) //костиль бо не працюе лiнива загрузка
+                    {
+                        res += cd.Category.Name;
+
+                    }
                 }
             }
             catch (Exception ex)

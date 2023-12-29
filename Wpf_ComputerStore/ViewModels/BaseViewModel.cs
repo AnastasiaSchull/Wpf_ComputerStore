@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Wpf_ComputerStore.Services;
 
 namespace Wpf_ComputerStore.ViewModels
 {
@@ -15,6 +16,8 @@ namespace Wpf_ComputerStore.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public IWindowService windowService;
 
     }
 }
