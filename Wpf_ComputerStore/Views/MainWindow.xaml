@@ -56,7 +56,6 @@
                                 <GridViewColumn  Header=" PowerSupply" DisplayMemberBinding="{Binding Path=PowerSupply.Name}"   />
                                 <GridViewColumn  Header=" Quantity" DisplayMemberBinding="{Binding Path=Quantity}" />
                                 <GridViewColumn  Header=" Price" DisplayMemberBinding="{Binding Path=Price}" />
-                                <GridViewColumn  Header=" RAM" DisplayMemberBinding="{Binding Path=RAM.Name}"   />
                             </GridView>
                         </ListView.View>
 
