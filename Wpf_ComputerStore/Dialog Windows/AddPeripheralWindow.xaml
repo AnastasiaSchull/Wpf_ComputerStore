@@ -1,0 +1,39 @@
+﻿<Window x:Class="Wpf_ComputerStore.Dialog_Windows.AddPeripheralWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:VM="clr-namespace:Wpf_ComputerStore.ViewModels"
+        Title="Add Peripheral" Height="300" Width="400">
+    <Window.DataContext>
+        <VM:MainWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="Name:" Grid.Row="0"/>
+        <TextBox x:Name="NameTextBox" Grid.Row="1"/>
+
+        <Label Content="PeripheralsType:" Grid.Row="2"/>
+        <ComboBox x:Name="PeripheralsTypeComboBox" Grid.Row="3" DisplayMemberPath="Name" SelectedValuePath="Name" ItemsSource="{Binding PeripheralsTypeList}"/>
+
+        <Label Content="Quantity:" Grid.Row="4"/>
+        <TextBox x:Name="QuantityTextBox" Grid.Row="5"/>
+
+        <Label Content="Price:" Grid.Row="6" Margin="0,0,0,33"/>
+        <TextBox x:Name="PriceTextBox" Grid.Row="6" Margin="0,26,0,15"/>
+
+        <Label Content="Description:" Grid.Row="6" Margin="0,44,0,60" Grid.RowSpan="2"/>
+        <TextBox x:Name="DescriptionTextBox" Grid.Row="7" Margin="0,11,0,42"/>
+
+        <Button Content="Save" Click="SaveButton_Click" Grid.Row="7" Margin="0,35,0,0" FontWeight="Bold" Grid.RowSpan="2"/>
+    </Grid>
+</Window>

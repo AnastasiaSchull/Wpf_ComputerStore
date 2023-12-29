@@ -1,9 +1,14 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
+using Wpf_ComputerStore.Dialog_Windows;
 using Wpf_ComputerStore.Models;
 
 namespace Wpf_ComputerStore.ViewModels
@@ -13,9 +18,20 @@ namespace Wpf_ComputerStore.ViewModels
         private List<ComputerDetail> computerDetailsList = new List<ComputerDetail>();
         private List<Category> categoriesList = new List<Category>();
         private List<Computer> computersList = new List<Computer>();
-        private List<Peripherals> peripheralsList = new List<Peripherals>();
+        private ObservableCollection<Peripherals> peripheralsList = new ObservableCollection<Peripherals>();
+        private List<PeripheralsType> peripheralsTypeList = new List<PeripheralsType>();
 
-        public List<Peripherals> PeripheralsList
+        public List<PeripheralsType> PeripheralsTypeList
+        {
+            get { return peripheralsTypeList; }
+            set
+            {
+                peripheralsTypeList = value;
+                NotifyPropertyChanged("PeripheralsTypeList");
+            }
+        }
+
+        public ObservableCollection<Peripherals> PeripheralsList
         {
             get { return peripheralsList; }
 
@@ -63,6 +79,8 @@ namespace Wpf_ComputerStore.ViewModels
             getComputers();
             getComputerDetails();
             getCategoriesList();
+            getPeripheralsTypes();
+            AddCommand = new RelayCommand((param) => AddPeripheral());
         }
 
         public void getPeripherals()
@@ -71,7 +89,7 @@ namespace Wpf_ComputerStore.ViewModels
             {
                 using (DBContext db = new DBContext())
                 {
-                    PeripheralsList = db.Peripheralss.ToList();
+                    PeripheralsList = new ObservableCollection<Peripherals>(db.Peripheralss.Include(p => p.PeripheralsType).ToList());
                 }
             }
             catch (Exception ex)
@@ -160,6 +178,64 @@ namespace Wpf_ComputerStore.ViewModels
 
                     }
 
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void getPeripheralsTypes()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    PeripheralsTypeList = db.PeripheralsType.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public ICommand AddCommand { get; private set; }
+
+        public void AddPeripheral()
+        {
+            try
+            {
+                var addPeripheralWindow = new AddPeripheralWindow();
+                var result = addPeripheralWindow.ShowDialog();
+
+                if (result == true)
+                {
+                    string? Name = addPeripheralWindow.Name;
+                    PeripheralsType peripheralsType = addPeripheralWindow.PeripheralsType;
+                    int Quantity = addPeripheralWindow.Quantity;
+                    double Price = addPeripheralWindow.Price;
+                    string? Description = addPeripheralWindow.Description;
+
+                    if (string.IsNullOrEmpty(Name) || Quantity <= 0 || Price <= 0)
+                    {
+                        MessageBox.Show("Please fill in all required fields (Name, Quantity, Price).");
+                        return;
+                    }
+
+                    // Створюємо новий об'єкт Peripherals
+                    var newPeripheral = new Peripherals
+                    {
+                        Name = Name,
+                        PeripheralsType = peripheralsType,
+                        Quantity = Quantity,
+                        Price = Price,
+                        Description = Description
+                    };
+
+                    // Додаємо новий об'єкт до списку
+                    PeripheralsList.Add(newPeripheral);
                 }
             }
             catch (Exception ex)
