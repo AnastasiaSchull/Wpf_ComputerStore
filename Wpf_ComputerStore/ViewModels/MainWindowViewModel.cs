@@ -10,11 +10,14 @@ using System.Windows;
 using System.Windows.Input;
 using Wpf_ComputerStore.Dialog_Windows;
 using Wpf_ComputerStore.Models;
+using Wpf_ComputerStore.Services;
 
 namespace Wpf_ComputerStore.ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
     {
+
+
         private List<ComputerDetail> computerDetailsList = new List<ComputerDetail>();
         private List<Category> categoriesList = new List<Category>();
         private List<Computer> computersList = new List<Computer>();
@@ -105,6 +108,12 @@ namespace Wpf_ComputerStore.ViewModels
                 using (DBContext db = new DBContext())
                 {
                     ComputerDetailsList = db.ComputerDetails.ToList();
+                    string res = "";
+                    foreach (ComputerDetail cd in ComputerDetailsList) //костиль бо не працюе лiнива загрузка
+                    {
+                        res += cd.Category.Name;
+
+                    }
                 }
             }
             catch (Exception ex)

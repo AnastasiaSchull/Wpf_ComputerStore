@@ -1,4 +1,4 @@
-﻿<Window x:Class="Wpf_ComputerStore.MainWindow"
+﻿<Window x:Class="Wpf_ComputerStore.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,9 +7,9 @@
          xmlns:VM="clr-namespace:Wpf_ComputerStore.ViewModels"
         mc:Ignorable="d"
                      Title="Computer store" Height="450" Width="800">
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <VM:MainWindowViewModel/>
-    </Window.DataContext>
+    </Window.DataContext>-->
     <Grid>
         <TabControl>
             <TabItem Header="Computer">
@@ -79,7 +79,7 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="0" Grid.Row="0" Content="Add Component" Margin="10,10,10,10"/>
+                    <Button Grid.Column="0" Grid.Row="0" Content="Add Component" Margin="10,10,10,10" Command="{Binding cmdAddComputerDetail}"/>
                     <Button Grid.Column="1" Grid.Row="0" Content="Edit Component" Margin="10,10,10,10" />
                     <Button Grid.Column="2" Grid.Row="0" Content="Delete Component" Margin="10,10,10,10"/>
                     <Button Grid.Column="3" Grid.Row="0" Content="Sale Component" Margin="10,10,10,10"/>

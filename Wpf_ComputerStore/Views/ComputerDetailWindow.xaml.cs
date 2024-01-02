@@ -10,19 +10,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Wpf_ComputerStore.ViewModels;
 
-namespace Wpf_ComputerStore
+namespace Wpf_ComputerStore.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ComputerDetailWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ComputerDetailWindow : Window
     {
-        public MainWindow()
+        public ComputerDetailWindow(BaseViewModel model)
         {
+            DataContext = model;
             InitializeComponent();
+
+        }
+        public void CloseWindow(object sender, RoutedEventArgs e) {
+            Close();
         }
     }
 }
