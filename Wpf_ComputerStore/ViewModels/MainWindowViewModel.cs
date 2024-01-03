@@ -84,6 +84,8 @@ namespace Wpf_ComputerStore.ViewModels
             getCategoriesList();
             getPeripheralsTypes();
             AddCommand = new RelayCommand((param) => AddPeripheral());
+           cmdAddComputerDetail = new RelayCommand((param)=> AddComputerDetail());
+            windowService = new WindowService();
         }
 
         public void getPeripherals()
@@ -251,6 +253,14 @@ namespace Wpf_ComputerStore.ViewModels
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        public ICommand cmdAddComputerDetail { get; private set; }
+
+        public void AddComputerDetail()
+        {
+            windowService.openComputerDetailWindow(new ComputerDetailViewModel());
+            getComputerDetails();
         }
     }
 }

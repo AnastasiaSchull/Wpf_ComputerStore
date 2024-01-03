@@ -134,7 +134,7 @@ namespace Wpf_ComputerStore.Models
                 ComputerDetail cd12_VC = new ComputerDetail { Name = "ASUS PCI-Ex GeForce RTX 4070 Ti ROG Strix ", Category = c6, Quantity = 30, Price = 41599, Description = "Відеокарта ASUS PCI-Ex GeForce RTX 4070 Ti ROG Strix  \r\n 12GB GDDR6X (192bit) (2640/21000) (2 x HDMI, 3 x DisplayPort)  \r\n (ROG-STRIX-RTX4070TI-12G-GAMING)" };
                 ComputerDetail cd13_VC = new ComputerDetail { Name = "SAPPHIRE Radeon RX 470 ", Category = c6, Quantity = 40, Price = 3940, Description = "Відеокарта SAPPHIRE Radeon RX 470 4GB NITRO \r\n(1236/7000) with DVI Б/В" };
                 ComputerDetail cd14_VC = new ComputerDetail { Name = "ASUS PCI-Ex GeForce RTX 4080 TUF Gaming", Category = c6, Quantity = 50, Price = 57309, Description = "Відеокарта ASUS PCI-Ex GeForce RTX 4080 TUF Gaming \r\n OC Edition 16GB GDDR6X (256bit) (2625/22400)\r\n  (2 x HDMI, 3 x DisplayPort) (TUF-RTX4080-O16G-GAMING)" };
-                
+
                 ComputerDetail cd1_RAM = new ComputerDetail { Name = "Kingston Fury SODIMM", Category = c1, Quantity = 70, Price = 2999, Description = "Оперативна пам'ять Kingston Fury SODIMM \r\nDDR4-3200 32768 MB PC4-25600 (Kit of 2x16384)\r\n Impact Black (KF432S20IBK2/32)" };
                 ComputerDetail cd2_RAM = new ComputerDetail { Name = "Kingston Fury DDR4-3200", Category = c1, Quantity = 70, Price = 1569, Description = "Оперативна пам'ять Kingston Fury DDR4-3200\r\n 16384 MB PC4-25600 (Kit of 2x8192)\r\n Beast Black (KF432C16BBK2/16)" };
                 ComputerDetail cd3_RAM = new ComputerDetail { Name = "Kingston Fury DDR4-3600", Category = c1, Quantity = 70, Price = 3199, Description = "Оперативна пам'ять Kingston Fury DDR4-3600 32768 MB \r\nPC4-28800 (Kit of 2x16384)\r\n Beast Black (KF436C18BBK2/32)" };
@@ -149,7 +149,7 @@ namespace Wpf_ComputerStore.Models
                 ComputerDetail cd12_RAM = new ComputerDetail { Name = "Kingston Fury DDR4-2666", Category = c1, Quantity = 70, Price = 1535, Description = "Оперативна пам'ять Kingston Fury DDR4-2666 16384MB  \r\n PC4-21300 Beast Black (KF426C16BB1/16)" };
                 ComputerDetail cd13_RAM = new ComputerDetail { Name = "Kingston FURY DDR5-6000", Category = c1, Quantity = 70, Price = 5799, Description = "Оперативна пам'ять Kingston FURY DDR5-6000 32768MB PC5-48000  \r\n (Kit of 2x16384) Beast RGB AM5 Black (KF560C36BBEAK2-32)" };
                 ComputerDetail cd14_RAM = new ComputerDetail { Name = "ATRIA DDR4-3200", Category = c1, Quantity = 70, Price = 2999, Description = "Оперативна пам'ять ATRIA DDR4-3200 16384MB \r\n PC4-25600 (Kit of 2x8192) Fly Blue (UAT43200CL18BLK2/16)" };
-               
+
 
 
                 ComputerDetail cd1_HD = new ComputerDetail { Name = "Western Digital Purple 4TB", Category = c4, Quantity = 80, Price = 4029, Description = "Жорсткий диск Western Digital Purple 4TB \r\n5400rpm 256MB WD43PURZ 3.5 SATA III" };
@@ -201,7 +201,7 @@ namespace Wpf_ComputerStore.Models
                 ComputerDetail cd14_SP = new ComputerDetail { Name = "Chieftec Chieftronic PowerUp GPX-850FC", Category = c7, Quantity = 50, Price = 3699, Description = "Блок живлення Chieftec Chieftronic \r\n PowerUp GPX-850FC 850W 80PLUS Gold" };
 
 
-               
+
                 ComputerDetails.Add(cd1_RAM);
                 ComputerDetails.Add(cd2_RAM);
                 ComputerDetails.Add(cd3_RAM);
@@ -312,7 +312,7 @@ namespace Wpf_ComputerStore.Models
                 ComputerType ct2 = new ComputerType { Name = "Laptop" };
                 ComputerTypes.Add(ct1);
                 ComputerTypes.Add(ct2);
-               
+
                 List<ComputerDetail> list1 = new List<ComputerDetail>();
                 list1.Add(cd1_RAM);
                 list1.Add(cd1_Motherboard);
@@ -340,7 +340,7 @@ namespace Wpf_ComputerStore.Models
                 list3.Add(cd3_VC);
                 list3.Add(cd3_SP);
 
-                Computer comp1 = new Computer { Name = "Tor AMD Ryzen", ComputerType = ct1, ComputerDetails= list1, Quantity = 5 , Price= 100000};
+                Computer comp1 = new Computer { Name = "Tor AMD Ryzen", ComputerType = ct1, ComputerDetails = list1, Quantity = 5, Price = 100000 };
                 Computer comp2 = new Computer { Name = "ARTLINE Business", ComputerType = ct2, ComputerDetails = list2, Quantity = 5, Price = 100000 };
                 Computer comp3 = new Computer { Name = "Lenovo IdeaCentre ", ComputerType = ct1, ComputerDetails = list3, Quantity = 5, Price = 100000 };
                 
@@ -369,10 +369,9 @@ namespace Wpf_ComputerStore.Models
         {
             //if (!optionsBuilder.IsConfigured)
             //{
-                optionsBuilder.UseLazyLoadingProxies();//@"Server=LAPTOP-DG4K3PMR;Database=ComputerStore;Integrated Security=SSPI;TrustServerCertificate=true", options => options.EnableRetryOnFailure());
-           // }
+            optionsBuilder.UseLazyLoadingProxies();//@"Server=LAPTOP-DG4K3PMR;Database=ComputerStore;Integrated Security=SSPI;TrustServerCertificate=true", options => options.EnableRetryOnFailure());
+                                                   // }
         }
     }
 
 }
-
