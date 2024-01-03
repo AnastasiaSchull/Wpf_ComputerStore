@@ -7,9 +7,9 @@
          xmlns:VM="clr-namespace:Wpf_ComputerStore.ViewModels"
         mc:Ignorable="d"
                      Title="Computer store" Height="450" Width="800">
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <VM:MainWindowViewModel/>
-    </Window.DataContext>
+    </Window.DataContext>-->
     <Grid>
         <TabControl>
             <TabItem Header="Computer">
@@ -148,7 +148,7 @@
                     </Grid.ColumnDefinitions>
 
 
-                    <Button Grid.Column="0" Grid.Row="0" Content="Add Peripheral" Margin="10,10,10,10" />
+                    <Button Grid.Column="0" Grid.Row="0" Content="Add Peripheral" Margin="10,10,10,10" Command="{Binding AddCommand}"/>
                     <Button Grid.Column="1" Grid.Row="0" Content="Edit Peripheral" Margin="10,10,10,10" />
                     <Button Grid.Column="2" Grid.Row="0" Content="Delete Peripheral" Margin="10,10,10,10" />
                     <Button Grid.Column="3" Grid.Row="0" Content="Sale Peripheral" Margin="10,10,10,10" />
@@ -275,7 +275,7 @@
             </TabItem>
         </TabControl>
 
-
+        
     </Grid>
 </Window>
 
