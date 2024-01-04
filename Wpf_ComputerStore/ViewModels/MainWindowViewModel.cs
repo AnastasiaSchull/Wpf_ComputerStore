@@ -10,11 +10,14 @@ using System.Windows;
 using System.Windows.Input;
 using Wpf_ComputerStore.Dialog_Windows;
 using Wpf_ComputerStore.Models;
+using Wpf_ComputerStore.Services;
 
 namespace Wpf_ComputerStore.ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
     {
+
+
         private List<ComputerDetail> computerDetailsList = new List<ComputerDetail>();
         private List<Category> categoriesList = new List<Category>();
         private List<Computer> computersList = new List<Computer>();
@@ -81,6 +84,8 @@ namespace Wpf_ComputerStore.ViewModels
             getCategoriesList();
             getPeripheralsTypes();
             AddCommand = new RelayCommand((param) => AddPeripheral());
+           cmdAddComputerDetail = new RelayCommand((param)=> AddComputerDetail());
+            windowService = new WindowService();
         }
 
         public void getPeripherals()
@@ -105,6 +110,12 @@ namespace Wpf_ComputerStore.ViewModels
                 using (DBContext db = new DBContext())
                 {
                     ComputerDetailsList = db.ComputerDetails.ToList();
+                    string res = "";
+                    foreach (ComputerDetail cd in ComputerDetailsList) //костиль бо не працюе лiнива загрузка
+                    {
+                        res += cd.Category.Name;
+
+                    }
                 }
             }
             catch (Exception ex)
@@ -242,6 +253,14 @@ namespace Wpf_ComputerStore.ViewModels
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        public ICommand cmdAddComputerDetail { get; private set; }
+
+        public void AddComputerDetail()
+        {
+            windowService.openComputerDetailWindow(new ComputerDetailViewModel());
+            getComputerDetails();
         }
     }
 }
