@@ -247,6 +247,16 @@ namespace Wpf_ComputerStore.ViewModels
 
                     // Додаємо новий об'єкт до списку
                     PeripheralsList.Add(newPeripheral);
+
+                    // Отримуємо контекст бази даних
+                    using (DBContext db = new DBContext())
+                    {
+                        // Додаємо новий об'єкт до контексту
+                        db.Peripheralss.Add(newPeripheral);
+
+                        // Зберігаємо зміни в базі даних
+                        db.SaveChanges();
+                    }
                 }
             }
             catch (Exception ex)
