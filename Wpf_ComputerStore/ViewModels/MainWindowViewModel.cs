@@ -78,8 +78,8 @@ namespace Wpf_ComputerStore.ViewModels
 
         public MainWindowViewModel()
         {
-            getPeripherals();
             getComputers();
+            getPeripherals();           
             getComputerDetails();
             getCategoriesList();
             getPeripheralsTypes();
