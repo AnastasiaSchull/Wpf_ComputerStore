@@ -24,6 +24,18 @@ namespace Wpf_ComputerStore.ViewModels
         private ObservableCollection<Peripherals> peripheralsList = new ObservableCollection<Peripherals>();
         private List<PeripheralsType> peripheralsTypeList = new List<PeripheralsType>();
 
+        private ComputerDetail selectedComputerDetail;
+        public ComputerDetail SelectedComputerDetail
+        {
+            get { return selectedComputerDetail; }
+            set
+            {
+                selectedComputerDetail= value;
+                NotifyPropertyChanged("SelectedComputerDetail");
+            }
+        }
+
+
         public List<PeripheralsType> PeripheralsTypeList
         {
             get { return peripheralsTypeList; }
@@ -85,6 +97,9 @@ namespace Wpf_ComputerStore.ViewModels
             getPeripheralsTypes();
             AddCommand = new RelayCommand((param) => AddPeripheral());
            cmdAddComputerDetail = new RelayCommand((param)=> AddComputerDetail());
+            cmdEditComputerDetail = new RelayCommand((param) => EditComputerDetail(), (param) => SelectedComputerDetail != null);
+            cmdDeleteComputerDetail = new RelayCommand((param) => DeleteComputerDetail(), (param) => SelectedComputerDetail != null);
+
             windowService = new WindowService();
         }
 
@@ -271,6 +286,34 @@ namespace Wpf_ComputerStore.ViewModels
         {
             windowService.openComputerDetailWindow(new ComputerDetailViewModel());
             getComputerDetails();
+        }
+
+        public ICommand cmdEditComputerDetail { get; private set; }
+
+        public void EditComputerDetail()
+        {
+            windowService.openComputerDetailWindow(new ComputerDetailViewModel(SelectedComputerDetail));
+            getComputerDetails();
+        }
+
+        public ICommand cmdDeleteComputerDetail { get; private set; }
+
+        public void DeleteComputerDetail()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    db.Attach(SelectedComputerDetail);
+                    db.Remove(SelectedComputerDetail);
+                    db.SaveChanges();
+                }
+                getComputerDetails();
+            }
+           catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
