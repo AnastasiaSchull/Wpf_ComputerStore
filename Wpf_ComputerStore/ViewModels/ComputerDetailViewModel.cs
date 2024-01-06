@@ -12,13 +12,28 @@ namespace Wpf_ComputerStore.ViewModels
 {
     public class ComputerDetailViewModel : BaseViewModel
     {
+        private ComputerDetail computerDetail;
 
-        public ComputerDetailViewModel() {
+        public ComputerDetailViewModel()
+        {
             getCategories();
             Category = Categories[0];
-            cmdAddComputerDetail = new RelayCommand((param)=>AddComputerDetail(),(param)=> CanExecute);
-        
+            cmdAddComputerDetail = new RelayCommand((param) => AddComputerDetail(), (param) => CanExecute);
+
         }
+
+        public ComputerDetailViewModel(ComputerDetail computerDetail)
+        {
+            this.computerDetail = computerDetail;
+            getCategories();
+            Category = computerDetail.Category;
+            Name = computerDetail.Name;
+            Quantity = computerDetail.Quantity;
+            Description = computerDetail.Description;
+            Price = computerDetail.Price;
+            cmdAddComputerDetail = new RelayCommand((param) => AddComputerDetail(), (param) => CanExecute);
+        }
+
         void getCategories()
         {
             try
@@ -28,7 +43,7 @@ namespace Wpf_ComputerStore.ViewModels
                     Categories = db.Categories.ToList();
                 }
             }
-            catch (Exception e){ }
+            catch (Exception e) { }
         }
         #region variables
         private string name;
@@ -54,7 +69,7 @@ namespace Wpf_ComputerStore.ViewModels
         private int quantity;
         public int Quantity
         {
-            get=>quantity;
+            get => quantity;
             set
             {
                 quantity = value;
@@ -98,25 +113,43 @@ namespace Wpf_ComputerStore.ViewModels
 
         public void AddComputerDetail()
         {
+
             try
             {
-                using(DBContext db = new DBContext())
+                using (DBContext db = new DBContext())
                 {
                     db.Attach(Category);
-                    ComputerDetail computerDetail = new ComputerDetail {Name=Name, Quantity=Quantity, Category = Category, Description=Description,Price=Price };
-                    db.ComputerDetails.Add(computerDetail);
+                    if (computerDetail == null)
+                    {
+
+                        ComputerDetail computerDetail = new ComputerDetail { Name = Name, Quantity = Quantity, Category = Category, Description = Description, Price = Price };
+                        db.ComputerDetails.Add(computerDetail);
+
+                    }
+                    else
+                    {
+                        computerDetail.Name = Name;
+                        computerDetail.Quantity = Quantity;
+                        computerDetail.Category = Category;
+                        computerDetail.Price = Price;
+                        computerDetail.Description = Description;
+                        db.ComputerDetails.Update(computerDetail);
+                    }
                     db.SaveChanges();
                 }
 
-            }catch(Exception e)
+
+            }
+            catch (Exception e)
             {
                 MessageBox.Show(e.Message);
             }
+
         }
 
         public bool CanExecute
         {
-            get { return !string.IsNullOrEmpty(Name)&&!string.IsNullOrEmpty(Description)&&Quantity!=0&&Price!=0; }
+            get { return !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Description) && Quantity != 0 && Price != 0; }
         }
 
     }
