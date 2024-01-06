@@ -90,8 +90,8 @@ namespace Wpf_ComputerStore.ViewModels
 
         public MainWindowViewModel()
         {
-            getPeripherals();
             getComputers();
+            getPeripherals();           
             getComputerDetails();
             getCategoriesList();
             getPeripheralsTypes();
@@ -162,9 +162,16 @@ namespace Wpf_ComputerStore.ViewModels
                 {
                     ComputersList = db.Computers.ToList();
                     string rams = "";
+                    foreach (Computer computer in ComputersList) //костиль бо не працюе лiнива загрузка
+                    {
+                        rams += computer.ComputerType.Name;
+
+                    }
+                    string rams1 = "";
+
                     foreach(Computer computer in ComputersList) //костиль бо не працюе лiнива загрузка
                     {
-                        rams += computer.RAM.Name;
+                        rams1 += computer.RAM.Name;
                         
                     }
                     string rams2 = "";
