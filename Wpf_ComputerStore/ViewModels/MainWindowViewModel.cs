@@ -84,6 +84,9 @@ namespace Wpf_ComputerStore.ViewModels
             getCategoriesList();
             getPeripheralsTypes();
             AddCommand = new RelayCommand((param) => AddPeripheral());
+            cmdAddComputerDetail = new RelayCommand((param)=> AddComputerDetail());
+            cmdAddComputer = new RelayCommand((param) => AddComputer());
+            windowService = new WindowService();
         }
 
         public void getPeripherals()
@@ -145,9 +148,16 @@ namespace Wpf_ComputerStore.ViewModels
                 {
                     ComputersList = db.Computers.ToList();
                     string rams = "";
+                    foreach (Computer computer in ComputersList) //костиль бо не працюе лiнива загрузка
+                    {
+                        rams += computer.ComputerType.Name;
+
+                    }
+                    string rams1 = "";
+
                     foreach(Computer computer in ComputersList) //костиль бо не працюе лiнива загрузка
                     {
-                        rams += computer.RAM.Name;
+                        rams1 += computer.RAM.Name;
                         
                     }
                     string rams2 = "";
@@ -245,12 +255,38 @@ namespace Wpf_ComputerStore.ViewModels
 
                     // Додаємо новий об'єкт до списку
                     PeripheralsList.Add(newPeripheral);
+
+                    // Отримуємо контекст бази даних
+                    using (DBContext db = new DBContext())
+                    {
+                        // Додаємо новий об'єкт до контексту
+                        db.Peripheralss.Add(newPeripheral);
+
+                        // Зберігаємо зміни в базі даних
+                        db.SaveChanges();
+                    }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        public ICommand cmdAddComputerDetail { get; private set; }
+
+        public void AddComputerDetail()
+        {
+            windowService.openComputerDetailWindow(new ComputerDetailViewModel());
+            getComputerDetails();
+        }
+
+        public ICommand cmdAddComputer { get; private set; }
+
+        public void AddComputer()
+        {
+            windowService.openComputerWindow(new ComputerViewModel());
+            getComputers();
         }
     }
 }

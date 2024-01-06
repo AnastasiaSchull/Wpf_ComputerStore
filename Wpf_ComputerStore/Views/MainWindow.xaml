@@ -30,55 +30,7 @@
 
                     <Button   Grid.Column="0" Grid.Row="0" Content="Add Computer" Margin="0,10,10,10" Command="{Binding cmdAddComputer}" />
                     
-                    <!--<Expander Grid.Column="0" Grid.Row="0" Header="Add Computer"  Name="expander1" Width="300"  IsExpanded="False" ExpandDirection="Down" Background="AliceBlue">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                            <RowDefinition Height="50"/>
-                            <RowDefinition Height="50"/>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="50"/>
-                              
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-
-                            <Grid.ColumnDefinitions>
-
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                
-                               
-                            </Grid.ColumnDefinitions>
-                            <Label Content="Name" Grid.Row="0" Grid.Column="0" ></Label>
-                            <TextBox Grid.Row="0" Grid.Column="1"/>
-                            <Label Content="Computer Type" Grid.Row="1" Grid.Column="0" ></Label>
-                            <TextBox Grid.Row="1" Grid.Column="1"/>
-                            <Label Content="RAM" Grid.Row="2" Grid.Column="0" ></Label>
-                            <ComboBox Grid.Row="2" Grid.Column="1"/>
-                            <Label Content="Motherboard" Grid.Row="3" Grid.Column="0" ></Label>
-                            <ComboBox Grid.Row="3" Grid.Column="1"/>
-                            <Label Content="CPU" Grid.Row="4" Grid.Column="0" ></Label>
-                            <ComboBox Grid.Row="4" Grid.Column="1"/>
-                            <Label Content="Hard Drive" Grid.Row="5" Grid.Column="0" ></Label>
-                            <ComboBox Grid.Row="5" Grid.Column="1"/>
-                            <Label Content="SDD" Grid.Row="6" Grid.Column="0" ></Label>
-                            <ComboBox Grid.Row="6" Grid.Column="1"/>
-                            <Label Content="Video Card" Grid.Row="7" Grid.Column="0" ></Label>
-                            <ComboBox Grid.Row="7" Grid.Column="1"/>
-                            <Label Content="Power Supply" Grid.Row="7" Grid.Column="0" ></Label>
-                            <ComboBox Grid.Row="7" Grid.Column="1"/>
-                            <Label Content="Price" Grid.Row="8" Grid.Column="0" ></Label>
-                            <TextBox Grid.Row="8" Grid.Column="1"/>
-                            <Label Content="Quantity" Grid.Row="8" Grid.Column="0" ></Label>
-                            <TextBox Grid.Row="8" Grid.Column="1"/>
-                        </Grid>
-                    </Expander>-->
+                   
                     <Button Grid.Column="1" Grid.Row="0" Content="Edit Computer" Margin="10,10,10,10" />
                     <Button Grid.Column="2" Grid.Row="0" Content="Delete Computer" Margin="10,10,10,10" />
                     <Button Grid.Column="3" Grid.Row="0" Content="Sale Computer" Margin="0,10,10,10" />
@@ -97,6 +49,7 @@
                             <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Computers Information" >
 
                                 <GridViewColumn  Header=" Name" DisplayMemberBinding="{Binding Path=Name}"   />
+                                <GridViewColumn  Header=" Computer Type" DisplayMemberBinding="{Binding Path=ComputerType.Name}"   />
                                 <GridViewColumn  Header=" RAM" DisplayMemberBinding="{Binding Path=RAM.Name}"   />
                                 <GridViewColumn  Header=" Motherboard" DisplayMemberBinding="{Binding Path=Motherboard.Name}"   />
                                 <GridViewColumn  Header=" CPU" DisplayMemberBinding="{Binding Path=CPU.Name}"   />
@@ -106,7 +59,6 @@
                                 <GridViewColumn  Header=" PowerSupply" DisplayMemberBinding="{Binding Path=PowerSupply.Name}"   />
                                 <GridViewColumn  Header=" Quantity" DisplayMemberBinding="{Binding Path=Quantity}" />
                                 <GridViewColumn  Header=" Price" DisplayMemberBinding="{Binding Path=Price}" />
-                                
                             </GridView>
                         </ListView.View>
 

@@ -14,25 +14,30 @@ namespace Wpf_ComputerStore.ViewModels
 {
     public class ComputerViewModel: BaseViewModel
     {
-        public List <Computer> Computers;
+       
         public ComputerViewModel()
         {
-            getComputers();
            
+            getRams();
+            getPowerSupplys();
+            getCPUs();
+            getHardDrives();
+            getMotherboards();
+            getSDDs();
+            getVideoCards();
+            getComputerTypes();
+            RAM = RAMs[0];
+            PowerSupply= PowerSupplys[0];
+            CPU = CPUs[0];
+            HardDrive = HardDrives[0];
+            SDD= SDDs[0];
+            Motherboard = Motherboards[0];
+            VideoCard = VideoCards[0];
+            ComputerType = ComputerTypes[0];
             cmdAddComputer = new RelayCommand((param) => AddComputer(), (param) => CanExecute);//додали параметр param
 
         }
-        public void getComputers()
-        {
-            try
-            {
-                using (DBContext db = new DBContext())
-                {
-                    Computers = db.Computers.ToList();
-                }
-            }
-            catch (Exception e) { }
-        }
+          
         private string name;
         public string Name { 
             get { return name; }
@@ -40,6 +45,23 @@ namespace Wpf_ComputerStore.ViewModels
             {
                 name= value;
                 NotifyPropertyChanged("Name");
+            }
+        }
+
+        #region computertype
+        public void getComputerTypes()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    ComputerTypes = db.ComputerTypes.ToList();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
         private ComputerType computerType;
@@ -63,6 +85,8 @@ namespace Wpf_ComputerStore.ViewModels
                 NotifyPropertyChanged("ComputerTypes");
             }
         }
+        #endregion
+
         private List<ComputerDetail> computerDetails;
         public List<ComputerDetail> ComputerDetails
         {
@@ -72,8 +96,24 @@ namespace Wpf_ComputerStore.ViewModels
                 computerDetails = value;
                 NotifyPropertyChanged("ComputerDetails");
             }
-        } 
+        }
 
+        #region ram
+        public void getRams()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    RAMs = db.ComputerDetails.Where(cd => cd.Category.Name.Equals("RAM")).ToList();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         private ComputerDetail ram;
         public ComputerDetail RAM
         {
@@ -92,10 +132,28 @@ namespace Wpf_ComputerStore.ViewModels
             set
             {
                 rams = value;
-                NotifyPropertyChanged("RAM");
+                NotifyPropertyChanged("RAMs");
             }
         }
 
+        #endregion
+
+        #region motherboard
+        public void getMotherboards()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    Motherboards = db.ComputerDetails.Where(cd => cd.Category.Name.Equals("Motherboard")).ToList();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         private ComputerDetail motherboard;
         public ComputerDetail Motherboard
         {
@@ -117,7 +175,25 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
+        #endregion
 
+        #region cpu
+
+        public void getCPUs()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    CPUs = db.ComputerDetails.Where(cd => cd.Category.Name.Equals("CPU")).ToList();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         private ComputerDetail cpu;
         public ComputerDetail CPU
         {
@@ -135,7 +211,25 @@ namespace Wpf_ComputerStore.ViewModels
             set
             {
                 cpus = value;
-                NotifyPropertyChanged("CPU");
+                NotifyPropertyChanged("CPUs");
+            }
+        }
+        #endregion
+
+        #region harddrive
+        public void getHardDrives()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    HardDrives = db.ComputerDetails.Where(cd => cd.Category.Name.Equals("HardDrive")).ToList();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
         private ComputerDetail hardDrive;
@@ -148,6 +242,37 @@ namespace Wpf_ComputerStore.ViewModels
                 NotifyPropertyChanged("HardDrive");
             }
         }
+
+        private List<ComputerDetail> harddrives;
+        public List<ComputerDetail> HardDrives
+        {
+            get => harddrives;
+            set
+            {
+                harddrives = value;
+                NotifyPropertyChanged("HardDrives");
+            }
+        }
+
+        #endregion
+
+
+        #region sdd
+        public void getSDDs()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    SDDs = db.ComputerDetails.Where(cd => cd.Category.Name.Equals("SDD")).ToList();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         private List<ComputerDetail> sdds;
         public List<ComputerDetail> SDDs
         {
@@ -155,7 +280,7 @@ namespace Wpf_ComputerStore.ViewModels
             set
             {
                 sdds = value;
-                NotifyPropertyChanged("SDD");
+                NotifyPropertyChanged("SDDs");
             }
         }
         private ComputerDetail sdd;
@@ -168,6 +293,25 @@ namespace Wpf_ComputerStore.ViewModels
                 NotifyPropertyChanged("SDD");
             }
         }
+
+        #endregion
+
+        #region videocard
+        public void getVideoCards()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    VideoCards = db.ComputerDetails.Where(cd => cd.Category.Name.Equals("VideoCard")).ToList();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         private List<ComputerDetail> videoCards;
         public List<ComputerDetail> VideoCards
         {
@@ -175,7 +319,7 @@ namespace Wpf_ComputerStore.ViewModels
             set
             {
                 videoCards = value;
-                NotifyPropertyChanged("VideoCard");
+                NotifyPropertyChanged("VideoCards");
             }
         }
 
@@ -190,7 +334,24 @@ namespace Wpf_ComputerStore.ViewModels
                 NotifyPropertyChanged("VideoCard");
             }
         }
+        #endregion
 
+        #region powersupply
+        public void getPowerSupplys()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    PowerSupplys = db.ComputerDetails.Where(cd => cd.Category.Name.Equals("PowerSupply")).ToList();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         private ComputerDetail powerSupply;
         public ComputerDetail PowerSupply
         {
@@ -209,9 +370,12 @@ namespace Wpf_ComputerStore.ViewModels
             set
             {
                 powerSupplys = value;
-                NotifyPropertyChanged("PowerSupply");
+                NotifyPropertyChanged("PowerSupplys");
             }
         }
+
+        #endregion
+
         private int quantity;
         public int Quantity
         {
@@ -255,13 +419,8 @@ namespace Wpf_ComputerStore.ViewModels
                     {
                         Name = Name,
                         ComputerType = ComputerType,
-                        RAM = RAM,
-                        Motherboard = Motherboard,
-                        CPU = CPU,
-                        HardDrive = HardDrive,
-                        SDD = SDD,
-                        VideoCard = VideoCard,
-                        PowerSupply = PowerSupply,
+                        ComputerDetails = new List<ComputerDetail>() { RAM,Motherboard, CPU,HardDrive, SDD,VideoCard, PowerSupply},
+                       
                         Quantity = Quantity,
                         Price = Price
                     };

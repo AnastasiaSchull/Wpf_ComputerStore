@@ -11,5 +11,6 @@ namespace Wpf_ComputerStore.Services
     {
         void openComputerDetailWindow(BaseViewModel model);
         void openMainWindow(BaseViewModel model);
+        void openComputerWindow(BaseViewModel model);
     }
 }
