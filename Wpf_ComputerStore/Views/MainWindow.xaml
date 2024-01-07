@@ -28,7 +28,9 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="0" Grid.Row="0" Content="Add Computer" Margin="0,10,10,10"  />
+                    <Button   Grid.Column="0" Grid.Row="0" Content="Add Computer" Margin="0,10,10,10" Command="{Binding cmdAddComputer}" />
+                    
+                   
                     <Button Grid.Column="1" Grid.Row="0" Content="Edit Computer" Margin="10,10,10,10" />
                     <Button Grid.Column="2" Grid.Row="0" Content="Delete Computer" Margin="10,10,10,10" />
                     <Button Grid.Column="3" Grid.Row="0" Content="Sale Computer" Margin="0,10,10,10" />
@@ -47,6 +49,7 @@
                             <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Computers Information" >
 
                                 <GridViewColumn  Header=" Name" DisplayMemberBinding="{Binding Path=Name}"   />
+                                <GridViewColumn  Header=" Computer Type" DisplayMemberBinding="{Binding Path=ComputerType.Name}"   />
                                 <GridViewColumn  Header=" RAM" DisplayMemberBinding="{Binding Path=RAM.Name}"   />
                                 <GridViewColumn  Header=" Motherboard" DisplayMemberBinding="{Binding Path=Motherboard.Name}"   />
                                 <GridViewColumn  Header=" CPU" DisplayMemberBinding="{Binding Path=CPU.Name}"   />

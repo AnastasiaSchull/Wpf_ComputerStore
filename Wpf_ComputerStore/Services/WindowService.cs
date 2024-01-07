@@ -20,5 +20,10 @@ namespace Wpf_ComputerStore.Services
         {
             throw new NotImplementedException();
         }
+        public void openComputerWindow(BaseViewModel model)
+        {
+            ComputerWindow window = new ComputerWindow(model);
+            window.ShowDialog();
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -17,6 +18,10 @@ namespace Wpf_ComputerStore.Models
         public virtual ComputerType ComputerType { get; set; }      
         public virtual List< ComputerDetail> ComputerDetails { get; set; }
         [NotMapped]  // щоб не створювалась колонка в базі даних
+
+        private ComputerDetail ram;
+        [NotMapped]
+
         public ComputerDetail RAM
         { 
             get 
@@ -30,9 +35,11 @@ namespace Wpf_ComputerStore.Models
                // MessageBox.Show(computerDetail.Name);
                 return computerDetail;
             }
-           
+            set { ram = value; }
         }
-
+        [NotMapped]
+        private ComputerDetail motherboard;
+        [NotMapped]
         public ComputerDetail Motherboard
         {
             get
@@ -45,9 +52,11 @@ namespace Wpf_ComputerStore.Models
                 }          
                 return computerDetail;
             }
-
+            set { motherboard = value; }
         }
-
+        [NotMapped]
+        private ComputerDetail cpu;
+        [NotMapped]
         public ComputerDetail CPU
         {
             get
@@ -60,9 +69,11 @@ namespace Wpf_ComputerStore.Models
                 }
                 return computerDetail;
             }
-
+            set { cpu = value; }
         }
-
+        [NotMapped]
+        private ComputerDetail hardDrive;
+        [NotMapped]
         public ComputerDetail HardDrive
         {
             get
@@ -75,9 +86,11 @@ namespace Wpf_ComputerStore.Models
                 }
                 return computerDetail;
             }
-
+            set { hardDrive = value; }
         }
-
+        [NotMapped]
+        private ComputerDetail sdd;
+        [NotMapped]
         public ComputerDetail SDD
         {
             get
@@ -90,9 +103,11 @@ namespace Wpf_ComputerStore.Models
                 }
                 return computerDetail;
             }
-
+            set { sdd = value; }
         }
-
+        [NotMapped]
+        private ComputerDetail videoCard;
+        [NotMapped]
         public ComputerDetail VideoCard
         {
             get
@@ -105,9 +120,11 @@ namespace Wpf_ComputerStore.Models
                 }
                 return computerDetail;
             }
-
+            set { videoCard = value; }
         }
-
+        [NotMapped]
+        private ComputerDetail powerSupply;
+        [NotMapped]
         public ComputerDetail PowerSupply
         {
             get
@@ -120,7 +137,7 @@ namespace Wpf_ComputerStore.Models
                 }
                 return computerDetail;
             }
-
+            set { powerSupply = value; }
         }
         public int Quantity { get; set; }
         public double Price { get; set; }
