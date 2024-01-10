@@ -24,6 +24,17 @@ namespace Wpf_ComputerStore.ViewModels
         private ObservableCollection<Peripherals> peripheralsList = new ObservableCollection<Peripherals>();
         private List<PeripheralsType> peripheralsTypeList = new List<PeripheralsType>();
 
+        private Computer selectedComputer;
+        public Computer SelectedComputer
+        {
+            get { return selectedComputer; }
+            set
+            {
+                selectedComputer = value;
+                NotifyPropertyChanged("SelectedComputer");
+            }
+        }
+
         private ComputerDetail selectedComputerDetail;
         public ComputerDetail SelectedComputerDetail
         {
@@ -96,7 +107,11 @@ namespace Wpf_ComputerStore.ViewModels
             getCategoriesList();
             getPeripheralsTypes();
             AddCommand = new RelayCommand((param) => AddPeripheral());
-           cmdAddComputerDetail = new RelayCommand((param)=> AddComputerDetail());
+            cmdAddComputer = new RelayCommand((param) => AddComputer());
+            cmdEditComputer = new RelayCommand((param) => EditComputer(), (param) => SelectedComputer != null);
+            cmdDeleteComputer = new RelayCommand((param) => DeleteComputer(), (param) => SelectedComputer != null);
+
+            cmdAddComputerDetail = new RelayCommand((param)=> AddComputerDetail());
             cmdEditComputerDetail = new RelayCommand((param) => EditComputerDetail(), (param) => SelectedComputerDetail != null);
             cmdDeleteComputerDetail = new RelayCommand((param) => DeleteComputerDetail(), (param) => SelectedComputerDetail != null);
 
@@ -322,5 +337,50 @@ namespace Wpf_ComputerStore.ViewModels
                 MessageBox.Show(ex.Message);
             }
         }
+
+
+        public ICommand cmdEditComputer { get; private set; }
+
+        public void EditComputer()
+        {
+            windowService.openComputerWindow(new ComputerViewModel(SelectedComputer));
+            getComputers();
+        }
+        public ICommand cmdAddComputer { get; private set; }
+
+        public void AddComputer()
+        {
+            windowService.openComputerWindow(new ComputerViewModel());
+            getComputers();
+        }
+
+        public ICommand cmdDeleteComputer { get; private set; }
+
+        public void DeleteComputer()
+        {
+            
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this computer?", "Delete Computer", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    using (DBContext db = new DBContext())
+                    {
+                        db.Attach(SelectedComputer);
+                        db.Remove(SelectedComputer);
+                        db.SaveChanges();
+                    }
+                    getComputers();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+       
+ 
     }
 }
