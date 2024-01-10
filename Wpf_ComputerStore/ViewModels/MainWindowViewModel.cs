@@ -24,6 +24,10 @@ namespace Wpf_ComputerStore.ViewModels
             getCategoriesList();
             getPeripheralsTypes();
             AddCommand = new RelayCommand((param) => AddPeripheral());
+            cmdAddComputer = new RelayCommand((param) => AddComputer());
+            cmdEditComputer = new RelayCommand((param) => EditComputer(), (param) => SelectedComputer != null);
+            cmdDeleteComputer = new RelayCommand((param) => DeleteComputer(), (param) => SelectedComputer != null);
+
             cmdAddComputerDetail = new RelayCommand((param) => AddComputerDetail());
             cmdEditComputerDetail = new RelayCommand((param) => EditComputerDetail(), (param) => SelectedComputerDetail != null);
             cmdDeleteComputerDetail = new RelayCommand((param) => DeleteComputerDetail(), (param) => SelectedComputerDetail != null);
@@ -57,6 +61,9 @@ namespace Wpf_ComputerStore.ViewModels
         }
 
         private List<ComputerDetail> computerDetailsList = new List<ComputerDetail>();
+
+      
+
         private ComputerDetail selectedComputerDetail;
         public ComputerDetail SelectedComputerDetail
         {
@@ -77,7 +84,11 @@ namespace Wpf_ComputerStore.ViewModels
                 NotifyPropertyChanged("ComputerDetailsList");
             }
         }
+
+    
+
         public ICommand cmdGetComputerDetail { get; private set; }
+
 
         public void getComputerDetails()
         {
@@ -196,20 +207,7 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
-        public void getPeripherals()
-        {
-            try
-            {
-                using (DBContext db = new DBContext())
-                {
-                    PeripheralsList = new ObservableCollection<Peripherals>(db.Peripheralss.Include(p => p.PeripheralsType).ToList());
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
+  
 
         public void getPeripheralsTypes()
         {
@@ -244,7 +242,20 @@ namespace Wpf_ComputerStore.ViewModels
                 NotifyPropertyChanged("PeripheralsList");
             }
         }
-
+        public void getPeripherals()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    PeripheralsList = new ObservableCollection<Peripherals>(db.Peripheralss.Include(p => p.PeripheralsType).ToList());
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         public ICommand AddCommand { get; private set; }
 
         public void AddPeripheral()
@@ -330,9 +341,28 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
+
+
+
+
+
+
+
         #endregion
 
         #region computers
+
+        private Computer selectedComputer;
+        public Computer SelectedComputer
+        {
+            get { return selectedComputer; }
+            set
+            {
+                selectedComputer = value;
+                NotifyPropertyChanged("SelectedComputer");
+            }
+        }
+
 
         private List<Computer> computersList = new List<Computer>();
 
@@ -410,22 +440,6 @@ namespace Wpf_ComputerStore.ViewModels
                 MessageBox.Show(ex.Message);
             }
         }
-
-
-        #endregion
-
-
-
-
-
-
-
-
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-
         public ICommand cmdEditComputer { get; private set; }
 
         public void EditComputer()
@@ -445,7 +459,7 @@ namespace Wpf_ComputerStore.ViewModels
 
         public void DeleteComputer()
         {
-            
+
             MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this computer?", "Delete Computer", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Yes)
@@ -466,9 +480,15 @@ namespace Wpf_ComputerStore.ViewModels
                 }
             }
         }
+        #endregion
 
-       
- 
+
+
+
+
+
+
+
     }
        
 }
