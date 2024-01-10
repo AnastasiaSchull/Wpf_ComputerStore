@@ -7,12 +7,12 @@ using System.Windows.Input;
 
 namespace Wpf_ComputerStore.Commands
 {
-    class RelayCommand : ICommand
+    class RelayCommand : ICommand // клас для Command в вікнах
     {
-        private readonly Action _execute;
-        private readonly Func<bool> _canExecute;
+        private readonly Action _execute; // дія яка буде виконуватися
+        private readonly Func<bool> _canExecute; // чи є можливість щоб дія виконалась
 
-        public RelayCommand(Action action) : this(action, () => true)
+        public RelayCommand(Action action) : this(action, () => true) 
         {
             _execute = action;
         }

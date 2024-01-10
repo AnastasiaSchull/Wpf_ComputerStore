@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls.Ribbon;
 using System.Windows.Input;
 using Wpf_ComputerStore.Models;
-using Wpf_ComputerStore.Commands;
+using Microsoft.EntityFrameworkCore;
 
 namespace Wpf_ComputerStore.ViewModels
 {
     public class ComputerViewModel: BaseViewModel
     {
-       
+        private Computer computer;
         public ComputerViewModel()
         {
            
@@ -37,7 +33,31 @@ namespace Wpf_ComputerStore.ViewModels
             cmdAddComputer = new RelayCommand((param) => AddComputer(), (param) => CanExecute);//додали параметр param
 
         }
-          
+        public ComputerViewModel(Computer computer)
+        {
+            this.computer = computer;
+            getComputerTypes(); // наповнюємо список типами і заодно заповнюємо комбобокс через binding
+            getRams();
+            getPowerSupplys();
+            getCPUs();
+            getHardDrives();
+            getMotherboards();
+            getSDDs();
+            getVideoCards();
+            ComputerType = computer.ComputerType;
+            Name = computer.Name;
+            RAM = RAMs.Find(r => r.ID == computer.RAM.ID); // щоб в комбобоксі був вибраний поточний RAM комп'ютера
+            PowerSupply = PowerSupplys.Find(p => p.ID == computer.PowerSupply.ID);
+            CPU = CPUs.Find(c => c.ID == computer.CPU.ID);
+            HardDrive = HardDrives.Find(c => c.ID == computer.HardDrive.ID);
+            SDD = SDDs.Find(s => s.ID == computer.SDD.ID);
+            Motherboard = Motherboards.Find(m => m.ID == computer.Motherboard.ID);
+            VideoCard = VideoCards.Find(c => c.ID == computer.VideoCard.ID);
+            Quantity = computer.Quantity;
+            Price = computer.Price;
+
+            cmdAddComputer = new RelayCommand((param) => AddComputer(), (param) => CanExecute); //команда для додавання або редагування
+        }
         private string name;
         public string Name { 
             get { return name; }
@@ -406,25 +426,39 @@ namespace Wpf_ComputerStore.ViewModels
             {
                 using (DBContext db = new DBContext())
                 {
-                    db.Attach(ComputerType);
-                    db.Attach(RAM);
-                    db.Attach(Motherboard);
-                    db.Attach(CPU);
-                    db.Attach(HardDrive);
-                    db.Attach(SDD);
-                    db.Attach(VideoCard);
-                    db.Attach(PowerSupply);
+                    db.ComputerTypes.Attach(ComputerType);
+                    db.ComputerDetails.Attach(RAM);
+                    db.ComputerDetails.Attach(Motherboard);
+                    db.ComputerDetails.Attach(CPU);
+                    db.ComputerDetails.Attach(HardDrive);
+                    db.ComputerDetails.Attach(SDD);
+                    db.ComputerDetails.Attach(VideoCard);
+                    db.ComputerDetails.Attach(PowerSupply);
 
-                    Computer computer = new Computer
-                    {
-                        Name = Name,
-                        ComputerType = ComputerType,
-                        ComputerDetails = new List<ComputerDetail>() { RAM,Motherboard, CPU,HardDrive, SDD,VideoCard, PowerSupply},
-                       
-                        Quantity = Quantity,
-                        Price = Price
-                    };
+                    if (computer == null) { 
+                        Computer computer = new Computer
+                        {
+                            Name = Name,
+                            ComputerType = ComputerType,
+                            ComputerDetails = new List<ComputerDetail>() { RAM, Motherboard, CPU, HardDrive, SDD, VideoCard, PowerSupply },
+
+                            Quantity = Quantity,
+                            Price = Price
+                        };
                     db.Computers.Add(computer);
+                    }
+                    else
+                    {
+                        computer.ComputerType = ComputerType;
+                        computer.Name = Name;
+                        computer.Quantity = Quantity;
+                        computer.Price = Price;
+                        //Зв'язок багато до багатьох видалення через команду 
+                        db.Database.ExecuteSql($"Delete from [dbo].[ComputerComputerDetail] WHERE ComputersID={computer.ID}");
+                        //Створюємо нові зв'язки багато до багатьох
+                        computer.ComputerDetails=new List<ComputerDetail>() { RAM, Motherboard, CPU, HardDrive, SDD, VideoCard, PowerSupply };
+                        db.Computers.Update(computer);
+                    }
                     db.SaveChanges();
                 }
 
@@ -435,7 +469,7 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
-        public bool CanExecute
+        public bool CanExecute //для команди (коли повертає false, то кнопка Save не клікабельна)
         {
             get { return !string.IsNullOrEmpty(Name)  && Quantity != 0 && Price != 0; }
         }

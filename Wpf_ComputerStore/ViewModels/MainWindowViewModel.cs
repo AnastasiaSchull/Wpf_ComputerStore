@@ -16,13 +16,53 @@ namespace Wpf_ComputerStore.ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
     {
+        public MainWindowViewModel()
+        {
+            getComputers();
+            getPeripherals();
+            getComputerDetails();
+            getCategoriesList();
+            getPeripheralsTypes();
+            AddCommand = new RelayCommand((param) => AddPeripheral());
+            cmdAddComputer = new RelayCommand((param) => AddComputer());
+            cmdEditComputer = new RelayCommand((param) => EditComputer(), (param) => SelectedComputer != null);
+            cmdDeleteComputer = new RelayCommand((param) => DeleteComputer(), (param) => SelectedComputer != null);
 
+            cmdAddComputerDetail = new RelayCommand((param) => AddComputerDetail());
+            cmdEditComputerDetail = new RelayCommand((param) => EditComputerDetail(), (param) => SelectedComputerDetail != null);
+            cmdDeleteComputerDetail = new RelayCommand((param) => DeleteComputerDetail(), (param) => SelectedComputerDetail != null);
+            cmdGetComputerDetail = new RelayCommand((param)=>getComputerDetails());
+            cmdFindComputerDetail = new RelayCommand ((param) => FindComputerDetail());
+            SelectedFindCriteriaCD = 0;
+            windowService = new WindowService();
+        }
+
+
+
+        #region computer_detail
+        private int selectedFindCriteriaCD;
+        public int SelectedFindCriteriaCD
+        {
+            get { return selectedFindCriteriaCD;}
+            set {
+                selectedFindCriteriaCD = value;
+                NotifyPropertyChanged("SelectedFindCriteriaCD");
+            }
+        }
+        private string criteriaComputerDetail;
+        public string CriteriaComputerDetail
+        {
+            get { return criteriaComputerDetail; }
+            set
+            {
+                criteriaComputerDetail = value;
+                NotifyPropertyChanged("CriteriaComputerDetail");
+            }
+        }
 
         private List<ComputerDetail> computerDetailsList = new List<ComputerDetail>();
-        private List<Category> categoriesList = new List<Category>();
-        private List<Computer> computersList = new List<Computer>();
-        private ObservableCollection<Peripherals> peripheralsList = new ObservableCollection<Peripherals>();
-        private List<PeripheralsType> peripheralsTypeList = new List<PeripheralsType>();
+
+      
 
         private ComputerDetail selectedComputerDetail;
         public ComputerDetail SelectedComputerDetail
@@ -30,30 +70,8 @@ namespace Wpf_ComputerStore.ViewModels
             get { return selectedComputerDetail; }
             set
             {
-                selectedComputerDetail= value;
+                selectedComputerDetail = value;
                 NotifyPropertyChanged("SelectedComputerDetail");
-            }
-        }
-
-
-        public List<PeripheralsType> PeripheralsTypeList
-        {
-            get { return peripheralsTypeList; }
-            set
-            {
-                peripheralsTypeList = value;
-                NotifyPropertyChanged("PeripheralsTypeList");
-            }
-        }
-
-        public ObservableCollection<Peripherals> PeripheralsList
-        {
-            get { return peripheralsList; }
-
-            set
-            { 
-                peripheralsList = value;
-                NotifyPropertyChanged("PeripheralsList");
             }
         }
 
@@ -67,56 +85,10 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
-        public List<Category> CategoriesList
-        {
-            get { return categoriesList; }
+    
 
-            set
-            {
-                categoriesList = value;
-                NotifyPropertyChanged("CategoriesList");
-            }
-        }
+        public ICommand cmdGetComputerDetail { get; private set; }
 
-        public List<Computer> ComputersList
-        {
-            get { return computersList; }
-            set
-            {
-                computersList = value;
-                NotifyPropertyChanged("ComputersList");
-            }
-        }
-
-        public MainWindowViewModel()
-        {
-            getComputers();
-            getPeripherals();           
-            getComputerDetails();
-            getCategoriesList();
-            getPeripheralsTypes();
-            AddCommand = new RelayCommand((param) => AddPeripheral());
-           cmdAddComputerDetail = new RelayCommand((param)=> AddComputerDetail());
-            cmdEditComputerDetail = new RelayCommand((param) => EditComputerDetail(), (param) => SelectedComputerDetail != null);
-            cmdDeleteComputerDetail = new RelayCommand((param) => DeleteComputerDetail(), (param) => SelectedComputerDetail != null);
-
-            windowService = new WindowService();
-        }
-
-        public void getPeripherals()
-        {
-            try
-            {
-                using (DBContext db = new DBContext())
-                {
-                    PeripheralsList = new ObservableCollection<Peripherals>(db.Peripheralss.Include(p => p.PeripheralsType).ToList());
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
 
         public void getComputerDetails()
         {
@@ -138,15 +110,79 @@ namespace Wpf_ComputerStore.ViewModels
                 MessageBox.Show(ex.Message);
             }
         }
+        public ICommand cmdFindComputerDetail { get; private set; }
 
-        public void getCategoriesList()
+        public void FindComputerDetail()
         {
             try
             {
                 using (DBContext db = new DBContext())
                 {
-                    CategoriesList = db.Categories.ToList();
+                    switch (SelectedFindCriteriaCD)
+                    {
+                        case 0:
+                            ComputerDetailsList =db.ComputerDetails.Where(cd=>cd.Name.ToLower().Contains(CriteriaComputerDetail.ToLower())).ToList();
+                             break;
+                        case 1:
+                            ComputerDetailsList = db.ComputerDetails.Where(cd => cd.Description.ToLower().Contains(CriteriaComputerDetail.ToLower())).ToList();
+
+                            break;
+                        case 2:
+                            ComputerDetailsList = db.ComputerDetails.Where(cd => cd.Category.Name.ToLower().Equals(CriteriaComputerDetail.ToLower())).ToList();
+
+                            break;
+                        case 3:
+                            ComputerDetailsList = db.ComputerDetails.Where(cd => cd.ID == Int32.Parse(CriteriaComputerDetail)).ToList();
+
+                            break;
+                    }
+                    string res = "";
+                    foreach (ComputerDetail cd in ComputerDetailsList) //костиль бо не працюе лiнива загрузка
+                    {
+                        res += cd.Category.Name;
+
+                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public ICommand cmdAddComputerDetail { get; private set; }
+
+        public void AddComputerDetail()
+        {
+            windowService.openComputerDetailWindow(new ComputerDetailViewModel());
+            getComputerDetails();
+        }
+
+        public ICommand cmdEditComputerDetail { get; private set; }
+
+        public void EditComputerDetail()
+        {
+            windowService.openComputerDetailWindow(new ComputerDetailViewModel(SelectedComputerDetail));
+            getComputerDetails();
+        }
+
+        public ICommand cmdDeleteComputerDetail { get; private set; }
+
+        public void DeleteComputerDetail()
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to delete this computer detail?", "Delete computer detail", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.No) {
+                return;
+            }
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    db.Attach(SelectedComputerDetail);
+                    db.Remove(SelectedComputerDetail);
+                    db.SaveChanges();
+                }
+                getComputerDetails();
             }
             catch (Exception ex)
             {
@@ -154,70 +190,24 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
-        public void getComputers()
+
+        #endregion
+
+        #region peripherals_type
+
+        private List<PeripheralsType> peripheralsTypeList = new List<PeripheralsType>();
+
+        public List<PeripheralsType> PeripheralsTypeList
         {
-            try
+            get { return peripheralsTypeList; }
+            set
             {
-                using (DBContext db = new DBContext())
-                {
-                    ComputersList = db.Computers.ToList();
-                    string rams = "";
-                    foreach (Computer computer in ComputersList) //костиль бо не працюе лiнива загрузка
-                    {
-                        rams += computer.ComputerType.Name;
-
-                    }
-                    string rams1 = "";
-
-                    foreach(Computer computer in ComputersList) //костиль бо не працюе лiнива загрузка
-                    {
-                        rams1 += computer.RAM.Name;
-                        
-                    }
-                    string rams2 = "";
-                    foreach (Computer computer in ComputersList) 
-                    {
-                        rams2 += computer.Motherboard.Name;
-
-                    }
-                    string rams3 = "";
-                    foreach (Computer computer in ComputersList)
-                    {
-                        rams3 += computer.CPU.Name;
-
-                    }
-                    string rams4 = "";
-                    foreach (Computer computer in ComputersList)
-                    {
-                        rams4 += computer.HardDrive.Name;
-
-                    }
-                    string rams5 = "";
-                    foreach (Computer computer in ComputersList)
-                    {
-                        rams5 += computer.SDD.Name;
-
-                    }
-                    string rams6 = "";
-                    foreach (Computer computer in ComputersList)
-                    {
-                        rams6 += computer.VideoCard.Name;
-
-                    }
-                    string rams7 = "";
-                    foreach (Computer computer in ComputersList)
-                    {
-                        rams7 += computer.PowerSupply.Name;
-
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                peripheralsTypeList = value;
+                NotifyPropertyChanged("PeripheralsTypeList");
             }
         }
+
+  
 
         public void getPeripheralsTypes()
         {
@@ -234,6 +224,38 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
+
+        #endregion
+
+
+        #region peripheral
+        private ObservableCollection<Peripherals> peripheralsList = new ObservableCollection<Peripherals>();
+
+
+        public ObservableCollection<Peripherals> PeripheralsList
+        {
+            get { return peripheralsList; }
+
+            set
+            {
+                peripheralsList = value;
+                NotifyPropertyChanged("PeripheralsList");
+            }
+        }
+        public void getPeripherals()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    PeripheralsList = new ObservableCollection<Peripherals>(db.Peripheralss.Include(p => p.PeripheralsType).ToList());
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         public ICommand AddCommand { get; private set; }
 
         public void AddPeripheral()
@@ -287,40 +309,186 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
-        public ICommand cmdAddComputerDetail { get; private set; }
 
-        public void AddComputerDetail()
+        #endregion
+
+        #region category
+        private List<Category> categoriesList = new List<Category>();
+
+        public List<Category> CategoriesList
         {
-            windowService.openComputerDetailWindow(new ComputerDetailViewModel());
-            getComputerDetails();
+            get { return categoriesList; }
+
+            set
+            {
+                categoriesList = value;
+                NotifyPropertyChanged("CategoriesList");
+            }
         }
 
-        public ICommand cmdEditComputerDetail { get; private set; }
-
-        public void EditComputerDetail()
-        {
-            windowService.openComputerDetailWindow(new ComputerDetailViewModel(SelectedComputerDetail));
-            getComputerDetails();
-        }
-
-        public ICommand cmdDeleteComputerDetail { get; private set; }
-
-        public void DeleteComputerDetail()
+        public void getCategoriesList()
         {
             try
             {
                 using (DBContext db = new DBContext())
                 {
-                    db.Attach(SelectedComputerDetail);
-                    db.Remove(SelectedComputerDetail);
-                    db.SaveChanges();
+                    CategoriesList = db.Categories.ToList();
                 }
-                getComputerDetails();
             }
-           catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
+
+
+
+
+
+
+
+
+        #endregion
+
+        #region computers
+
+        private Computer selectedComputer;
+        public Computer SelectedComputer
+        {
+            get { return selectedComputer; }
+            set
+            {
+                selectedComputer = value;
+                NotifyPropertyChanged("SelectedComputer");
+            }
+        }
+
+
+        private List<Computer> computersList = new List<Computer>();
+
+
+        public List<Computer> ComputersList
+        {
+            get { return computersList; }
+            set
+            {
+                computersList = value;
+                NotifyPropertyChanged("ComputersList");
+            }
+        }
+        public void getComputers()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    ComputersList = db.Computers.ToList();
+                    string rams = "";
+                    foreach (Computer computer in ComputersList) //костиль бо не працюе лiнива загрузка
+                    {
+                        rams += computer.ComputerType.Name;
+
+                    }
+                    string rams1 = "";
+
+                    foreach (Computer computer in ComputersList) //костиль бо не працюе лiнива загрузка
+                    {
+                        rams1 += computer.RAM.Name;
+
+                    }
+                    string rams2 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        rams2 += computer.Motherboard.Name;
+
+                    }
+                    string rams3 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        rams3 += computer.CPU.Name;
+
+                    }
+                    string rams4 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        rams4 += computer.HardDrive.Name;
+
+                    }
+                    string rams5 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        rams5 += computer.SDD.Name;
+
+                    }
+                    string rams6 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        rams6 += computer.VideoCard.Name;
+
+                    }
+                    string rams7 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        rams7 += computer.PowerSupply.Name;
+
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        public ICommand cmdEditComputer { get; private set; }
+
+        public void EditComputer()
+        {
+            windowService.openComputerWindow(new ComputerViewModel(SelectedComputer));
+            getComputers();
+        }
+        public ICommand cmdAddComputer { get; private set; }
+
+        public void AddComputer()
+        {
+            windowService.openComputerWindow(new ComputerViewModel());
+            getComputers();
+        }
+
+        public ICommand cmdDeleteComputer { get; private set; }
+
+        public void DeleteComputer()
+        {
+
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this computer?", "Delete Computer", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    using (DBContext db = new DBContext())
+                    {
+                        db.Attach(SelectedComputer);
+                        db.Remove(SelectedComputer);
+                        db.SaveChanges();
+                    }
+                    getComputers();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+        #endregion
+
+
+
+
+
+
+
+
     }
+       
 }
