@@ -26,7 +26,7 @@ namespace Wpf_ComputerStore.ViewModels
         {
             this.computerDetail = computerDetail;
             getCategories();
-            Category = computerDetail.Category;
+            Category = Categories.Find(c => c.ID == computerDetail.Category.ID);
             Name = computerDetail.Name;
             Quantity = computerDetail.Quantity;
             Description = computerDetail.Description;

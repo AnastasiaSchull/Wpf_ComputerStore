@@ -20,14 +20,12 @@ namespace Wpf_ComputerStore.Views
     /// </summary>
     public partial class ComputerWindow : Window
     {
-        //public ComputerWindow()
-        //{
-        //    InitializeComponent();
-        //}
+       
         public ComputerWindow(BaseViewModel model)
         {
             DataContext = model;
             InitializeComponent();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
        
         public void CloseWindow(object sender, RoutedEventArgs e)

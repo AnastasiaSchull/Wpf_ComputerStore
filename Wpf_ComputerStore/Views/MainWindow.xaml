@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:Wpf_ComputerStore"
          xmlns:VM="clr-namespace:Wpf_ComputerStore.ViewModels"
         mc:Ignorable="d"
-                     Title="Computer store" Height="450" Width="800">
+                     Title="Computer store" Height="750" Width="900"   >       <!--Height="450"-->
     <!--<Window.DataContext>
         <VM:MainWindowViewModel/>
     </Window.DataContext>-->
     <Grid>
-        <TabControl>
-            <TabItem Header="Computer">
+        <TabControl >
+            <TabItem Header="Computer" >
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50"/>
@@ -22,29 +22,28 @@
 
                     <Grid.ColumnDefinitions>
 
-                        <ColumnDefinition Width="141*" />
-                        <ColumnDefinition Width="58*"/>
-                        <ColumnDefinition Width="199*" />
-                        <ColumnDefinition Width="199*" />
-                        <ColumnDefinition Width="199*" />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <Button   Grid.Column="0" Grid.Row="0" Content="Add Computer" Margin="0,10,10,10" Command="{Binding cmdAddComputer}" Grid.ColumnSpan="2" />
+                    <Button   Grid.Column="0" Grid.Row="0" Content="Add Computer" Margin="0,10,10,10" Command="{Binding cmdAddComputer}" />
 
 
-                    <Button Grid.Column="2" Grid.Row="0" Content="Edit Computer" Margin="10,10,10,10" />
-                    <Button Grid.Column="3" Grid.Row="0" Content="Delete Computer" Margin="10,10,10,10" />
-                    <Button Grid.Column="4" Grid.Row="0" Content="Sale Computer" Margin="0,10,10,10" />
+                    <Button Grid.Column="1" Grid.Row="0" Content="Edit Computer" Margin="10,10,10,10" Command="{Binding cmdEditComputer}" />
+                    <Button Grid.Column="2" Grid.Row="0" Content="Delete Computer" Margin="10,10,10,10" Command="{Binding cmdDeleteComputer}"/>
+                    <Button Grid.Column="3" Grid.Row="0" Content="Sale Computer" Margin="0,10,10,10" Command="{Binding cmdSaleComputer}"/>
 
-                    <Label Grid.Row="1" Grid.Column="0" Margin="10,10,10,10" Grid.ColumnSpan="3">Find by:</Label>
-                    <ComboBox Grid.Row="1" Grid.Column="1" Margin="57,10,10,10" SelectedIndex="0" Grid.ColumnSpan="2">
+                    <Label Grid.Row="1" Grid.Column="0" Margin="10,10,10,10" Grid.ColumnSpan="2">Find by:</Label>
+                    <ComboBox Grid.Row="1" Grid.Column="1" Margin="0,10,10,10" SelectedIndex="0">
                         <ComboBoxItem>Name</ComboBoxItem>
                         <ComboBoxItem>Quantity</ComboBoxItem>
                         <ComboBoxItem>Price</ComboBoxItem>
                     </ComboBox>
-                    <TextBox Grid.Row="1" Grid.Column="3" Margin="10,10,10,10" ></TextBox>
-                    <Button Grid.Column="4" Grid.Row="1" Margin="10,10,10,10" Content="Find"/>
-                    <ListView  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding ComputersList}">
+                    <TextBox Grid.Row="1" Grid.Column="2" Margin="10,10,10,10" ></TextBox>
+                    <Button Grid.Column="3" Grid.Row="1" Margin="10,10,10,10" Content="Find"/>
+                    <ListView  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding ComputersList}"  SelectedItem="{Binding SelectedComputer}">
                         <ListView.View>
 
                             <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Computers Information" >
@@ -112,34 +111,108 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Category">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
+                <TabControl>
+                    <TabItem Header="Motherboard">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            
+                            <Label Grid.Row="0"  Content="Motherboard" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Матери́нська пла́та, систе́мна пла́та відома також як головна плата на якій містяться основні компоненти комп'ютера, що забезпечують логіку.
+                                Від материнської плати залежить функціональність комп'ютера, що визначається елементами самої плати і підключеними до неї пристроями.</TextBlock>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
+                            <Image Grid.Row="2" Width="700" Source="/static/matplata.jpg" Margin="0,0,10,20"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="RAM">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="100"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
 
+                        <Label Grid.Row="0"  Content="Random access memory" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Операти́вна па́м'ять (англ. random-access memory, дослівно — пам'ять з довільним доступом, ПДД,[1][2] первинна пам'ять) —
+                            пам'ять ЕОМ, призначена для зберігання коду та даних програм під час їхнього виконання. У сучасних комп'ютерах оперативна пам'ять переважно представлена динамічною пам'яттю з довільним доступом DRAM.</TextBlock>
 
-                    <Button Grid.Column="0" Grid.Row="0" Content="Add Category " Margin="10" />
-                    <Button Grid.Column="1" Grid.Row="0" Content="Edit Category" Margin="10" />
-                    <Button Grid.Column="2" Grid.Row="0" Content="Delete Category" Margin="10" />
+                        <Image Grid.Row="2" Width="700" Source="/static/ram.jpg" Margin="0,0,10,20"/>
+                    </Grid>
+                    </TabItem>
+                    <TabItem Header="CPU">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
 
-                    <ListView  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="10"  BorderThickness="0 2 0 0" HorizontalAlignment="Stretch" ItemsSource="{Binding CategoriesList}">
-                        <ListView.View>
-                            <GridView AllowsColumnReorder= "true" ColumnHeaderToolTip="Category Information" >
-                                <GridViewColumn Width = "100" Header=" Name " DisplayMemberBinding="{Binding Path=Name}"/>
-                            </GridView>
-                        </ListView.View>
+                            <Label Grid.Row="0"  Content="Central processing unit" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Процесор – це пристрій, що управляє обчисленнями, від нього подаються команди всім частинам комп’ютера.
+                                Тактова частота процесора, розрядність, і адресне визначають характерні особливості процесора. Частота процесора визначає швидкодію комп’ютера, це обсяг операцій, вироблених за 1 секунду.</TextBlock>
+                            <Image Grid.Row="2" Width="700" Source="/static/cpu.jpg" Margin="0,0,10,20"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="HardDrive">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
 
-                    </ListView>
-                </Grid>
+                            <Label Grid.Row="0"  Content="Hard Drive" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Жорстки́й диск, або жорстки́й магні́тний диск, або накопичувач на магнітних дисках. Mагнітний диск, основа якого виконана з жорсткого твердого матеріалу (скла, алюмінію тощо). У більшості ЕОМ виконує функцію енергонезалежного носія інформації (комп'ютерної пам'яті чи накопичувача інформації) з довільним доступом.</TextBlock>
+                            <Image Grid.Row="2" Width="700" Source="/static/hdd.png" Margin="0,0,10,20"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="SSD">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0"  Content="Solid-state drive" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Твердотілий накопичувач (англ. SSD, solid-state drive) — комп'ютерний запам'ятовувальний пристрій на основі мікросхем пам'яті та контролера керування ними, що не містить рухомих механічних частин.
+                               Розрізняють два види твердотілих накопичувачів: SSD на основі динамічної пам’яті (подібної до оперативної пам'яті комп'ютерів) і SSD на основі флеш-пам'яті.</TextBlock>
+                            <Image Grid.Row="2" Width="700" Source="/static/ssd.jpg" Margin="0,0,10,20"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Videocard">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            
+                            <Label Grid.Row="0"  Content="Video card" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Відеока́рта (англ. video card, також графічна карта, графічний адаптер, графічний прискорювач) — електронний пристрій, частина комп'ютера, призначена для генерації та обробки зображень з подальшим їхнім виведенням на екран периферійного пристрою.
+                               Відеокарта зазвичай є платою розширення і вставляється у слот розширення, універсальний (PCI-Express, PCI, ISA, VLB, EISA, MCA) або спеціалізований (AGP). Проте відеокарта може бути і вбудованою у материнську плату як у вигляді окремого елемента, так і як складової частини північного мосту чипсету або центрального процесора.</TextBlock>
+                            <Image Grid.Row="2" Width="700" Source="/static/videocard.jpg" Margin="0,0,10,20"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="PowerSupply">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="110"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0"  Content="Power Supply" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Комп'ю́терний блок жи́влення — блок живлення (вторинне джерело живлення), призначений для забезпечення вузлів комп'ютера електричною енергією постійного струму. У його завдання входить перетворення мережевої напруги до заданих значень напруги живлення, її стабілізація і захист від незначних перешкод з боку електричних мереж живлення. Також, завдяки вбудованому вентилятору, він бере участь в охолоджуванні системного блоку.</TextBlock>
+                            <Image Grid.Row="2" Width="700" Source="/static/powersupply.jpg" Margin="0,0,10,20"/>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
             </TabItem>
-
+            
             <TabItem Header="Peripherals">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -152,7 +225,7 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition />
-
+                        
                     </Grid.ColumnDefinitions>
 
 
