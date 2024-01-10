@@ -58,6 +58,9 @@ namespace Wpf_ComputerStore.ViewModels
         }
 
         private List<ComputerDetail> computerDetailsList = new List<ComputerDetail>();
+
+      
+
         private ComputerDetail selectedComputerDetail;
         public ComputerDetail SelectedComputerDetail
         {
@@ -78,7 +81,11 @@ namespace Wpf_ComputerStore.ViewModels
                 NotifyPropertyChanged("ComputerDetailsList");
             }
         }
+
+    
+
         public ICommand cmdGetComputerDetail { get; private set; }
+
 
         public void getComputerDetails()
         {
@@ -197,20 +204,7 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
-        public void getPeripherals()
-        {
-            try
-            {
-                using (DBContext db = new DBContext())
-                {
-                    PeripheralsList = new ObservableCollection<Peripherals>(db.Peripheralss.Include(p => p.PeripheralsType).ToList());
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
+  
 
         public void getPeripheralsTypes()
         {
@@ -256,7 +250,20 @@ namespace Wpf_ComputerStore.ViewModels
                 NotifyPropertyChanged("PeripheralsList");
             }
         }
-
+        public void getPeripherals()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    PeripheralsList = new ObservableCollection<Peripherals>(db.Peripheralss.Include(p => p.PeripheralsType).ToList());
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         public ICommand AddCommand { get; private set; }
         public ICommand DeleteCommand { get; private set; }
 
@@ -365,9 +372,28 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
+
+
+
+
+
+
+
         #endregion
 
         #region computers
+
+        private Computer selectedComputer;
+        public Computer SelectedComputer
+        {
+            get { return selectedComputer; }
+            set
+            {
+                selectedComputer = value;
+                NotifyPropertyChanged("SelectedComputer");
+            }
+        }
+
 
         private List<Computer> computersList = new List<Computer>();
 
@@ -445,8 +471,46 @@ namespace Wpf_ComputerStore.ViewModels
                 MessageBox.Show(ex.Message);
             }
         }
+        public ICommand cmdEditComputer { get; private set; }
 
+        public void EditComputer()
+        {
+            windowService.openComputerWindow(new ComputerViewModel(SelectedComputer));
+            getComputers();
+        }
+        public ICommand cmdAddComputer { get; private set; }
 
+        public void AddComputer()
+        {
+            windowService.openComputerWindow(new ComputerViewModel());
+            getComputers();
+        }
+
+        public ICommand cmdDeleteComputer { get; private set; }
+
+        public void DeleteComputer()
+        {
+
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this computer?", "Delete Computer", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    using (DBContext db = new DBContext())
+                    {
+                        db.Attach(SelectedComputer);
+                        db.Remove(SelectedComputer);
+                        db.SaveChanges();
+                    }
+                    getComputers();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
         #endregion
 
 

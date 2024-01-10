@@ -10,6 +10,13 @@
   <ItemGroup>
     <None Remove="static\about_us.jpg" />
     <None Remove="static\contact_us.jpg" />
+    <None Remove="static\cpu.jpg" />
+    <None Remove="static\hdd.png" />
+    <None Remove="static\matplata.jpg" />
+    <None Remove="static\powersupply.jpg" />
+    <None Remove="static\ram.jpg" />
+    <None Remove="static\ssd.jpg" />
+    <None Remove="static\videocard.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +36,13 @@
   <ItemGroup>
     <Resource Include="static\about_us.jpg" />
     <Resource Include="static\contact_us.jpg" />
+    <Resource Include="static\cpu.jpg" />
+    <Resource Include="static\hdd.png" />
+    <Resource Include="static\matplata.jpg" />
+    <Resource Include="static\powersupply.jpg" />
+    <Resource Include="static\ram.jpg" />
+    <Resource Include="static\ssd.jpg" />
+    <Resource Include="static\videocard.jpg" />
   </ItemGroup>
 
 </Project>
