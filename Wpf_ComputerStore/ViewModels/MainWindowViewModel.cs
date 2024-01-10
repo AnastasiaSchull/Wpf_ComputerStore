@@ -24,6 +24,7 @@ namespace Wpf_ComputerStore.ViewModels
             getCategoriesList();
             getPeripheralsTypes();
             AddCommand = new RelayCommand((param) => AddPeripheral());
+            DeleteCommand = new RelayCommand((param) => DeletePeripheral(), (param) => SelectedPeripherals != null);
             cmdAddComputerDetail = new RelayCommand((param) => AddComputerDetail());
             cmdEditComputerDetail = new RelayCommand((param) => EditComputerDetail(), (param) => SelectedComputerDetail != null);
             cmdDeleteComputerDetail = new RelayCommand((param) => DeleteComputerDetail(), (param) => SelectedComputerDetail != null);
@@ -226,6 +227,17 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
+        private Peripherals selectedPeripherals;
+
+        public Peripherals SelectedPeripherals
+        {
+            get { return selectedPeripherals; }
+            set
+            {
+                selectedPeripherals = value;
+                NotifyPropertyChanged("SelectedPeripherals");
+            }
+        }
 
         #endregion
 
@@ -246,6 +258,7 @@ namespace Wpf_ComputerStore.ViewModels
         }
 
         public ICommand AddCommand { get; private set; }
+        public ICommand DeleteCommand { get; private set; }
 
         public void AddPeripheral()
         {
@@ -298,6 +311,28 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
+        public void DeletePeripheral()
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to delete this computer detail?", "Delete computer detail", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.No)
+            {
+                return;
+            }
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    db.Attach(SelectedPeripherals);
+                    db.Remove(SelectedPeripherals);
+                    db.SaveChanges();
+                }
+                getPeripherals();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
         #endregion
 
