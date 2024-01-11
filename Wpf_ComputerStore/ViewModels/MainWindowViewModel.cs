@@ -25,6 +25,7 @@ namespace Wpf_ComputerStore.ViewModels
             getPeripheralsTypes();
             AddCommand = new RelayCommand((param) => AddPeripheral());
             DeleteCommand = new RelayCommand((param) => DeletePeripheral(), (param) => SelectedPeripherals != null);
+            EditCommand = new RelayCommand((param) => EditPeripheral(), (param) => SelectedPeripherals != null);
             cmdAddComputerDetail = new RelayCommand((param) => AddComputerDetail());
             cmdEditComputerDetail = new RelayCommand((param) => EditComputerDetail(), (param) => SelectedComputerDetail != null);
             cmdDeleteComputerDetail = new RelayCommand((param) => DeleteComputerDetail(), (param) => SelectedComputerDetail != null);
@@ -265,6 +266,7 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
         public ICommand AddCommand { get; private set; }
+        public ICommand EditCommand { get; private set; }
         public ICommand DeleteCommand { get; private set; }
 
         public void AddPeripheral()
@@ -310,6 +312,38 @@ namespace Wpf_ComputerStore.ViewModels
                         // Зберігаємо зміни в базі даних
                         db.SaveChanges();
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void EditPeripheral()
+        {
+            try
+            {
+                EditPeripheralWindow editPeripheralWindow = new EditPeripheralWindow(SelectedPeripherals);
+                bool? editResult = editPeripheralWindow.ShowDialog();
+
+                if (editResult == true)
+                {
+                    // Оновлюємо властивості виділеної периферії
+                    SelectedPeripherals.Name = editPeripheralWindow.Name;
+                    SelectedPeripherals.PeripheralsType = editPeripheralWindow.PeripheralsType;
+                    SelectedPeripherals.Quantity = editPeripheralWindow.Quantity;
+                    SelectedPeripherals.Price = editPeripheralWindow.Price;
+                    SelectedPeripherals.Description = editPeripheralWindow.Description;
+
+                    using (DBContext db = new DBContext())
+                    {
+                        // Відстежуємо зміни і зберігаємо їх в базі даних
+                        db.Entry(SelectedPeripherals).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                    getPeripherals();
                 }
             }
             catch (Exception ex)
