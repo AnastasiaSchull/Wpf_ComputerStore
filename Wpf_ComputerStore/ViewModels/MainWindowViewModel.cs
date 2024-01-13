@@ -23,6 +23,9 @@ namespace Wpf_ComputerStore.ViewModels
             getComputerDetails();
             getCategoriesList();
             getPeripheralsTypes();
+            cmdAddComputer = new RelayCommand((param) => AddComputer());
+            cmdDeleteComputer = new RelayCommand((param) => DeleteComputer(), (param) => SelectedComputer != null);
+            cmdEditComputer = new RelayCommand((param) => EditComputer(), (param) => SelectedComputer != null);
             AddCommand = new RelayCommand((param) => AddPeripheral());
             DeleteCommand = new RelayCommand((param) => DeletePeripheral(), (param) => SelectedPeripherals != null);
             EditCommand = new RelayCommand((param) => EditPeripheral(), (param) => SelectedPeripherals != null);
