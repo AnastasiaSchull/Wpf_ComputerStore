@@ -4,13 +4,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Wpf_ComputerStore.Dialog_Windows;
 using Wpf_ComputerStore.Models;
 using Wpf_ComputerStore.Services;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Wpf_ComputerStore.ViewModels
 {
@@ -26,6 +29,8 @@ namespace Wpf_ComputerStore.ViewModels
             cmdAddComputer = new RelayCommand((param) => AddComputer());
             cmdDeleteComputer = new RelayCommand((param) => DeleteComputer(), (param) => SelectedComputer != null);
             cmdEditComputer = new RelayCommand((param) => EditComputer(), (param) => SelectedComputer != null);
+            cmdGetComputer = new RelayCommand((param) => getComputers());
+            cmdFindComputer = new RelayCommand((param) => FindComputer());
             AddCommand = new RelayCommand((param) => AddPeripheral());
             DeleteCommand = new RelayCommand((param) => DeletePeripheral(), (param) => SelectedPeripherals != null);
             EditCommand = new RelayCommand((param) => EditPeripheral(), (param) => SelectedPeripherals != null);
@@ -431,7 +436,26 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
-
+        private int selectedFindCriteriaC;
+        public int SelectedFindCriteriaC
+        {
+            get { return selectedFindCriteriaC; }
+            set
+            {
+                selectedFindCriteriaC = value;
+                NotifyPropertyChanged("SelectedFindCriteriaC");
+            }
+        }
+        private string criteriaComputer;
+        public string CriteriaComputer
+        {
+            get { return criteriaComputer; }
+            set
+            {
+                criteriaComputer = value;
+                NotifyPropertyChanged("CriteriaComputer");
+            }
+        }
         private List<Computer> computersList = new List<Computer>();
 
 
@@ -444,6 +468,8 @@ namespace Wpf_ComputerStore.ViewModels
                 NotifyPropertyChanged("ComputersList");
             }
         }
+
+        public ICommand cmdGetComputer { get; private set; }
         public void getComputers()
         {
             try
@@ -451,53 +477,53 @@ namespace Wpf_ComputerStore.ViewModels
                 using (DBContext db = new DBContext())
                 {
                     ComputersList = db.Computers.ToList();
-                    string rams = "";
+                    string res = "";
                     foreach (Computer computer in ComputersList) //костиль бо не працюе лiнива загрузка
                     {
-                        rams += computer.ComputerType.Name;
+                        res += computer.ComputerType.Name;
 
                     }
-                    string rams1 = "";
+                    string res1 = "";
 
                     foreach (Computer computer in ComputersList) //костиль бо не працюе лiнива загрузка
                     {
-                        rams1 += computer.RAM.Name;
+                        res1 += computer.RAM.Name;
 
                     }
-                    string rams2 = "";
+                    string res2 = "";
                     foreach (Computer computer in ComputersList)
                     {
-                        rams2 += computer.Motherboard.Name;
+                        res2 += computer.Motherboard.Name;
 
                     }
-                    string rams3 = "";
+                    string res3 = "";
                     foreach (Computer computer in ComputersList)
                     {
-                        rams3 += computer.CPU.Name;
+                        res3 += computer.CPU.Name;
 
                     }
-                    string rams4 = "";
+                    string res4 = "";
                     foreach (Computer computer in ComputersList)
                     {
-                        rams4 += computer.HardDrive.Name;
+                        res4 += computer.HardDrive.Name;
 
                     }
-                    string rams5 = "";
+                    string res5 = "";
                     foreach (Computer computer in ComputersList)
                     {
-                        rams5 += computer.SDD.Name;
+                        res5 += computer.SDD.Name;
 
                     }
-                    string rams6 = "";
+                    string res6 = "";
                     foreach (Computer computer in ComputersList)
                     {
-                        rams6 += computer.VideoCard.Name;
+                        res6 += computer.VideoCard.Name;
 
                     }
-                    string rams7 = "";
+                    string res7 = "";
                     foreach (Computer computer in ComputersList)
                     {
-                        rams7 += computer.PowerSupply.Name;
+                        res7 += computer.PowerSupply.Name;
 
                     }
 
@@ -548,6 +574,111 @@ namespace Wpf_ComputerStore.ViewModels
                 }
             }
         }
+
+        public ICommand cmdFindComputer { get; private set; }
+
+        public void FindComputer()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    ComputersList = db.Computers.ToList();
+                    switch (SelectedFindCriteriaC)
+                     {
+                        
+                         case 0:
+                             ComputersList = db.Computers.Where(c => c.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
+                             break;
+                        case 1:
+                            ComputersList = db.Computers.Where(c => c.ComputerType.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
+
+                            break;
+                        case 2:
+                            ComputersList = ComputersList.Where(c => c.Motherboard.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
+                            break;
+                        case 3:
+                            ComputersList = ComputersList.Where(c => c.RAM.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
+                            break;
+                        case 4:
+                            ComputersList = ComputersList.Where(c => c.CPU.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
+                            break;
+                        case 5:
+                            ComputersList = ComputersList.Where(c => c.HardDrive.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
+                            break;
+                        case 6:
+                            ComputersList = ComputersList.Where(c => c.SDD.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
+                            break;
+                        case 7:
+                            ComputersList = ComputersList.Where(c => c.VideoCard.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
+                            break;
+                        case 8:
+                            ComputersList = ComputersList.Where(c => c.PowerSupply.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
+                            break;
+                            
+                        case 9:
+                             ComputersList = db.Computers.Where(cd => cd.Price == Int32.Parse(CriteriaComputer)).ToList();
+
+                             break;
+                     }
+                    
+                    string res = "";
+                    foreach (Computer computer in ComputersList) //костиль бо не працюе лiнива загрузка
+                    {
+                        res += computer.ComputerType.Name;
+
+                    }
+                    string res1 = "";
+
+                    foreach (Computer computer in ComputersList) //костиль бо не працюе лiнива загрузка
+                    {
+                        res1 += computer.RAM.Name;
+
+                    }
+                    string res2 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        res2 += computer.Motherboard.Name;
+
+                    }
+                    string res3 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        res3 += computer.CPU.Name;
+
+                    }
+                    string res4 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        res4 += computer.HardDrive.Name;
+
+                    }
+                    string res5 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        res5 += computer.SDD.Name;
+
+                    }
+                    string res6 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        res6 += computer.VideoCard.Name;
+
+                    }
+                    string res7 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        res7 += computer.PowerSupply.Name;
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         #endregion
 
 
@@ -558,5 +689,5 @@ namespace Wpf_ComputerStore.ViewModels
 
 
     }
-       
+
 }
