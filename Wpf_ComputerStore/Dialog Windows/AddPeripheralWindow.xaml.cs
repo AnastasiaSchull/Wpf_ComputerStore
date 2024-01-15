@@ -29,6 +29,7 @@ namespace Wpf_ComputerStore.Dialog_Windows
         public AddPeripheralWindow()
         {
             InitializeComponent();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;//щоб розташувати у центрi діалогове вікно додавання ( редагування) 
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
