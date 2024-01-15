@@ -134,7 +134,7 @@ namespace Wpf_ComputerStore.ViewModels
 
                             break;
                         case 2:
-                            ComputerDetailsList = db.ComputerDetails.Where(cd => cd.Category.Name.ToLower().Equals(CriteriaComputerDetail.ToLower())).ToList();
+                            ComputerDetailsList = db.ComputerDetails.Where(cd => cd.Category.Name.ToLower().Contains(CriteriaComputerDetail.ToLower())).ToList();
 
                             break;
                         case 3:
