@@ -25,6 +25,7 @@ namespace Wpf_ComputerStore.Views
         {
             InitializeComponent();
             DataContext=new MainWindowViewModel();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;//щоб розташувати вікно у центрi 
         }
     }
 }
