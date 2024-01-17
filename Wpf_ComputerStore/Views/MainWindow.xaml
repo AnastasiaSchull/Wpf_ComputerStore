@@ -230,23 +230,33 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="13*"/>
+                        <ColumnDefinition Width="13*"/>
+                        <ColumnDefinition Width="13*"/>
+                        <ColumnDefinition Width="13*"/>
 
                     </Grid.ColumnDefinitions>
 
-
+                    <Label Grid.Row="1" Grid.Column="0" Margin="10,10,10,10" Grid.ColumnSpan="5">Find by:</Label>
+                    <ComboBox Grid.Row="1" Grid.Column="1" Margin="10,10,10,10"  SelectedIndex="{Binding SelectedFindCriteriaPeripheral}">
+                        <ComboBoxItem>Name</ComboBoxItem>
+                        <ComboBoxItem>Description</ComboBoxItem>
+                        <ComboBoxItem>PeripheriaType</ComboBoxItem>
+                        <ComboBoxItem>Quantity</ComboBoxItem>
+                        <ComboBoxItem>Price</ComboBoxItem>
+                    </ComboBox>
+                    <TextBox Grid.Row="1" Grid.Column="2" Margin="10,10,10,10" Text="{Binding CriteriaPeripheral}" />
+                    <Button Grid.Column="3" Grid.Row="1" Margin="10,10,10,10" Content="Find" Command="{Binding FindCommand}"/>
                     <Button Grid.Column="0" Grid.Row="0" Content="Add Peripheral" Margin="10,10,10,10" Command="{Binding AddCommand}"/>
                     <Button Grid.Column="1" Grid.Row="0" Content="Edit Peripheral" Margin="10,10,10,10" Command="{Binding EditCommand}"/>
                     <Button Grid.Column="2" Grid.Row="0" Content="Delete Peripheral" Margin="10,10,10,10" Command="{Binding DeleteCommand}"/>
                     <Button Grid.Column="3" Grid.Row="0" Content="Sale Peripheral" Margin="10,10,10,10" />
-                    <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding PeripheralsList}" SelectedItem="{Binding SelectedPeripherals, Mode=TwoWay}">
+                    <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding PeripheralsList}" SelectedItem="{Binding SelectedPeripherals, Mode=TwoWay}">
                         <ListView.View>
 
                             <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Peripheral Information" >

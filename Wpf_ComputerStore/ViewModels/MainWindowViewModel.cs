@@ -34,6 +34,7 @@ namespace Wpf_ComputerStore.ViewModels
             AddCommand = new RelayCommand((param) => AddPeripheral());
             DeleteCommand = new RelayCommand((param) => DeletePeripheral(), (param) => SelectedPeripherals != null);
             EditCommand = new RelayCommand((param) => EditPeripheral(), (param) => SelectedPeripherals != null);
+            FindCommand = new RelayCommand((param) => FindPeripheral());
             cmdAddComputerDetail = new RelayCommand((param) => AddComputerDetail());
             cmdEditComputerDetail = new RelayCommand((param) => EditComputerDetail(), (param) => SelectedComputerDetail != null);
             cmdDeleteComputerDetail = new RelayCommand((param) => DeleteComputerDetail(), (param) => SelectedComputerDetail != null);
@@ -259,6 +260,29 @@ namespace Wpf_ComputerStore.ViewModels
                 NotifyPropertyChanged("PeripheralsList");
             }
         }
+
+        private int selectedFindCriteriaPeripheral;
+        public int SelectedFindCriteriaPeripheral
+        {
+            get { return selectedFindCriteriaPeripheral; }
+            set
+            {
+                selectedFindCriteriaPeripheral = value;
+                NotifyPropertyChanged("SelectedFindCriteriaPeripheral");
+            }
+        }
+
+        private string criteriaPeripheral;
+        public string CriteriaPeripheral
+        {
+            get { return criteriaPeripheral; }
+            set
+            {
+                criteriaPeripheral = value;
+                NotifyPropertyChanged("CriteriaPeripheral");
+            }
+        }
+
         public void getPeripherals()
         {
             try
@@ -276,6 +300,7 @@ namespace Wpf_ComputerStore.ViewModels
         public ICommand AddCommand { get; private set; }
         public ICommand EditCommand { get; private set; }
         public ICommand DeleteCommand { get; private set; }
+        public ICommand FindCommand { get; private set; }
 
         public void AddPeripheral()
         {
@@ -376,6 +401,49 @@ namespace Wpf_ComputerStore.ViewModels
                     db.SaveChanges();
                 }
                 getPeripherals();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void FindPeripheral()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    List<Peripherals> result = new List<Peripherals>();
+
+                    switch (SelectedFindCriteriaPeripheral)
+                    {
+                        case 0:
+                            result = db.Peripheralss.Where(pr => pr.Name.ToLower().Contains(CriteriaPeripheral.ToLower())).ToList();
+                            break;
+                        case 1:
+                            result = db.Peripheralss.Where(pr => pr.Description.ToLower().Contains(CriteriaPeripheral.ToLower())).ToList();
+                            break;
+                        case 2:
+                            result = db.Peripheralss.Where(pr => pr.PeripheralsType.Name.ToLower().Contains(CriteriaPeripheral.ToLower())).ToList();
+                            break;
+                        case 3:
+                            result = db.Peripheralss.Where(pr => pr.Quantity == Int32.Parse(CriteriaPeripheral)).ToList();
+                            break;
+                        case 4:
+                            result = db.Peripheralss.Where(pr => pr.Price == Int32.Parse(CriteriaPeripheral)).ToList();
+                            break;
+                    }
+
+                    // Створюємо новий об'єкт ObservableCollection на основі результатів запиту
+                    PeripheralsList = new ObservableCollection<Peripherals>(result);
+
+                    string res = "";
+                    foreach (Peripherals peripheral in PeripheralsList)
+                    {
+                        res += peripheral.PeripheralsType.Name;
+                    }
+                }
             }
             catch (Exception ex)
             {
