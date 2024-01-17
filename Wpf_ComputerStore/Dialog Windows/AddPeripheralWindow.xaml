@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:VM="clr-namespace:Wpf_ComputerStore.ViewModels"
         Title="Add Peripheral" Height="300" Width="400">
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <VM:MainWindowViewModel/>
-    </Window.DataContext>
+    </Window.DataContext>-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
