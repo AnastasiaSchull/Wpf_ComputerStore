@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Wpf_ComputerStore.Models
 {
-    public class OrderCart
+    public class ItemForSale
     {
         public int ID { get; set; }
-        public string CustomerName { get; set; }
-        public DateTime Date { get; set; }
-        public virtual List<ItemForSale> Items { get; set; }
-      
+        public int Quantity { get; set; }
+        public virtual Item Item { get; set; }
+        public virtual OrderCart OrderCart { get; set; }
     }
 }

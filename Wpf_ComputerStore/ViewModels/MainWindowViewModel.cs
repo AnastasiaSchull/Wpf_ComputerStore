@@ -1,19 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.Intrinsics.Arm;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using Wpf_ComputerStore.Dialog_Windows;
 using Wpf_ComputerStore.Models;
 using Wpf_ComputerStore.Services;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Wpf_ComputerStore.ViewModels
 {
@@ -40,10 +35,86 @@ namespace Wpf_ComputerStore.ViewModels
             cmdDeleteComputerDetail = new RelayCommand((param) => DeleteComputerDetail(), (param) => SelectedComputerDetail != null);
             cmdGetComputerDetail = new RelayCommand((param)=>getComputerDetails());
             cmdFindComputerDetail = new RelayCommand ((param) => FindComputerDetail());
+
+            cmdSaleComputerDetail = new RelayCommand((param) => SaleComputerDetail(), (param) => SelectedComputerDetail != null);
+            cmdSale = new RelayCommand((param) => Sale(), (param) => !Items.IsNullOrEmpty());
             SelectedFindCriteriaCD = 0;
+            OrderCart = new OrderCart { Items = new List<ItemForSale>() };
             windowService = new WindowService();
         }
+        #region order
+        private OrderCart orderCart;
+        public OrderCart OrderCart
+        {
+            get { return orderCart; }
+            set {
+                orderCart = value;
+                NotifyPropertyChanged("OrderCart");
+            }
+        }
+        public List<ItemForSale> Items
+        {
+            get { return orderCart.Items; }
+            set
+            {
+                orderCart.Items = value;
+                NotifyPropertyChanged("Items");
+            }
+        }
+        public ICommand cmdSaleComputerDetail { get; private set; }
 
+        public void SaleComputerDetail()
+        {
+            if (Items.Where(cd => cd.Item == SelectedComputerDetail).Any())
+            {
+                ItemForSale item = Items.Where(cd => cd.Item.ID == SelectedComputerDetail.ID).First();
+                if (item.Item.Quantity >= item.Quantity + 1)
+                    item.Quantity++;
+                else
+                    MessageBox.Show("not enough computer details in store");
+                
+            }
+            else
+            {
+                
+                Items.Add(new ItemForSale { Item = SelectedComputerDetail, Quantity = 1 });
+            }
+           
+            NotifyPropertyChanged("Items");
+        }
+        public ICommand cmdSale { get; private set; }
+
+        public void Sale()
+        {
+            try { 
+                using(DBContext db = new DBContext())
+                {
+                    double sum = 0;
+                    OrderCart.CustomerName = "Undefined";
+                    OrderCart.Date = DateTime.Now;
+                    string bill = "";
+                    foreach(ItemForSale item in Items)
+                    {                 
+                        db.Attach(item.Item);
+                      
+                        item.Item.Quantity -= item.Quantity;
+                        sum+=item.Quantity*item.Item.Price;
+                        bill += $"{item.Item.Name}\t{item.Quantity}x{item.Item.Price}={item.Item.Price * item.Quantity}\n";
+                    }
+                    db.Add(OrderCart);
+                    db.SaveChanges();
+                    bill += $"Total bill: {sum}";
+                    MessageBox.Show(bill);
+                    OrderCart = new OrderCart { Items = new List<ItemForSale>() };
+                    Items = OrderCart.Items;
+                    getComputerDetails();
+                }
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        #endregion
 
 
         #region computer_detail

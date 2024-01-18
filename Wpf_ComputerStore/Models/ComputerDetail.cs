@@ -9,15 +9,10 @@ using System.Threading.Tasks;
 
 namespace Wpf_ComputerStore.Models
 {
-    public class ComputerDetail
+    public class ComputerDetail:Item
     {
-       
-        public int ID { get; set; }
-        public string Name { get; set; }
       
         public virtual Category Category { get; set; }
-        public int Quantity { get; set; }
-        public double Price { get; set; }
         public string Description { get; set; }
         public virtual ICollection<Computer> Computers { get; set; }
        

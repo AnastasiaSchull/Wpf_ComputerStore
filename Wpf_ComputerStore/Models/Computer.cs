@@ -11,10 +11,9 @@ using Wpf_ComputerStore.Models;
 
 namespace Wpf_ComputerStore.Models
 {
-    public class Computer
+    public class Computer: Item
     {
-        public int ID { get; set; }
-        public string Name { get; set; }     
+   
         public virtual ComputerType ComputerType { get; set; }      
         public virtual List< ComputerDetail> ComputerDetails { get; set; }
         [NotMapped]  // щоб не створювалась колонка в базі даних
@@ -139,7 +138,6 @@ namespace Wpf_ComputerStore.Models
             }
             set { powerSupply = value; }
         }
-        public int Quantity { get; set; }
-        public double Price { get; set; }
+
     }
 }
