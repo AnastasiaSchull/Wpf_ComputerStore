@@ -205,7 +205,7 @@
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Delete Components "/>
                         </Button.ToolTip>
                     </Button>
-                    <Button Grid.Column="4" Grid.Row="0"  Style="{StaticResource ButtonStyle}"  Padding="0" Height="30" Width="30" >
+                    <Button Grid.Column="4" Grid.Row="0"  Style="{StaticResource ButtonStyle}"  Padding="0" Height="30" Width="30" Command="{Binding cmdSaleComputerDetail}" >
                         <Image Source="/static/cart3.png" Height="25"  />
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Sale Components "/>
@@ -213,6 +213,8 @@
                     </Button>
                     <Label Grid.Row="0" Grid.Column="5" Margin="10,30,10,10">Find by:</Label>
                     <ComboBox Grid.Row="0" Grid.Column="6" Padding="0"  Style="{StaticResource ComboBoxStyle}" SelectedIndex="{Binding SelectedFindCriteriaCD}">
+                      
+                    
                         <ComboBoxItem>Name</ComboBoxItem>
                         <ComboBoxItem>Description</ComboBoxItem>
                         <ComboBoxItem>Category</ComboBoxItem>
@@ -363,22 +365,33 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="13*"/>
+                        <ColumnDefinition Width="13*"/>
+                        <ColumnDefinition Width="13*"/>
+                        <ColumnDefinition Width="13*"/>
 
                     </Grid.ColumnDefinitions>
 
+                    <Label Grid.Row="1" Grid.Column="0" Margin="10,10,10,10" Grid.ColumnSpan="5">Find by:</Label>
+                    <ComboBox Grid.Row="1" Grid.Column="1" Margin="10,10,10,10"  SelectedIndex="{Binding SelectedFindCriteriaPeripheral}">
+                        <ComboBoxItem>Name</ComboBoxItem>
+                        <ComboBoxItem>Description</ComboBoxItem>
+                        <ComboBoxItem>PeripheriaType</ComboBoxItem>
+                        <ComboBoxItem>Quantity</ComboBoxItem>
+                        <ComboBoxItem>Price</ComboBoxItem>
+                    </ComboBox>
+                    <TextBox Grid.Row="1" Grid.Column="2" Margin="10,10,10,10" Text="{Binding CriteriaPeripheral}" />
+                    <Button Grid.Column="3" Grid.Row="1" Margin="10,10,10,10" Content="Find" Command="{Binding FindCommand}"/>
                     <Button Grid.Column="0" Grid.Row="0" Content="Add Peripheral" Margin="10,10,10,10" Command="{Binding AddCommand}"/>
                     <Button Grid.Column="1" Grid.Row="0" Content="Edit Peripheral" Margin="10,10,10,10" Command="{Binding EditCommand}"/>
                     <Button Grid.Column="2" Grid.Row="0" Content="Delete Peripheral" Margin="10,10,10,10" Command="{Binding DeleteCommand}"/>
                     <Button Grid.Column="3" Grid.Row="0" Content="Sale Peripheral" Margin="10,10,10,10" />
-                    <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding PeripheralsList}" SelectedItem="{Binding SelectedPeripherals, Mode=TwoWay}">
+                    <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding PeripheralsList}" SelectedItem="{Binding SelectedPeripherals, Mode=TwoWay}">
                         <ListView.View>
                             <GridView AllowsColumnReorder="true" >
                                 <GridView.ColumnHeaderToolTip>
@@ -414,24 +427,25 @@
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="224*"/>
+                        <ColumnDefinition Width="224*"/>
+                        <ColumnDefinition Width="19*"/>
+                        <ColumnDefinition Width="204*"/>
+                        <ColumnDefinition Width="224*"/>
                     </Grid.ColumnDefinitions>
 
 
-                    <Button Grid.Column="1" Grid.Row="0" Content="Sale" Margin="10"/>
-                    <Button Grid.Column="2" Grid.Row="0" Content="Clear" Margin="10"/>
+                    <Button Grid.Column="1" Grid.Row="0" Content="Sale" Margin="10,10,10,10" Command="{Binding cmdSale}"/>
+                    <Button Grid.Column="2" Grid.Row="0" Content="Clear" Margin="10,10,10,10" Grid.ColumnSpan="2"/>
 
-                    <ListView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="10"  BorderThickness="0 2 0 0" HorizontalAlignment="Stretch">
+                    <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding Items}">
 
                         <ListView.View>
 
-                            <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Order Cart Information" >
-                                <GridViewColumn Header=" Name "/>
-                                <GridViewColumn Header=" Quantity "/>
-                                <GridViewColumn Header=" Price "/>
+                            <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Order Cart Information"  >
+                                <GridViewColumn Header=" Name " DisplayMemberBinding="{Binding Path=Item.Name}"/>
+                                <GridViewColumn Header=" Quantity " DisplayMemberBinding="{Binding Path= Quantity}"/>
+                                <GridViewColumn Header=" Price " DisplayMemberBinding="{Binding Path=Item.Price}"/>
                             </GridView>
                         </ListView.View>
 
@@ -486,37 +500,35 @@
                 <Grid HorizontalAlignment="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="110"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Content="About Us" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
-                    <TextBlock Grid.Row="1" Width="500" TextWrapping="Wrap">We are young company! We have a lot of Computer details.In our shop you can buy ready to use computer,  
+                    <TextBlock Grid.Row="1" Width="500" TextWrapping="Wrap" FontSize="16" TextAlignment="Justify">We are young company! We have a lot of Computer details.In our shop you can buy ready to use computer,  
                         any of computer detail,  accessors such as keyboard, headphone, microphone and a lot of others. Our consultants tell you all information that you need. You are always welcome!!!</TextBlock>
-                    <Image Grid.Row="2" Source="/static/about_us.jpg" Margin="0,10,0,10"/>
+                    <Image Grid.Row="2" Source="/static/about_us.jpg" Margin="20
+                           "/>
                 </Grid>
             </TabItem>
             <TabItem Header="Contact us" >
                 <Grid >
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
+
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Contact Us" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
-                    <Label Grid.Row="2" Grid.Column="0"  Content="email:    computer.store@gmail.com" FontSize="20"/>
-                    <Label Grid.Row="3"  Grid.Column="0" Content="telegram: @computer_store" FontSize="20"/>
-                    <Label Grid.Row="4"  Grid.Column="0" Content="phone:    +380676767777" FontSize="20"/>
 
-                    <Image Grid.Row="1"  Grid.Column="1" Grid.RowSpan="5" Source="/static/contact_us.jpg" Margin="0,0,10,0"/>
+                    <Label Grid.Row="0"  Content="Contact Us" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center" />
+                    <Label Grid.Row="1" Grid.Column="0"  Content="email:    computer.store@gmail.com" FontSize="20"  HorizontalAlignment="Center"/>
+                    <Label Grid.Row="2"  Grid.Column="0" Content="telegram: @computer_store" FontSize="20" HorizontalAlignment="Center"/>
+                    <Label Grid.Row="3"  Grid.Column="0" Content="phone:    +380676767777" FontSize="20"  HorizontalAlignment="Center"/>
+
+                    <Image Grid.Row="4" Source="/static/contact_us.jpg" Margin="10,10,10,10" />
                 </Grid>
             </TabItem>
         </TabControl>
