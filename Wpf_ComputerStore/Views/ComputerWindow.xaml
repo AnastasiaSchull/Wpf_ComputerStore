@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_ComputerStore.Views"
         mc:Ignorable="d"
-        Title="ComputerWindow" Height="670" Width="450">
+        Title="ComputerWindow" Height="700" Width="450"
+         FontFamily="{DynamicResource MaterialDesignFont}" Foreground="#6600CC">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -29,24 +30,24 @@
         </Grid.ColumnDefinitions>
 
         <Label Content="Computer" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="20" Margin="5" HorizontalAlignment="Center"></Label>
-        <Label Content="Name" Grid.Row="1" Grid.Column="0"  Margin="5" FontSize="16"></Label>
+        <Label Content="Name" Grid.Row="1" Grid.Column="0" FontSize="16" Margin="5"></Label>
         <TextBox Text ="{Binding Name}" Grid.Row="1" Grid.Column="1" Margin="5"/>
         <Label Content="Computer Type" Grid.Row="2" Grid.Column="0" Margin="5" FontSize="16"></Label>
-        <ComboBox Grid.Row="2" Grid.Column="1" Margin="5" ItemsSource="{Binding ComputerTypes}" SelectedItem="{Binding ComputerType}" IsSynchronizedWithCurrentItem="True"  DisplayMemberPath="Name"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" Margin="5" Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding ComputerTypes}" SelectedItem="{Binding ComputerType}" IsSynchronizedWithCurrentItem="True"  DisplayMemberPath="Name"/>
         <Label Content="RAM" Grid.Row="3" Grid.Column="0"  Margin="5" FontSize="16"></Label>
-        <ComboBox Grid.Row="3" Grid.Column="1" Margin="5" ItemsSource="{Binding RAMs}" SelectedItem="{Binding RAM}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
+        <ComboBox Grid.Row="3" Grid.Column="1" Margin="5" Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding RAMs}" SelectedItem="{Binding RAM}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
         <Label Content="Motherboard" Grid.Row="4" Grid.Column="0" Margin="5" FontSize="16"></Label>
-        <ComboBox Grid.Row="4" Grid.Column="1" Margin="5" ItemsSource="{Binding Motherboards}" SelectedItem="{Binding Motherboard}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
+        <ComboBox Grid.Row="4" Grid.Column="1" Margin="5" Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding Motherboards}" SelectedItem="{Binding Motherboard}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
         <Label Content="CPU" Grid.Row="5" Grid.Column="0" Margin="5" FontSize="16"></Label>
-        <ComboBox Grid.Row="5" Grid.Column="1" Margin="5" ItemsSource="{Binding CPUs}" SelectedItem="{Binding CPU}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
+        <ComboBox Grid.Row="5" Grid.Column="1" Margin="5" Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding CPUs}" SelectedItem="{Binding CPU}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
         <Label Content="Hard Drive" Grid.Row="6" Grid.Column="0" Margin="5" FontSize="16"></Label>
-        <ComboBox Grid.Row="6" Grid.Column="1" Margin="5" ItemsSource="{Binding HardDrives}" SelectedItem="{Binding HardDrive}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
+        <ComboBox Grid.Row="6" Grid.Column="1" Margin="5" Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding HardDrives}" SelectedItem="{Binding HardDrive}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
         <Label Content="SDD" Grid.Row="7" Grid.Column="0" Margin="5" FontSize="16"></Label>
-        <ComboBox Grid.Row="7" Grid.Column="1" Margin="5" ItemsSource="{Binding SDDs}" SelectedItem="{Binding SDD}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
+        <ComboBox Grid.Row="7" Grid.Column="1" Margin="5" Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding SDDs}" SelectedItem="{Binding SDD}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
         <Label Content="Video Card" Grid.Row="8" Grid.Column="0" Margin="5" FontSize="16" ></Label>
-        <ComboBox Grid.Row="8" Grid.Column="1" Margin="5" ItemsSource="{Binding VideoCards}" SelectedItem="{Binding VideoCard}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
+        <ComboBox Grid.Row="8" Grid.Column="1" Margin="5" Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding VideoCards}" SelectedItem="{Binding VideoCard}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
         <Label Content="Power Supply" Grid.Row="9" Grid.Column="0" Margin="5" FontSize="16"></Label>
-        <ComboBox Grid.Row="9" Grid.Column="1" Margin="5" ItemsSource="{Binding PowerSupplys}" SelectedItem="{Binding PowerSupply}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
+        <ComboBox Grid.Row="9" Grid.Column="1" Margin="5" Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding PowerSupplys}" SelectedItem="{Binding PowerSupply}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
         <Label Content="Price" Grid.Row="10" Grid.Column="0" Margin="5" FontSize="16"></Label>
         <TextBox Text="{Binding Price}" Grid.Row="10" Grid.Column="1" Margin="5" />
         <Label Content="Quantity" Grid.Row="11" Grid.Column="0" Margin="5" FontSize="16"></Label>
