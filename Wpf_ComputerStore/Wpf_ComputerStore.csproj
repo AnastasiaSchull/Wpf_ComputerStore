@@ -9,17 +9,25 @@
 
   <ItemGroup>
     <None Remove="static\about_us.jpg" />
+    <None Remove="static\cart3.png" />
     <None Remove="static\contact_us.jpg" />
     <None Remove="static\cpu.jpg" />
     <None Remove="static\hdd.png" />
+    <None Remove="static\house.png" />
+    <None Remove="static\image.png" />
     <None Remove="static\matplata.jpg" />
+    <None Remove="static\pencil.png" />
+    <None Remove="static\plus-circle.png" />
     <None Remove="static\powersupply.jpg" />
     <None Remove="static\ram.jpg" />
+    <None Remove="static\search.png" />
     <None Remove="static\ssd.jpg" />
+    <None Remove="static\trash3.png" />
     <None Remove="static\videocard.jpg" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.14" />
@@ -35,13 +43,20 @@
 
   <ItemGroup>
     <Resource Include="static\about_us.jpg" />
+    <Resource Include="static\cart3.png" />
     <Resource Include="static\contact_us.jpg" />
     <Resource Include="static\cpu.jpg" />
     <Resource Include="static\hdd.png" />
+    <Resource Include="static\house.png" />
+    <Resource Include="static\image.png" />
     <Resource Include="static\matplata.jpg" />
+    <Resource Include="static\pencil.png" />
+    <Resource Include="static\plus-circle.png" />
     <Resource Include="static\powersupply.jpg" />
     <Resource Include="static\ram.jpg" />
+    <Resource Include="static\search.png" />
     <Resource Include="static\ssd.jpg" />
+    <Resource Include="static\trash3.png" />
     <Resource Include="static\videocard.jpg" />
   </ItemGroup>
 
