@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Wpf_ComputerStore"
          xmlns:VM="clr-namespace:Wpf_ComputerStore.ViewModels"
         mc:Ignorable="d"
-         Title="Computer store"  Height="750" Width="1200" 
+      
+         Title="Computer store"  Height="750" Width="1250" 
          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
        TextElement.Foreground="{DynamicResource MaterialDesignBody}" 
      TextElement.FontWeight="Regular"
@@ -28,7 +29,9 @@
         </LinearGradientBrush>
     </Window.Background>
     <Window.Resources>
-       
+        <Style TargetType="ScrollBar">
+            <Setter Property="Background" Value="#BFEEEE"/>
+        </Style>
         <!-- Стиль для всплывающей подсказки -->
         <Style x:Key="ToolTipStyle" TargetType="ToolTip">
             <Setter Property="Foreground" Value="#7861ae"/>
@@ -51,7 +54,7 @@
             <!--<TabItem Header="Computer" >-->
             <TabItem>
                 <TabItem.Header>
-                    <TextBlock Text="Computer" FontSize="18" />
+                    <TextBlock Text="Computer" FontSize="16" />
                 </TabItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -126,7 +129,7 @@
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Find Computer "/>
                         </Button.ToolTip>
                     </Button>
-                    <ListView  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="9" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding ComputersList}"  SelectedItem="{Binding SelectedComputer}">
+                    <ListView ItemContainerStyle="{StaticResource ListViewItemOptionStyle}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="9" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding ComputersList}"  SelectedItem="{Binding SelectedComputer}">
                         <ListView.View>
                             <GridView AllowsColumnReorder="true" >
                                 <GridView.ColumnHeaderToolTip>
@@ -159,7 +162,7 @@
             <!--<TabItem Header="Computer Details">-->
             <TabItem>
                 <TabItem.Header>
-                    <TextBlock Text="Computer Details" FontSize="18" />
+                    <TextBlock Text="Computer Details" FontSize="16" />
                 </TabItem.Header>
                 <Grid >
                     <Grid.RowDefinitions>
@@ -205,7 +208,7 @@
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Delete Components "/>
                         </Button.ToolTip>
                     </Button>
-                    <Button Grid.Column="4" Grid.Row="0"  Style="{StaticResource ButtonStyle}"  Padding="0" Height="30" Width="30" Command="{Binding cmdSaleComputerDetail}" >
+                    <Button Grid.Column="4" Grid.Row="0"  Style="{StaticResource ButtonStyle}"  Padding="0" Height="30" Width="30" Command="{Binding cmdSaleComputerDetail}" ToolTipService.ShowOnDisabled="True"  >
                         <Image Source="/static/cart3.png" Height="25"  />
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Sale Components "/>
@@ -220,14 +223,14 @@
                         <ComboBoxItem>Category</ComboBoxItem>
                         <ComboBoxItem>Number</ComboBoxItem>
                     </ComboBox>
-                    <TextBox Grid.Row="0" Grid.Column="7"  Margin="10,10,10,20" Text="{Binding CriteriaComputerDetail}" ></TextBox>
+                    <TextBox Grid.Row="0" Grid.Column="7"  Margin="10,20,10,20" Text="{Binding CriteriaComputerDetail}" ></TextBox>
                     <Button Grid.Column="9" Grid.Row="0" Command="{Binding cmdFindComputerDetail}"  Padding="0" Height="30" Width="30">
-                        <Image Source="/static/search.png" Height="25"  />
+                        <Image Source="/static/search.png" Height="25" />
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Find Components "/>
                         </Button.ToolTip>
                     </Button>
-                    <ListView Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="10" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding ComputerDetailsList}" SelectedItem="{Binding SelectedComputerDetail}">
+                    <ListView ItemContainerStyle="{StaticResource ListViewItemOptionStyle}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="10" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding ComputerDetailsList}" SelectedItem="{Binding SelectedComputerDetail}">
                         <ListView.View >
                             <GridView AllowsColumnReorder="true" >
                                 <GridView.ColumnHeaderToolTip>
@@ -253,7 +256,7 @@
             <!--<TabItem Header="Category">-->
             <TabItem>
                 <TabItem.Header>
-                    <TextBlock Text="Category" FontSize="18" />
+                    <TextBlock Text="Category" FontSize="16" />
                 </TabItem.Header>
                 <TabControl>
                     <TabItem Header="Motherboard">
@@ -360,38 +363,75 @@
             <!--<TabItem Header="Peripherals">-->
             <TabItem>
                 <TabItem.Header>
-                    <TextBlock Text="Peripherals" FontSize="18" />
+                    <TextBlock Text="Peripherals" FontSize="16" />
                 </TabItem.Header>
                 <Grid>
+                    
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="70" />
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="13*"/>
-                        <ColumnDefinition Width="13*"/>
-                        <ColumnDefinition Width="13*"/>
-                        <ColumnDefinition Width="13*"/>
 
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition  />
+                        <ColumnDefinition Width="60" />
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Row="1" Grid.Column="0" Margin="10,10,10,10" Grid.ColumnSpan="5">Find by:</Label>
-                    <ComboBox Grid.Row="1" Grid.Column="1" Margin="10,10,10,10"  SelectedIndex="{Binding SelectedFindCriteriaPeripheral}">
+                    <Button  Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonStyle}"    Padding="0" Height="30" Width="30" >
+                        <Image Source="/static/house.png" Height="25"  />
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="All Peripherias"/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button  Grid.Row="0" Grid.Column="1" Padding="0" Height="30" Width="30" Style="{StaticResource ButtonStyle}" Command="{Binding AddCommand}">
+                        <Image Source="/static/plus-circle.png" Height="25" />
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}"  Content="Add Peripheral "/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="2" Padding="0" Height="30" Width="30" Style="{StaticResource ButtonStyle}"  Command="{Binding EditCommand}" ToolTipService.ShowOnDisabled="True" >
+                        <Image Source="/static/pencil.png" Height="25"  />
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Edit Peripheral "/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="3" Padding="0" Height="30" Width="30" Style="{StaticResource ButtonStyle}" Command="{Binding DeleteCommand}" ToolTipService.ShowOnDisabled="True" >
+                        <Image Source="/static/trash3.png" Height="25" />
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Delete Peripheral "/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="4" Padding="0" Height="30" Width="30" Style="{StaticResource ButtonStyle}" >
+                        <Image Source="/static/cart3.png" Height="25" />
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Sale Peripheral "/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Label Grid.Row="0" Grid.Column="5" Margin="10,30,10,10">Find by:</Label>
+                        <ComboBox Grid.Row="0" Grid.Column="6" Padding="0" Style="{StaticResource ComboBoxStyle}"  SelectedIndex="{Binding SelectedFindCriteriaPeripheral}">
                         <ComboBoxItem>Name</ComboBoxItem>
                         <ComboBoxItem>Description</ComboBoxItem>
                         <ComboBoxItem>PeripheriaType</ComboBoxItem>
                         <ComboBoxItem>Quantity</ComboBoxItem>
                         <ComboBoxItem>Price</ComboBoxItem>
                     </ComboBox>
-                    <TextBox Grid.Row="1" Grid.Column="2" Margin="10,10,10,10" Text="{Binding CriteriaPeripheral}" />
-                    <Button Grid.Column="3" Grid.Row="1" Margin="10,10,10,10" Content="Find" Command="{Binding FindCommand}"/>
-                    <Button Grid.Column="0" Grid.Row="0" Content="Add Peripheral" Margin="10,10,10,10" Command="{Binding AddCommand}"/>
-                    <Button Grid.Column="1" Grid.Row="0" Content="Edit Peripheral" Margin="10,10,10,10" Command="{Binding EditCommand}"/>
-                    <Button Grid.Column="2" Grid.Row="0" Content="Delete Peripheral" Margin="10,10,10,10" Command="{Binding DeleteCommand}"/>
-                    <Button Grid.Column="3" Grid.Row="0" Content="Sale Peripheral" Margin="10,10,10,10" />
-                    <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding PeripheralsList}" SelectedItem="{Binding SelectedPeripherals, Mode=TwoWay}">
+                    <TextBox Grid.Row="0" Grid.Column="7" Margin="10,20,10,20" Text="{Binding CriteriaPeripheral}" ></TextBox>
+                    <Button Grid.Row="0" Grid.Column="9" Padding="0" Height="30" Width="30" Style="{StaticResource ButtonStyle}" Command="{Binding FindCommand}">
+                        <Image Source="/static/search.png" Height="25" />
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Find Peripheral "/>
+                        </Button.ToolTip>
+                    </Button>
+
+                        <ListView Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="10" ItemContainerStyle="{StaticResource ListViewItemOptionStyle}" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding PeripheralsList}" SelectedItem="{Binding SelectedPeripherals, Mode=TwoWay}">
                         <ListView.View>
                             <GridView AllowsColumnReorder="true" >
                                 <GridView.ColumnHeaderToolTip>
@@ -418,7 +458,7 @@
             <!--<TabItem Header="OrderCart">-->
             <TabItem>
                 <TabItem.Header>
-                    <TextBlock Text="OrderCart" FontSize="18" />
+                    <TextBlock Text="OrderCart" FontSize="16" />
                 </TabItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -456,7 +496,7 @@
             <!--<TabItem Header="Statistics">-->
             <TabItem>
                 <TabItem.Header>
-                    <TextBlock Text="Statistics" FontSize="18" />
+                    <TextBlock Text="Statistics" FontSize="16" />
                 </TabItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -468,8 +508,8 @@
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="200"/>
 
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Grid.Row="0" Margin="10" >
@@ -495,7 +535,7 @@
             <!--<TabItem Header="About us">-->
             <TabItem>
                 <TabItem.Header>
-                    <TextBlock Text="About us" FontSize="18" />
+                    <TextBlock Text="About us" FontSize="16" />
                 </TabItem.Header>
                 <Grid HorizontalAlignment="Center">
                     <Grid.RowDefinitions>
@@ -510,8 +550,11 @@
                            "/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Contact us" >
-                <Grid >
+            <TabItem>
+                    <TabItem.Header>
+                        <TextBlock Text="Contact us" FontSize="16" />
+                    </TabItem.Header>
+                    <Grid >
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50"/>
