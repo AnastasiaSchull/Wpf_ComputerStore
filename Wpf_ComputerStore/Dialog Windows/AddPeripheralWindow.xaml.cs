@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Wpf_ComputerStore.Models;
+using Wpf_ComputerStore.ViewModels;
+using Wpf_ComputerStore.Views;
 
 namespace Wpf_ComputerStore.Dialog_Windows
 {
@@ -26,11 +28,14 @@ namespace Wpf_ComputerStore.Dialog_Windows
         public double Price { get; set; }
         public string? Description { get; set; }
 
+      
         public AddPeripheralWindow()
-        {
+        {       
             InitializeComponent();
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;//щоб розташувати у центрi діалогове вікно додавання ( редагування) 
         }
+
+       
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {

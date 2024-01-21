@@ -22,19 +22,34 @@
                 <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="10"/>
                 <Setter Property="IsEnabled" Value="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
                 <Setter Property="ToolTip" Value="MaterialDesignRaisedDarkButton with Round Corners"/>
-               
-        </Style>
+
+            </Style>
             <Style x:Key="ComboBoxStyle"   TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MaterialDesignFloatingHintComboBox}">
                 <Setter Property="materialDesign:ColorZoneAssist.Mode" Value="SecondaryLight"/>
                 <Setter Property="materialDesign:TextFieldAssist.HasClearButton"  Value="True"/>
                 <Setter Property="materialDesign:TextFieldAssist.UnderlineBrush" Value="#6600CC"/>
                 <Setter Property="Foreground" Value="#6600CC"/>
-               
-            </Style>
-        </ResourceDictionary>
 
-      
-      
+            </Style>
+
+            <Style x:Key="ListViewItemOptionStyle" TargetType="ListViewItem">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="Padding" Value="5"/>
+                <Style.Triggers>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsSelected" Value="True" />
+                        </MultiTrigger.Conditions>
+                        <MultiTrigger.Setters>
+                            <Setter Property="Background" Value="#BCBCE8" />
+                            <Setter Property="BorderBrush" Value="#CCFFE5" />
+                            <Setter Property="Foreground" Value="White"/>
+                        </MultiTrigger.Setters>
+                    </MultiTrigger>
+                </Style.Triggers>
+            </Style>
+
+        </ResourceDictionary>
     </Application.Resources>
    
 </Application>
