@@ -37,12 +37,34 @@ namespace Wpf_ComputerStore.ViewModels
             cmdFindComputerDetail = new RelayCommand ((param) => FindComputerDetail());
 
             cmdSaleComputerDetail = new RelayCommand((param) => SaleComputerDetail(), (param) => SelectedComputerDetail != null);
-            cmdSale = new RelayCommand((param) => Sale(), (param) => !Items.IsNullOrEmpty());
+            cmdSale = new RelayCommand((param) => Sale(), (param) => !Items.IsNullOrEmpty() && !CustomerName.IsNullOrEmpty());
+            cmdPlus = new RelayCommand((param)=>PlusItem(), (param)=> SelectedItem != null);
+            cmdMinus = new RelayCommand((param) => MinusItem(), (param) => SelectedItem != null);
+            cmdClearCart = new RelayCommand((param) => ClearCart(), (param) =>  !Items.IsNullOrEmpty());
+            cmdDeleteFromCart= new RelayCommand((param)=>DeleteFromCart(), (param)=> SelectedItem != null);
             SelectedFindCriteriaCD = 0;
             OrderCart = new OrderCart { Items = new List<ItemForSale>() };
             windowService = new WindowService();
         }
         #region order
+
+        private string customerName;
+        public string CustomerName
+        {
+            get { return customerName; }
+            set { customerName = value;
+                NotifyPropertyChanged("CustomerName");
+            }
+        }
+
+        private int quantity;
+        public int Quantity
+        {
+            get { return quantity; }
+            set { quantity = value;
+                NotifyPropertyChanged("Quantity");
+            }
+        }
         private OrderCart orderCart;
         public OrderCart OrderCart
         {
@@ -52,6 +74,19 @@ namespace Wpf_ComputerStore.ViewModels
                 NotifyPropertyChanged("OrderCart");
             }
         }
+        private ItemForSale selectedItem;
+        public ItemForSale SelectedItem
+        {
+            get { return selectedItem; }
+            set
+            {
+                selectedItem = value;
+                NotifyPropertyChanged("SelectedItem");
+               
+                Quantity = value.Quantity;
+            }
+        }
+
         public List<ItemForSale> Items
         {
             get { return orderCart.Items; }
@@ -79,9 +114,93 @@ namespace Wpf_ComputerStore.ViewModels
                 
                 Items.Add(new ItemForSale { Item = SelectedComputerDetail, Quantity = 1 });
             }
-           
-            NotifyPropertyChanged("Items");
+
+            getItems();
         }
+
+        public ICommand cmdPlus { get; private set; }
+
+        public void PlusItem()
+        {
+               
+                if (SelectedItem.Item.Quantity >= SelectedItem.Quantity + 1)
+                SelectedItem.Quantity++;
+                else
+                    MessageBox.Show("not enough computer details in store");
+            Quantity = SelectedItem.Quantity;
+            getItems();
+        }
+        public ICommand cmdMinus { get; private set; }
+
+        public void MinusItem()
+        {
+           
+            if (SelectedItem.Quantity-1 > 0)
+            {
+                SelectedItem.Quantity--;
+
+                Quantity = SelectedItem.Quantity;
+                
+            }
+            else if(SelectedItem.Quantity - 1 == 0)
+            {
+                MessageBoxResult result= MessageBox.Show("Do you want to delete this item?", "Delete item", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if(result == MessageBoxResult.Yes)
+                {
+                    Items.Remove(SelectedItem);
+                }
+            }
+            else
+                MessageBox.Show("not enough computer details in store");
+            Items = OrderCart.Items;
+            getItems();
+
+
+        }
+
+        public void getItems()
+        {
+            List<ItemForSale> allItems = new List<ItemForSale>();
+            foreach(ItemForSale i in Items)
+            {
+                allItems.Add(i);
+            }
+            Items = allItems;
+            if (SelectedItem != null)
+            {
+                Quantity = SelectedItem.Quantity;
+            }
+            else
+            {
+                Quantity = 0;
+            }
+        }
+        public ICommand cmdClearCart { get; private set; }
+
+        public void ClearCart()
+        {
+           
+                MessageBoxResult result = MessageBox.Show("Do you want to clear order cart?", "Clear cart", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                Items.Clear();
+                }
+            getItems();
+        }
+
+        public ICommand cmdDeleteFromCart { get; private set; }
+
+        public void DeleteFromCart()
+        {
+           
+            MessageBoxResult result = MessageBox.Show("Do you want to delete this item?", "Delete item", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                Items.Remove(SelectedItem);
+            }
+            getItems();
+        }
+
         public ICommand cmdSale { get; private set; }
 
         public void Sale()
@@ -90,9 +209,10 @@ namespace Wpf_ComputerStore.ViewModels
                 using(DBContext db = new DBContext())
                 {
                     double sum = 0;
-                    OrderCart.CustomerName = "Undefined";
+                    OrderCart.CustomerName = CustomerName;
                     OrderCart.Date = DateTime.Now;
-                    string bill = "";
+                    string bill = "Customer Name: "+CustomerName+"\n";
+                    bill += $"Date: {OrderCart.Date}\n";
                     foreach(ItemForSale item in Items)
                     {                 
                         db.Attach(item.Item);
