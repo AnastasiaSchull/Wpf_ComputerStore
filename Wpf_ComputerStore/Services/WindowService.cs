@@ -25,5 +25,11 @@ namespace Wpf_ComputerStore.Services
             ComputerWindow window = new ComputerWindow(model);
             window.ShowDialog();
         }
+
+        public void openPeripheralWindow(BaseViewModel model)
+        {
+            PeripheralWindow window = new PeripheralWindow(model);
+            window.ShowDialog();
+        }
     }
 }

@@ -6,7 +6,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using Wpf_ComputerStore.Dialog_Windows;
 using Wpf_ComputerStore.Models;
 using Wpf_ComputerStore.Services;
 
@@ -30,6 +29,7 @@ namespace Wpf_ComputerStore.ViewModels
             DeleteCommand = new RelayCommand((param) => DeletePeripheral(), (param) => SelectedPeripherals != null);
             EditCommand = new RelayCommand((param) => EditPeripheral(), (param) => SelectedPeripherals != null);
             FindCommand = new RelayCommand((param) => FindPeripheral());
+            GetPeripheralsCommand = new RelayCommand((param) => getPeripherals());
             cmdAddComputerDetail = new RelayCommand((param) => AddComputerDetail());
             cmdEditComputerDetail = new RelayCommand((param) => EditComputerDetail(), (param) => SelectedComputerDetail != null);
             cmdDeleteComputerDetail = new RelayCommand((param) => DeleteComputerDetail(), (param) => SelectedComputerDetail != null);
@@ -480,7 +480,13 @@ namespace Wpf_ComputerStore.ViewModels
             {
                 using (DBContext db = new DBContext())
                 {
-                    PeripheralsList = new ObservableCollection<Peripherals>(db.Peripheralss.Include(p => p.PeripheralsType).ToList());
+                    PeripheralsList = new ObservableCollection<Peripherals>(db.Peripheralss.ToList());
+                    string res = "";
+                    foreach (Peripherals pr in PeripheralsList)
+                    {
+                        res += pr.PeripheralsType.Name;
+
+                    }
                 }
             }
             catch (Exception ex)
@@ -492,88 +498,18 @@ namespace Wpf_ComputerStore.ViewModels
         public ICommand EditCommand { get; private set; }
         public ICommand DeleteCommand { get; private set; }
         public ICommand FindCommand { get; private set; }
+        public ICommand GetPeripheralsCommand { get; private set; }
 
         public void AddPeripheral()
         {
-            try
-            {
-                var addPeripheralWindow = new AddPeripheralWindow();
-                var result = addPeripheralWindow.ShowDialog();
-
-                if (result == true)
-                {
-                    string? Name = addPeripheralWindow.Name;
-                    PeripheralsType peripheralsType = addPeripheralWindow.PeripheralsType;
-                    int Quantity = addPeripheralWindow.Quantity;
-                    double Price = addPeripheralWindow.Price;
-                    string? Description = addPeripheralWindow.Description;
-
-                    if (string.IsNullOrEmpty(Name) || Quantity <= 0 || Price <= 0)
-                    {
-                        MessageBox.Show("Please fill in all required fields (Name, Quantity, Price).");
-                        return;
-                    }
-
-                    // Створюємо новий об'єкт Peripherals
-                    var newPeripheral = new Peripherals
-                    {
-                        Name = Name,
-                        PeripheralsType = peripheralsType,
-                        Quantity = Quantity,
-                        Price = Price,
-                        Description = Description
-                    };
-
-                    // Додаємо новий об'єкт до списку
-                    PeripheralsList.Add(newPeripheral);
-
-                    // Отримуємо контекст бази даних
-                    using (DBContext db = new DBContext())
-                    {
-                        // Додаємо новий об'єкт до контексту
-                        db.Peripheralss.Add(newPeripheral);
-
-                        // Зберігаємо зміни в базі даних
-                        db.SaveChanges();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            windowService.openPeripheralWindow(new PeripheralViewModel());
+            getPeripherals();
         }
 
         public void EditPeripheral()
         {
-            try
-            {
-                EditPeripheralWindow editPeripheralWindow = new EditPeripheralWindow(SelectedPeripherals);
-                bool? editResult = editPeripheralWindow.ShowDialog();
-
-                if (editResult == true)
-                {
-                    // Оновлюємо властивості виділеної периферії
-                    SelectedPeripherals.Name = editPeripheralWindow.Name;
-                    SelectedPeripherals.PeripheralsType = editPeripheralWindow.PeripheralsType;
-                    SelectedPeripherals.Quantity = editPeripheralWindow.Quantity;
-                    SelectedPeripherals.Price = editPeripheralWindow.Price;
-                    SelectedPeripherals.Description = editPeripheralWindow.Description;
-
-                    using (DBContext db = new DBContext())
-                    {
-                        // Відстежуємо зміни і зберігаємо їх в базі даних
-                        db.Entry(SelectedPeripherals).State = EntityState.Modified;
-                        db.SaveChanges();
-                    }
-
-                    getPeripherals();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            windowService.openPeripheralWindow(new PeripheralViewModel(SelectedPeripherals));
+            getPeripherals();
         }
 
         public void DeletePeripheral()
