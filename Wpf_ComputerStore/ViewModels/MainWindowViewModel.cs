@@ -14,29 +14,30 @@ namespace Wpf_ComputerStore.ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
     {
-        public MainWindowViewModel()
+        public bool IsAdmin { get; set; }
+        public MainWindowViewModel(bool isAdmin)
         {
+            IsAdmin = isAdmin;
             getComputers();
             getPeripherals();
             getComputerDetails();
             getCategoriesList();
             getPeripheralsTypes();
-            cmdAddComputer = new RelayCommand((param) => AddComputer());
-            cmdDeleteComputer = new RelayCommand((param) => DeleteComputer(), (param) => SelectedComputer != null);
-            cmdEditComputer = new RelayCommand((param) => EditComputer(), (param) => SelectedComputer != null);
+            cmdAddComputer = new RelayCommand((param) => AddComputer(),(param) => IsAdmin );// щоб тільки адмін міг додати комп'ютер
+            cmdDeleteComputer = new RelayCommand((param) => DeleteComputer(), (param) => SelectedComputer != null && IsAdmin );
+            cmdEditComputer = new RelayCommand((param) => EditComputer(), (param) => SelectedComputer != null && IsAdmin);
             cmdGetComputer = new RelayCommand((param) => getComputers());
             cmdFindComputer = new RelayCommand((param) => FindComputer());
-            AddCommand = new RelayCommand((param) => AddPeripheral());
-            DeleteCommand = new RelayCommand((param) => DeletePeripheral(), (param) => SelectedPeripherals != null);
-            EditCommand = new RelayCommand((param) => EditPeripheral(), (param) => SelectedPeripherals != null);
+            AddCommand = new RelayCommand((param) => AddPeripheral(), (param) => IsAdmin);
+            DeleteCommand = new RelayCommand((param) => DeletePeripheral(), (param) => SelectedPeripherals != null && IsAdmin);
+            EditCommand = new RelayCommand((param) => EditPeripheral(), (param) => SelectedPeripherals != null && IsAdmin);
             FindCommand = new RelayCommand((param) => FindPeripheral());
-            cmdAddComputerDetail = new RelayCommand((param) => AddComputerDetail());
-            cmdEditComputerDetail = new RelayCommand((param) => EditComputerDetail(), (param) => SelectedComputerDetail != null);
-            cmdDeleteComputerDetail = new RelayCommand((param) => DeleteComputerDetail(), (param) => SelectedComputerDetail != null);
+            cmdAddComputerDetail = new RelayCommand((param) => AddComputerDetail(), (param) => IsAdmin);
+            cmdEditComputerDetail = new RelayCommand((param) => EditComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
+            cmdDeleteComputerDetail = new RelayCommand((param) => DeleteComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
             cmdGetComputerDetail = new RelayCommand((param)=>getComputerDetails());
             cmdFindComputerDetail = new RelayCommand ((param) => FindComputerDetail());
-
-            cmdSaleComputerDetail = new RelayCommand((param) => SaleComputerDetail(), (param) => SelectedComputerDetail != null);
+            cmdSaleComputerDetail = new RelayCommand((param) => SaleComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
             cmdSale = new RelayCommand((param) => Sale(), (param) => !Items.IsNullOrEmpty());
             SelectedFindCriteriaCD = 0;
             OrderCart = new OrderCart { Items = new List<ItemForSale>() };
