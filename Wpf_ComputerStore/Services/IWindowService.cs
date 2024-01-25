@@ -13,5 +13,7 @@ namespace Wpf_ComputerStore.Services
         void openMainWindow(BaseViewModel model);
         void openComputerWindow(BaseViewModel model);
         void openPasswordWindow(BaseViewModel model);
+        void openPeripheralWindow(BaseViewModel model);
+
     }
 }

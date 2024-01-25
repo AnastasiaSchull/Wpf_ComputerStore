@@ -22,6 +22,7 @@ namespace Wpf_ComputerStore.Services
            MainWindow window = new MainWindow(model);   
             window.ShowDialog();
         }
+        
         public void openComputerWindow(BaseViewModel model)
         {
             ComputerWindow window = new ComputerWindow(model);
@@ -30,7 +31,13 @@ namespace Wpf_ComputerStore.Services
 
          public void openPasswordWindow(BaseViewModel model)
         {
-            Password window = new Password(model);          
+            Password window = new Password(model);                   
+            window.ShowDialog();
+        }
+        
+        public void openPeripheralWindow(BaseViewModel model)
+        {
+            PeripheralWindow window = new PeripheralWindow(model);
             window.ShowDialog();
         }
     }

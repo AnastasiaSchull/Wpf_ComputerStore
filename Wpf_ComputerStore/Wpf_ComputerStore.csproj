@@ -12,6 +12,7 @@
     <None Remove="static\cart3.png" />
     <None Remove="static\contact_us.jpg" />
     <None Remove="static\cpu.jpg" />
+    <None Remove="static\dash.png" />
     <None Remove="static\hdd.png" />
     <None Remove="static\house.png" />
     <None Remove="static\image.png" />
@@ -24,6 +25,7 @@
     <None Remove="static\ssd.jpg" />
     <None Remove="static\trash3.png" />
     <None Remove="static\videocard.jpg" />
+    <None Remove="static\x.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,6 +49,7 @@
     <Resource Include="static\cart3.png" />
     <Resource Include="static\contact_us.jpg" />
     <Resource Include="static\cpu.jpg" />
+    <Resource Include="static\dash.png" />
     <Resource Include="static\hdd.png" />
     <Resource Include="static\house.png" />
     <Resource Include="static\image.png" />
@@ -59,6 +62,7 @@
     <Resource Include="static\ssd.jpg" />
     <Resource Include="static\trash3.png" />
     <Resource Include="static\videocard.jpg" />
+    <Resource Include="static\x.png" />
   </ItemGroup>
 
 </Project>
