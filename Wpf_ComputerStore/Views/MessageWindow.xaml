@@ -1,0 +1,44 @@
+﻿<Window x:Class="Wpf_ComputerStore.Views.MessageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_ComputerStore.Views"
+        mc:Ignorable="d"
+        Title="" Height="200" Width="600"
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}" 
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="30"        
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{DynamicResource MaterialDesignFont}"  Foreground="#6600CC" ResizeMode="NoResize" >
+
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Black"/>
+            <GradientStop Color="#FFCADDFA" Offset="1"/>
+            <GradientStop Color="#FFB5B5D2" Offset="0.997"/>
+            <GradientStop Color="#FF0B0C0E"/>
+            <GradientStop Color="#FF5A6270"/>
+            <GradientStop Color="#FF8490A4"/>
+            <GradientStop Color="White"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Label Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"  >
+            Log in as administrator?
+        </Label>
+        <Button   Grid.Row="1" Grid.Column="0" Style="{StaticResource ButtonStyle}" Margin ="25 0 0 0"  Width="200" Command="{Binding cmdYes}" >Yes</Button>
+        <Button   Grid.Row="1" Grid.Column="1" Style="{StaticResource ButtonStyle}" Margin ="0 0 25 0 " Width="200" Command="{Binding cmdNo}" >No</Button>
+    </Grid>
+</Window>
