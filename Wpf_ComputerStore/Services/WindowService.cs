@@ -18,14 +18,23 @@ namespace Wpf_ComputerStore.Services
 
         public void openMainWindow(BaseViewModel model)
         {
-            throw new NotImplementedException();
+           // throw new NotImplementedException();
+           MainWindow window = new MainWindow(model);   
+            window.ShowDialog();
         }
+        
         public void openComputerWindow(BaseViewModel model)
         {
             ComputerWindow window = new ComputerWindow(model);
             window.ShowDialog();
         }
 
+         public void openPasswordWindow(BaseViewModel model)
+        {
+            Password window = new Password(model);                   
+            window.ShowDialog();
+        }
+        
         public void openPeripheralWindow(BaseViewModel model)
         {
             PeripheralWindow window = new PeripheralWindow(model);
