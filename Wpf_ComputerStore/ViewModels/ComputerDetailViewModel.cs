@@ -17,7 +17,7 @@ namespace Wpf_ComputerStore.ViewModels
         public ComputerDetailViewModel()
         {
             getCategories();
-            Category = Categories[0];
+            Category = Categories[0];        
             cmdAddComputerDetail = new RelayCommand((param) => AddComputerDetail(), (param) => CanExecute);
 
         }

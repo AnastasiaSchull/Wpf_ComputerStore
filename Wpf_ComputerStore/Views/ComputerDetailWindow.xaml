@@ -34,10 +34,10 @@
         </ComboBox>
 
         <Label Content="Price:" Grid.Row="3" Grid.Column="0" Margin="5"/>
-        <TextBox Text="{Binding Price}" Grid.Row="3" Grid.Column="1" Margin="5"/>
+        <TextBox Text="{Binding Price}" Grid.Row="3" Grid.Column="1" Margin="5" GotFocus="TextBox_GotFocus"/>
 
         <Label Content="Quantity:" Grid.Row="4" Grid.Column="0" Margin="5"/>
-        <TextBox Text="{Binding Quantity}" Grid.Row="4" Grid.Column="1" Margin="5"/>
+        <TextBox Text="{Binding Quantity}" Grid.Row="4" Grid.Column="1" Margin="5" GotFocus="TextBox_GotFocus"/>
 
         <Label Content="Description:" Grid.Row="5" Grid.Column="0" Margin="5"/>
         <TextBox Text="{Binding Description}" Grid.Row="5" Grid.Column="1" Margin="5"/>
