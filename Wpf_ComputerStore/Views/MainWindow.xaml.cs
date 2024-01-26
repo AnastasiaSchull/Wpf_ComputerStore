@@ -27,5 +27,9 @@ namespace Wpf_ComputerStore.Views
             DataContext= model;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;//щоб розташувати вікно у центрi 
         }
+        public void CloseWindow(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:Wpf_ComputerStore.Views"
         mc:Ignorable="d"
         Title="ComputerWindow" Height="700" Width="450"
-         FontFamily="{DynamicResource MaterialDesignFont}" Foreground="#6600CC">
+        Icon = "/Wpf_ComputerStore;component/static/comp.jpg"
+        FontFamily="{DynamicResource MaterialDesignFont}" Foreground="#6600CC">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>

@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_ComputerStore.Views"
         mc:Ignorable="d"
-        Title="PeripheralWindow" Height="440" Width="320"
+        Title="PeripheralWindow" Height="440" Width="320" 
+        Icon = "/Wpf_ComputerStore;component/static/comp.jpg"
         FontFamily="{DynamicResource MaterialDesignFont}" Foreground="#6600CC">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>

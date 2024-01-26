@@ -27,25 +27,20 @@ namespace Wpf_ComputerStore.ViewModels
             cmdEditComputer = new RelayCommand((param) => EditComputer(), (param) => SelectedComputer != null && IsAdmin);
             cmdGetComputer = new RelayCommand((param) => getComputers());
             cmdFindComputer = new RelayCommand((param) => FindComputer());
+           
             AddCommand = new RelayCommand((param) => AddPeripheral(), (param) => IsAdmin);
             DeleteCommand = new RelayCommand((param) => DeletePeripheral(), (param) => SelectedPeripherals != null && IsAdmin);
             EditCommand = new RelayCommand((param) => EditPeripheral(), (param) => SelectedPeripherals != null && IsAdmin);
+            GetPeripheralsCommand = new RelayCommand((param) => getPeripherals());
             FindCommand = new RelayCommand((param) => FindPeripheral());
 
             cmdAddComputerDetail = new RelayCommand((param) => AddComputerDetail(), (param) => IsAdmin);
             cmdEditComputerDetail = new RelayCommand((param) => EditComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
             cmdDeleteComputerDetail = new RelayCommand((param) => DeleteComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
-            cmdGetComputerDetail = new RelayCommand((param)=>getComputerDetails());
+            cmdGetComputerDetail = new RelayCommand((param)=> getComputerDetails());
             cmdFindComputerDetail = new RelayCommand ((param) => FindComputerDetail());
             cmdSaleComputerDetail = new RelayCommand((param) => SaleComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
             cmdSale = new RelayCommand((param) => Sale(), (param) => !Items.IsNullOrEmpty());
-
-            GetPeripheralsCommand = new RelayCommand((param) => getPeripherals());
-            cmdAddComputerDetail = new RelayCommand((param) => AddComputerDetail());
-            cmdEditComputerDetail = new RelayCommand((param) => EditComputerDetail(), (param) => SelectedComputerDetail != null);
-            cmdDeleteComputerDetail = new RelayCommand((param) => DeleteComputerDetail(), (param) => SelectedComputerDetail != null);
-            cmdGetComputerDetail = new RelayCommand((param)=>getComputerDetails());
-            cmdFindComputerDetail = new RelayCommand ((param) => FindComputerDetail());
 
             cmdSaleComputerDetail = new RelayCommand((param) => SaleComputerDetail(), (param) => SelectedComputerDetail != null);
             cmdSale = new RelayCommand((param) => Sale(), (param) => !Items.IsNullOrEmpty() && !CustomerName.IsNullOrEmpty());

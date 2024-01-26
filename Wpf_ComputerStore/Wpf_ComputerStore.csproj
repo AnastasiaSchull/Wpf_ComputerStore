@@ -10,6 +10,7 @@
   <ItemGroup>
     <None Remove="static\about_us.jpg" />
     <None Remove="static\cart3.png" />
+    <None Remove="static\comp.jpg" />
     <None Remove="static\contact_us.jpg" />
     <None Remove="static\cpu.jpg" />
     <None Remove="static\dash.png" />
@@ -47,6 +48,7 @@
   <ItemGroup>
     <Resource Include="static\about_us.jpg" />
     <Resource Include="static\cart3.png" />
+    <Resource Include="static\comp.jpg" />
     <Resource Include="static\contact_us.jpg" />
     <Resource Include="static\cpu.jpg" />
     <Resource Include="static\dash.png" />

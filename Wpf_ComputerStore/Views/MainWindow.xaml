@@ -7,14 +7,16 @@
         xmlns:VM="clr-namespace:Wpf_ComputerStore.ViewModels"
         mc:Ignorable="d"     
         Title="Computer store"  Height="750" Width="1250" 
-        
-     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-     TextElement.Foreground="{DynamicResource MaterialDesignBody}" 
-     TextElement.FontWeight="Regular"
-     TextElement.FontSize="14"        
-     TextOptions.TextFormattingMode="Ideal"
-     TextOptions.TextRenderingMode="Auto"
-     FontFamily="{DynamicResource MaterialDesignFont}"  Foreground="#6600CC" > <!--330066-->
+        Icon = "/Wpf_ComputerStore;component/static/comp.jpg"
+
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}" 
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="14"        
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{DynamicResource MaterialDesignFont}"  Foreground="#6600CC" >
+    
     <!--Налаштування з сайту materialdesigninxaml 10-16 рядок-->
 
     <Window.Background>
@@ -28,10 +30,13 @@
             <GradientStop Color="White"/>
         </LinearGradientBrush>
     </Window.Background>
+ 
     <Window.Resources>
+   
         <Style TargetType="ScrollBar">
             <Setter Property="Background" Value="#BFEEEE"/>
         </Style>
+        
         <!-- Стиль для всплывающей подсказки -->
         <Style x:Key="ToolTipStyle" TargetType="ToolTip">
             <Setter Property="Foreground" Value="#7861ae"/>
@@ -47,10 +52,9 @@
             </Setter>
         </Style>
     </Window.Resources>
-   
 
-    <Grid>
-        <TabControl >
+    <Grid >
+            <TabControl >
             <!--<TabItem Header="Computer" >-->
             <TabItem>
                 <TabItem.Header>
@@ -462,7 +466,7 @@
                 </TabItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="150"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
@@ -609,8 +613,8 @@
                 </Grid>
             </TabItem>
         </TabControl>
-       
-    </Grid>
+        </Grid>
+   
 </Window>
 
 
