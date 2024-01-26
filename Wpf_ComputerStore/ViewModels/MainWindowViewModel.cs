@@ -27,7 +27,8 @@ namespace Wpf_ComputerStore.ViewModels
             cmdEditComputer = new RelayCommand((param) => EditComputer(), (param) => SelectedComputer != null && IsAdmin);
             cmdGetComputer = new RelayCommand((param) => getComputers());
             cmdFindComputer = new RelayCommand((param) => FindComputer());
-           
+            cmdSaleComputer = new RelayCommand((param) => SaleComputer(), (param) => SelectedComputer != null && IsAdmin);          
+
             AddCommand = new RelayCommand((param) => AddPeripheral(), (param) => IsAdmin);
             DeleteCommand = new RelayCommand((param) => DeletePeripheral(), (param) => SelectedPeripherals != null && IsAdmin);
             EditCommand = new RelayCommand((param) => EditPeripheral(), (param) => SelectedPeripherals != null && IsAdmin);
@@ -39,10 +40,8 @@ namespace Wpf_ComputerStore.ViewModels
             cmdDeleteComputerDetail = new RelayCommand((param) => DeleteComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
             cmdGetComputerDetail = new RelayCommand((param)=> getComputerDetails());
             cmdFindComputerDetail = new RelayCommand ((param) => FindComputerDetail());
-            cmdSaleComputerDetail = new RelayCommand((param) => SaleComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
-            cmdSale = new RelayCommand((param) => Sale(), (param) => !Items.IsNullOrEmpty());
-
-            cmdSaleComputerDetail = new RelayCommand((param) => SaleComputerDetail(), (param) => SelectedComputerDetail != null);
+            cmdSaleComputerDetail = new RelayCommand((param) => SaleComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);           
+           
             cmdSale = new RelayCommand((param) => Sale(), (param) => !Items.IsNullOrEmpty() && !CustomerName.IsNullOrEmpty());
             cmdPlus = new RelayCommand((param)=>PlusItem(), (param)=> SelectedItem != null);
             cmdMinus = new RelayCommand((param) => MinusItem(), (param) => SelectedItem != null);
@@ -125,6 +124,28 @@ namespace Wpf_ComputerStore.ViewModels
             getItems();
         }
 
+
+        public ICommand cmdSaleComputer { get; private set; }
+
+        public void SaleComputer()
+        {
+            if (Items.Where(cd => cd.Item == SelectedComputer).Any())
+            {
+                ItemForSale item = Items.Where(cd => cd.Item.ID == SelectedComputer.ID).First();
+                if (item.Item.Quantity >= item.Quantity + 1)
+                    item.Quantity++;
+                else
+                    MessageBox.Show("not enough computers in store");
+
+            }
+            else
+            {
+
+                Items.Add(new ItemForSale { Item = SelectedComputer, Quantity = 1 });
+            }
+
+            getItems();
+        }
         public ICommand cmdPlus { get; private set; }
 
         public void PlusItem()
@@ -133,7 +154,7 @@ namespace Wpf_ComputerStore.ViewModels
                 if (SelectedItem.Item.Quantity >= SelectedItem.Quantity + 1)
                 SelectedItem.Quantity++;
                 else
-                    MessageBox.Show("not enough computer details in store");
+                    MessageBox.Show("not enough items in store");
             Quantity = SelectedItem.Quantity;
             getItems();
         }
@@ -158,7 +179,7 @@ namespace Wpf_ComputerStore.ViewModels
                 }
             }
             else
-                MessageBox.Show("not enough computer details in store");
+                MessageBox.Show("not enough items in store");
             Items = OrderCart.Items;
             getItems();
 
@@ -235,6 +256,8 @@ namespace Wpf_ComputerStore.ViewModels
                     OrderCart = new OrderCart { Items = new List<ItemForSale>() };
                     Items = OrderCart.Items;
                     getComputerDetails();
+                    getComputers();
+                    getPeripherals();
                 }
             }catch(Exception ex)
             {
