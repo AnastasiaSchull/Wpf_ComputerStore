@@ -20,13 +20,16 @@ namespace Wpf_ComputerStore.Views
     /// </summary>
     public partial class Password : Window
     {
-        public Password(BaseViewModel model)
+        public Password(BaseViewModel vm)
         {
-            DataContext = model;
+            DataContext = vm;
+            (vm as PasswordViewModel).CloseAction = new Action(() => this.Close());//iнiцiалiзуэмо делегат, щоб закривалося саме це вiкно
             InitializeComponent();
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
+           
         }
+
+      
 
         //властивість Pass в ViewModel буде оновлюватися при кожній зміні вмісту PasswordBox
         private void MyPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
@@ -36,9 +39,10 @@ namespace Wpf_ComputerStore.Views
             if (DataContext is PasswordViewModel viewModel)
             {
                 viewModel.Pass = passwordBox.Password;
+               
             }
            
         }
-      
+     
     }
 }

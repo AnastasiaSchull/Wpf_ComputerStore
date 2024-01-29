@@ -10,6 +10,7 @@ namespace Wpf_ComputerStore.Services
 {
     public class WindowService : IWindowService
     {
+       
         public void openComputerDetailWindow(BaseViewModel model)
         {
             ComputerDetailWindow window = new ComputerDetailWindow(model);
@@ -20,7 +21,7 @@ namespace Wpf_ComputerStore.Services
         {
            // throw new NotImplementedException();
            MainWindow window = new MainWindow(model);   
-            window.ShowDialog();
+            window.Show();// щоб вікно яке було перед тим мало змогу закритись, а не чекало коли відпрацює MainWindow
         }
         
         public void openComputerWindow(BaseViewModel model)
@@ -32,13 +33,13 @@ namespace Wpf_ComputerStore.Services
          public void openPasswordWindow(BaseViewModel model)
         {
             Password window = new Password(model);                   
-            window.ShowDialog();
+            window.Show();// щоб вікно яке було перед тим мало змогу закритись, а не чекало коли відпрацює MainWindow
         }
         
         public void openPeripheralWindow(BaseViewModel model)
         {
             PeripheralWindow window = new PeripheralWindow(model);
-            window.ShowDialog();
+            window.ShowDialog();          
         }
     }
 }

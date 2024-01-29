@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Wpf_ComputerStore.Services;
 
@@ -10,7 +11,7 @@ namespace Wpf_ComputerStore.ViewModels
 {
     public class MessageViewModel: BaseViewModel
     {
-
+        public Action CloseAction { get; set; }//дiя для закриття вiкна
         public MessageViewModel() 
         {
             windowService = new WindowService();
@@ -22,6 +23,7 @@ namespace Wpf_ComputerStore.ViewModels
         public void clickYes()
         {
             windowService.openPasswordWindow(new PasswordViewModel());
+            CloseAction();
         }
 
         public ICommand cmdNo {get; private set; }
@@ -29,6 +31,7 @@ namespace Wpf_ComputerStore.ViewModels
         public void clickNo()
         {
             windowService.openMainWindow(new MainWindowViewModel(false));
+            CloseAction();
         }
 
     }

@@ -23,8 +23,14 @@ namespace Wpf_ComputerStore.Views
         public MessageWindow()
         {
             InitializeComponent();
-            DataContext = new MessageViewModel();
-            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            MessageViewModel vm = new MessageViewModel();
+            DataContext = vm;
+           vm.CloseAction = new Action(() => this.Close());//iнiцiалiзуэмо делегат, щоб закривалося саме це вiкно
+
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;           
         }
+
+       
     }
+   
 }
