@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,6 +14,7 @@ namespace Wpf_ComputerStore.ViewModels
 {
    public class PasswordViewModel: BaseViewModel
     {
+        public Action CloseAction { get; set; }
         public PasswordViewModel() 
         {
             Pass = "";
@@ -26,6 +28,7 @@ namespace Wpf_ComputerStore.ViewModels
             if(Pass.Equals("1234"))
             {
                 windowService.openMainWindow(new MainWindowViewModel(true));
+                CloseAction();
             }
             else
             {

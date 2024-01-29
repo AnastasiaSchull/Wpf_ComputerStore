@@ -14,6 +14,7 @@ namespace Wpf_ComputerStore.ViewModels
     public class MainWindowViewModel : BaseViewModel
     {
         public bool IsAdmin { get; set; }
+       
         public MainWindowViewModel(bool isAdmin)
         {
             IsAdmin = isAdmin;
@@ -341,6 +342,12 @@ namespace Wpf_ComputerStore.ViewModels
             {
                 using (DBContext db = new DBContext())
                 {
+                    if (string.IsNullOrWhiteSpace(CriteriaComputerDetail))
+                    {
+                        MessageBox.Show("Please enter a search criteria!");
+                        return;
+                    }
+
                     switch (SelectedFindCriteriaCD)
                     {
                         case 0:
@@ -369,7 +376,7 @@ namespace Wpf_ComputerStore.ViewModels
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);            
             }
         }
 
@@ -565,6 +572,12 @@ namespace Wpf_ComputerStore.ViewModels
                 using (DBContext db = new DBContext())
                 {
                     List<Peripherals> result = new List<Peripherals>();
+
+                    if (string.IsNullOrWhiteSpace(CriteriaPeripheral))
+                    {
+                        MessageBox.Show("Please enter a search criteria!");
+                        return;
+                    }
 
                     switch (SelectedFindCriteriaPeripheral)
                     {
@@ -795,6 +808,13 @@ namespace Wpf_ComputerStore.ViewModels
                 using (DBContext db = new DBContext())
                 {
                     ComputersList = db.Computers.ToList();
+
+                    if (string.IsNullOrWhiteSpace(CriteriaComputer))
+                    {
+                        MessageBox.Show("Please enter a search criteria!");
+                        return;
+                    }
+
                     switch (SelectedFindCriteriaC)
                      {
                         
