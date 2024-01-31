@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:Wpf_ComputerStore.Views"
         mc:Ignorable="d"
         Title="ComputerWindow" Height="700" Width="450"
-         FontFamily="{DynamicResource MaterialDesignFont}" Foreground="#6600CC">
+        Icon = "/Wpf_ComputerStore;component/static/comp.jpg"
+        FontFamily="{DynamicResource MaterialDesignFont}" Foreground="#6600CC">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -49,9 +51,9 @@
         <Label Content="Power Supply" Grid.Row="9" Grid.Column="0" Margin="5" FontSize="16"></Label>
         <ComboBox Grid.Row="9" Grid.Column="1" Margin="5" Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding PowerSupplys}" SelectedItem="{Binding PowerSupply}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
         <Label Content="Price" Grid.Row="10" Grid.Column="0" Margin="5" FontSize="16"></Label>
-        <TextBox Text="{Binding Price}" Grid.Row="10" Grid.Column="1" Margin="5" />
+        <TextBox Text="{Binding Price}" Grid.Row="10" Grid.Column="1" Margin="5" GotFocus="TextBox_GotFocus" />
         <Label Content="Quantity" Grid.Row="11" Grid.Column="0" Margin="5" FontSize="16"></Label>
-        <TextBox Text="{Binding Quantity}" Grid.Row="11" Grid.Column="1" Margin="5"/>
+        <TextBox Text="{Binding Quantity}" Grid.Row="11" Grid.Column="1" Margin="5" GotFocus="TextBox_GotFocus"/>
         <Button Grid.Row="12" Grid.Column="0" Content="Save" Margin="5" FontSize="18" Command="{Binding cmdAddComputer}" Click="CloseWindow"></Button>
         <Button Grid.Row="12" Grid.Column="1" Content="Cancel" Margin="5" FontSize="18" Click="CloseWindow"></Button>
     </Grid>

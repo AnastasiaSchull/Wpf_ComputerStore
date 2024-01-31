@@ -10,28 +10,27 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wpf_ComputerStore.ViewModels;
 
 namespace Wpf_ComputerStore.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MessageWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MessageWindow : Window
     {
-        
-        public MainWindow(BaseViewModel vm)
+        public MessageWindow()
         {
             InitializeComponent();
+            MessageViewModel vm = new MessageViewModel();
             DataContext = vm;
-            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;//щоб розташувати вікно у центрi         
+            vm.CloseAction = new Action(() => this.Close());//iнiцiалiзуэмо делегат, щоб закривалося саме це вiкно
+
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;           
         }
 
-        public void CloseWindow(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
+       
     }
+   
 }

@@ -20,14 +20,26 @@ namespace Wpf_ComputerStore.Views
     /// </summary>
     public partial class ComputerDetailWindow : Window
     {
-        public ComputerDetailWindow(BaseViewModel model)
+        public ComputerDetailWindow(BaseViewModel vm)
         {
-            DataContext = model;
+            DataContext = vm;
             InitializeComponent();
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;//щоб розташувати у центрi діалогове вікно додавання ( редагування) деталей
         }
         public void CloseWindow(object sender, RoutedEventArgs e) {
             Close();
+        }        
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (textBox.Text == "0")
+            {
+                textBox.Clear(); 
+            }
+            textBox.SelectAll(); 
         }
+
     }
 }

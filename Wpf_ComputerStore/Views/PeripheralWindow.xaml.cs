@@ -16,18 +16,17 @@ using Wpf_ComputerStore.ViewModels;
 namespace Wpf_ComputerStore.Views
 {
     /// <summary>
-    /// Interaction logic for ComputerWindow.xaml
+    /// Interaction logic for PeripheralWindow.xaml
     /// </summary>
-    public partial class ComputerWindow : Window
+    public partial class PeripheralWindow : Window
     {
-       
-        public ComputerWindow(BaseViewModel vm)
+        public PeripheralWindow(BaseViewModel vm)
         {
             DataContext = vm;
             InitializeComponent();
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
-       
+
         public void CloseWindow(object sender, RoutedEventArgs e)
         {
             Close();

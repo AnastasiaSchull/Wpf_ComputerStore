@@ -6,7 +6,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using Wpf_ComputerStore.Dialog_Windows;
 using Wpf_ComputerStore.Models;
 using Wpf_ComputerStore.Services;
 
@@ -14,34 +13,42 @@ namespace Wpf_ComputerStore.ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
     {
-        public MainWindowViewModel()
+        public bool IsAdmin { get; set; }
+       
+        public MainWindowViewModel(bool isAdmin)
         {
+            IsAdmin = isAdmin;
             getComputers();
             getPeripherals();
             getComputerDetails();
             getCategoriesList();
             getPeripheralsTypes();
-            cmdAddComputer = new RelayCommand((param) => AddComputer());
-            cmdDeleteComputer = new RelayCommand((param) => DeleteComputer(), (param) => SelectedComputer != null);
-            cmdEditComputer = new RelayCommand((param) => EditComputer(), (param) => SelectedComputer != null);
+            cmdAddComputer = new RelayCommand((param) => AddComputer(),(param) => IsAdmin );// щоб тільки адмін міг додати комп'ютер
+            cmdDeleteComputer = new RelayCommand((param) => DeleteComputer(), (param) => SelectedComputer != null && IsAdmin );
+            cmdEditComputer = new RelayCommand((param) => EditComputer(), (param) => SelectedComputer != null && IsAdmin);
             cmdGetComputer = new RelayCommand((param) => getComputers());
             cmdFindComputer = new RelayCommand((param) => FindComputer());
-            AddCommand = new RelayCommand((param) => AddPeripheral());
-            DeleteCommand = new RelayCommand((param) => DeletePeripheral(), (param) => SelectedPeripherals != null);
-            EditCommand = new RelayCommand((param) => EditPeripheral(), (param) => SelectedPeripherals != null);
-            FindCommand = new RelayCommand((param) => FindPeripheral());
-            cmdAddComputerDetail = new RelayCommand((param) => AddComputerDetail());
-            cmdEditComputerDetail = new RelayCommand((param) => EditComputerDetail(), (param) => SelectedComputerDetail != null);
-            cmdDeleteComputerDetail = new RelayCommand((param) => DeleteComputerDetail(), (param) => SelectedComputerDetail != null);
-            cmdGetComputerDetail = new RelayCommand((param)=>getComputerDetails());
-            cmdFindComputerDetail = new RelayCommand ((param) => FindComputerDetail());
+            cmdSaleComputer = new RelayCommand((param) => SaleComputer(), (param) => SelectedComputer != null && IsAdmin);          
 
-            cmdSaleComputerDetail = new RelayCommand((param) => SaleComputerDetail(), (param) => SelectedComputerDetail != null);
+            AddCommand = new RelayCommand((param) => AddPeripheral(), (param) => IsAdmin);
+            DeleteCommand = new RelayCommand((param) => DeletePeripheral(), (param) => SelectedPeripherals != null && IsAdmin);
+            EditCommand = new RelayCommand((param) => EditPeripheral(), (param) => SelectedPeripherals != null && IsAdmin);
+            GetPeripheralsCommand = new RelayCommand((param) => getPeripherals());
+            FindCommand = new RelayCommand((param) => FindPeripheral());
+
+            cmdAddComputerDetail = new RelayCommand((param) => AddComputerDetail(), (param) => IsAdmin);
+            cmdEditComputerDetail = new RelayCommand((param) => EditComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
+            cmdDeleteComputerDetail = new RelayCommand((param) => DeleteComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
+            cmdGetComputerDetail = new RelayCommand((param)=> getComputerDetails());
+            cmdFindComputerDetail = new RelayCommand ((param) => FindComputerDetail());
+            cmdSaleComputerDetail = new RelayCommand((param) => SaleComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);           
+           
             cmdSale = new RelayCommand((param) => Sale(), (param) => !Items.IsNullOrEmpty() && !CustomerName.IsNullOrEmpty());
             cmdPlus = new RelayCommand((param)=>PlusItem(), (param)=> SelectedItem != null);
             cmdMinus = new RelayCommand((param) => MinusItem(), (param) => SelectedItem != null);
             cmdClearCart = new RelayCommand((param) => ClearCart(), (param) =>  !Items.IsNullOrEmpty());
             cmdDeleteFromCart= new RelayCommand((param)=>DeleteFromCart(), (param)=> SelectedItem != null);
+
             SelectedFindCriteriaCD = 0;
             OrderCart = new OrderCart { Items = new List<ItemForSale>() };
             windowService = new WindowService();
@@ -118,6 +125,28 @@ namespace Wpf_ComputerStore.ViewModels
             getItems();
         }
 
+
+        public ICommand cmdSaleComputer { get; private set; }
+
+        public void SaleComputer()
+        {
+            if (Items.Where(cd => cd.Item == SelectedComputer).Any())
+            {
+                ItemForSale item = Items.Where(cd => cd.Item.ID == SelectedComputer.ID).First();
+                if (item.Item.Quantity >= item.Quantity + 1)
+                    item.Quantity++;
+                else
+                    MessageBox.Show("not enough computers in store");
+
+            }
+            else
+            {
+
+                Items.Add(new ItemForSale { Item = SelectedComputer, Quantity = 1 });
+            }
+
+            getItems();
+        }
         public ICommand cmdPlus { get; private set; }
 
         public void PlusItem()
@@ -126,7 +155,7 @@ namespace Wpf_ComputerStore.ViewModels
                 if (SelectedItem.Item.Quantity >= SelectedItem.Quantity + 1)
                 SelectedItem.Quantity++;
                 else
-                    MessageBox.Show("not enough computer details in store");
+                    MessageBox.Show("not enough items in store");
             Quantity = SelectedItem.Quantity;
             getItems();
         }
@@ -151,7 +180,7 @@ namespace Wpf_ComputerStore.ViewModels
                 }
             }
             else
-                MessageBox.Show("not enough computer details in store");
+                MessageBox.Show("not enough items in store");
             Items = OrderCart.Items;
             getItems();
 
@@ -224,10 +253,17 @@ namespace Wpf_ComputerStore.ViewModels
                     db.Add(OrderCart);
                     db.SaveChanges();
                     bill += $"Total bill: {sum}";
-                    MessageBox.Show(bill);
+
+                    MessageBoxResult res = MessageBox.Show(bill,"Do you want to send the bill on e-mail?", MessageBoxButton.YesNo);
+                    if(res == MessageBoxResult.Yes) 
+                    {
+                        windowService.openSMTPWindow(new SMTPViewModel(bill));
+                    }
                     OrderCart = new OrderCart { Items = new List<ItemForSale>() };
                     Items = OrderCart.Items;
                     getComputerDetails();
+                    getComputers();
+                    getPeripherals();
                 }
             }catch(Exception ex)
             {
@@ -260,8 +296,6 @@ namespace Wpf_ComputerStore.ViewModels
 
         private List<ComputerDetail> computerDetailsList = new List<ComputerDetail>();
 
-      
-
         private ComputerDetail selectedComputerDetail;
         public ComputerDetail SelectedComputerDetail
         {
@@ -283,10 +317,7 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
-    
-
         public ICommand cmdGetComputerDetail { get; private set; }
-
 
         public void getComputerDetails()
         {
@@ -316,6 +347,12 @@ namespace Wpf_ComputerStore.ViewModels
             {
                 using (DBContext db = new DBContext())
                 {
+                    if (string.IsNullOrWhiteSpace(CriteriaComputerDetail))
+                    {
+                        MessageBox.Show("Please enter a search criteria!");
+                        return;
+                    }
+
                     switch (SelectedFindCriteriaCD)
                     {
                         case 0:
@@ -344,7 +381,7 @@ namespace Wpf_ComputerStore.ViewModels
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);            
             }
         }
 
@@ -404,8 +441,6 @@ namespace Wpf_ComputerStore.ViewModels
                 NotifyPropertyChanged("PeripheralsTypeList");
             }
         }
-
-  
 
         public void getPeripheralsTypes()
         {
@@ -480,7 +515,13 @@ namespace Wpf_ComputerStore.ViewModels
             {
                 using (DBContext db = new DBContext())
                 {
-                    PeripheralsList = new ObservableCollection<Peripherals>(db.Peripheralss.Include(p => p.PeripheralsType).ToList());
+                    PeripheralsList = new ObservableCollection<Peripherals>(db.Peripheralss.ToList());
+                    string res = "";
+                    foreach (Peripherals pr in PeripheralsList)
+                    {
+                        res += pr.PeripheralsType.Name;
+
+                    }
                 }
             }
             catch (Exception ex)
@@ -492,88 +533,18 @@ namespace Wpf_ComputerStore.ViewModels
         public ICommand EditCommand { get; private set; }
         public ICommand DeleteCommand { get; private set; }
         public ICommand FindCommand { get; private set; }
+        public ICommand GetPeripheralsCommand { get; private set; }
 
         public void AddPeripheral()
         {
-            try
-            {
-                var addPeripheralWindow = new AddPeripheralWindow();
-                var result = addPeripheralWindow.ShowDialog();
-
-                if (result == true)
-                {
-                    string? Name = addPeripheralWindow.Name;
-                    PeripheralsType peripheralsType = addPeripheralWindow.PeripheralsType;
-                    int Quantity = addPeripheralWindow.Quantity;
-                    double Price = addPeripheralWindow.Price;
-                    string? Description = addPeripheralWindow.Description;
-
-                    if (string.IsNullOrEmpty(Name) || Quantity <= 0 || Price <= 0)
-                    {
-                        MessageBox.Show("Please fill in all required fields (Name, Quantity, Price).");
-                        return;
-                    }
-
-                    // Створюємо новий об'єкт Peripherals
-                    var newPeripheral = new Peripherals
-                    {
-                        Name = Name,
-                        PeripheralsType = peripheralsType,
-                        Quantity = Quantity,
-                        Price = Price,
-                        Description = Description
-                    };
-
-                    // Додаємо новий об'єкт до списку
-                    PeripheralsList.Add(newPeripheral);
-
-                    // Отримуємо контекст бази даних
-                    using (DBContext db = new DBContext())
-                    {
-                        // Додаємо новий об'єкт до контексту
-                        db.Peripheralss.Add(newPeripheral);
-
-                        // Зберігаємо зміни в базі даних
-                        db.SaveChanges();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            windowService.openPeripheralWindow(new PeripheralViewModel());
+            getPeripherals();
         }
 
         public void EditPeripheral()
         {
-            try
-            {
-                EditPeripheralWindow editPeripheralWindow = new EditPeripheralWindow(SelectedPeripherals);
-                bool? editResult = editPeripheralWindow.ShowDialog();
-
-                if (editResult == true)
-                {
-                    // Оновлюємо властивості виділеної периферії
-                    SelectedPeripherals.Name = editPeripheralWindow.Name;
-                    SelectedPeripherals.PeripheralsType = editPeripheralWindow.PeripheralsType;
-                    SelectedPeripherals.Quantity = editPeripheralWindow.Quantity;
-                    SelectedPeripherals.Price = editPeripheralWindow.Price;
-                    SelectedPeripherals.Description = editPeripheralWindow.Description;
-
-                    using (DBContext db = new DBContext())
-                    {
-                        // Відстежуємо зміни і зберігаємо їх в базі даних
-                        db.Entry(SelectedPeripherals).State = EntityState.Modified;
-                        db.SaveChanges();
-                    }
-
-                    getPeripherals();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            windowService.openPeripheralWindow(new PeripheralViewModel(SelectedPeripherals));
+            getPeripherals();
         }
 
         public void DeletePeripheral()
@@ -606,6 +577,12 @@ namespace Wpf_ComputerStore.ViewModels
                 using (DBContext db = new DBContext())
                 {
                     List<Peripherals> result = new List<Peripherals>();
+
+                    if (string.IsNullOrWhiteSpace(CriteriaPeripheral))
+                    {
+                        MessageBox.Show("Please enter a search criteria!");
+                        return;
+                    }
 
                     switch (SelectedFindCriteriaPeripheral)
                     {
@@ -672,13 +649,6 @@ namespace Wpf_ComputerStore.ViewModels
                 MessageBox.Show(ex.Message);
             }
         }
-
-
-
-
-
-
-
 
         #endregion
 
@@ -843,6 +813,13 @@ namespace Wpf_ComputerStore.ViewModels
                 using (DBContext db = new DBContext())
                 {
                     ComputersList = db.Computers.ToList();
+
+                    if (string.IsNullOrWhiteSpace(CriteriaComputer))
+                    {
+                        MessageBox.Show("Please enter a search criteria!");
+                        return;
+                    }
+
                     switch (SelectedFindCriteriaC)
                      {
                         
@@ -939,12 +916,6 @@ namespace Wpf_ComputerStore.ViewModels
         }
 
         #endregion
-
-
-
-
-
-
 
 
     }
