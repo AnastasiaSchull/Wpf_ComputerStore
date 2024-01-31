@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Input;
 using Wpf_ComputerStore.Models;
@@ -48,6 +49,9 @@ namespace Wpf_ComputerStore.ViewModels
             cmdMinus = new RelayCommand((param) => MinusItem(), (param) => SelectedItem != null);
             cmdClearCart = new RelayCommand((param) => ClearCart(), (param) =>  !Items.IsNullOrEmpty());
             cmdDeleteFromCart= new RelayCommand((param)=>DeleteFromCart(), (param)=> SelectedItem != null);
+            StartDate = DateTime.Now.AddMonths(-1);
+            FinalDate = DateTime.Now;
+            cmdCountMoney = new RelayCommand((param) => CountMoney());
 
             SelectedFindCriteriaCD = 0;
             OrderCart = new OrderCart { Items = new List<ItemForSale>() };
@@ -917,6 +921,70 @@ namespace Wpf_ComputerStore.ViewModels
 
         #endregion
 
+        #region statistics
+        private DateTime startDate;
+        public DateTime StartDate
+        {
+            get { return startDate; }
+            set { 
+                startDate = value;
+                NotifyPropertyChanged("StartDate");
+            }
+        }
+
+        private DateTime finalDate;
+        public DateTime FinalDate
+        {
+            get { return finalDate; }
+            set
+            {
+                finalDate = value;
+                NotifyPropertyChanged("FinalDate");
+            }
+        }
+
+        private double money;
+        public double Money
+        {
+            get { return money; }
+            set
+            {
+                money = value;
+                NotifyPropertyChanged("Money");
+            }
+        }
+
+        public ICommand cmdCountMoney { get; private set; }
+
+        void CountMoney()
+        {
+            if (StartDate > FinalDate)
+            {
+                MessageBox.Show("Final date should be later then start date");
+                return;
+            }
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    List<OrderCart> carts = db.OrderCarts.Where(c => c.Date.Date <= FinalDate && c.Date.Date >= StartDate.Date).ToList();
+                    double count = 0;
+                    foreach (OrderCart cart in carts)
+                    {
+                        foreach (ItemForSale item in cart.Items)
+                        {
+                            count += item.Quantity * item.Item.Price;
+                        }
+                    }
+                    Money = count;
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        #endregion
 
     }
 
