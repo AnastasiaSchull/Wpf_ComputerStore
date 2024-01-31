@@ -16,32 +16,33 @@ using Wpf_ComputerStore.ViewModels;
 namespace Wpf_ComputerStore.Views
 {
     /// <summary>
-    /// Interaction logic for ComputerWindow.xaml
+    /// Interaction logic for SMTPWindow.xaml
     /// </summary>
-    public partial class ComputerWindow : Window
+    public partial class SMTPWindow : Window
     {
-       
-        public ComputerWindow(BaseViewModel vm)
+        public SMTPWindow(BaseViewModel vm)
         {
-            DataContext = vm;
             InitializeComponent();
+            this.DataContext = vm;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
         }
-       
-        public void CloseWindow(object sender, RoutedEventArgs e)
+
+        private void MyPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            var passwordBox = sender as PasswordBox;
+
+            if (DataContext is SMTPViewModel viewModel)
+            {
+                viewModel.Password = passwordBox.Password;
+
+            }
+
+        }
+
+        private void close_Window(object sender, RoutedEventArgs e)
         {
             Close();
-        }
-
-        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-
-            if (textBox.Text == "0")
-            {
-                textBox.Clear();
-            }
-            textBox.SelectAll();
         }
     }
 }

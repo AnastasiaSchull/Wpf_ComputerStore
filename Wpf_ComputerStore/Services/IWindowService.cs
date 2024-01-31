@@ -10,11 +10,12 @@ namespace Wpf_ComputerStore.Services
 {
     public interface IWindowService
     {
-        void openComputerDetailWindow(BaseViewModel model);      
-        void openMainWindow(BaseViewModel model);
-        void openComputerWindow(BaseViewModel model);
-        void openPasswordWindow(BaseViewModel model);
-        void openPeripheralWindow(BaseViewModel model);
+        void openComputerDetailWindow(BaseViewModel viewModel);      
+        void openMainWindow(BaseViewModel viewModel);
+        void openComputerWindow(BaseViewModel viewModel);
+        void openPasswordWindow(BaseViewModel viewModel);
+        void openPeripheralWindow(BaseViewModel viewModel);
+        void openSMTPWindow(BaseViewModel viewModel);
 
     }
 }

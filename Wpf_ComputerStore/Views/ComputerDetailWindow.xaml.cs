@@ -20,9 +20,9 @@ namespace Wpf_ComputerStore.Views
     /// </summary>
     public partial class ComputerDetailWindow : Window
     {
-        public ComputerDetailWindow(BaseViewModel model)
+        public ComputerDetailWindow(BaseViewModel vm)
         {
-            DataContext = model;
+            DataContext = vm;
             InitializeComponent();
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;//щоб розташувати у центрi діалогове вікно додавання ( редагування) деталей
         }
