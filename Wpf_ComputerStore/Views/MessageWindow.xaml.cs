@@ -25,7 +25,7 @@ namespace Wpf_ComputerStore.Views
             InitializeComponent();
             MessageViewModel vm = new MessageViewModel();
             DataContext = vm;
-           vm.CloseAction = new Action(() => this.Close());//iнiцiалiзуэмо делегат, щоб закривалося саме це вiкно
+            vm.CloseAction = new Action(() => this.Close());//iнiцiалiзуэмо делегат, щоб закривалося саме це вiкно
 
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;           
         }

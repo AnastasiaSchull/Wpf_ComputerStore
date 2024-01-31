@@ -253,7 +253,12 @@ namespace Wpf_ComputerStore.ViewModels
                     db.Add(OrderCart);
                     db.SaveChanges();
                     bill += $"Total bill: {sum}";
-                    MessageBox.Show(bill);
+
+                    MessageBoxResult res = MessageBox.Show(bill,"Do you want to send the bill on e-mail?", MessageBoxButton.YesNo);
+                    if(res == MessageBoxResult.Yes) 
+                    {
+                        windowService.openSMTPWindow(new SMTPViewModel(bill));
+                    }
                     OrderCart = new OrderCart { Items = new List<ItemForSale>() };
                     Items = OrderCart.Items;
                     getComputerDetails();
