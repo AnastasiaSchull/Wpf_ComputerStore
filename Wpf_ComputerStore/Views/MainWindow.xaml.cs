@@ -22,10 +22,10 @@ namespace Wpf_ComputerStore.Views
     public partial class MainWindow : Window
     {
         
-        public MainWindow(BaseViewModel model)
+        public MainWindow(BaseViewModel vm)
         {
             InitializeComponent();
-            DataContext = model;
+            DataContext = vm;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;//щоб розташувати вікно у центрi         
         }
 

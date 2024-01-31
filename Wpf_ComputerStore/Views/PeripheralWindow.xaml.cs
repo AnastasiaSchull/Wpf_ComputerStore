@@ -20,9 +20,9 @@ namespace Wpf_ComputerStore.Views
     /// </summary>
     public partial class PeripheralWindow : Window
     {
-        public PeripheralWindow(BaseViewModel model)
+        public PeripheralWindow(BaseViewModel vm)
         {
-            DataContext = model;
+            DataContext = vm;
             InitializeComponent();
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
