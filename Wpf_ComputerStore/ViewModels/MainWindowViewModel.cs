@@ -8,7 +8,8 @@ using System.Windows;
 using System.Windows.Input;
 using Wpf_ComputerStore.Models;
 using Wpf_ComputerStore.Services;
-
+using System.Threading;
+using System.Threading.Tasks;
 namespace Wpf_ComputerStore.ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
@@ -17,6 +18,7 @@ namespace Wpf_ComputerStore.ViewModels
        
         public MainWindowViewModel(bool isAdmin)
         {
+            ProgressValue = 0;
             IsAdmin = isAdmin;
             getComputers();
             getPeripherals();
@@ -70,6 +72,18 @@ namespace Wpf_ComputerStore.ViewModels
             get { return quantity; }
             set { quantity = value;
                 NotifyPropertyChanged("Quantity");
+            }
+        }
+
+        private int progressValue;
+
+        public int ProgressValue
+        {
+            get { return progressValue; }
+            set
+            {
+                progressValue = value;
+                NotifyPropertyChanged("ProgressValue");
             }
         }
         private OrderCart orderCart;
@@ -232,7 +246,7 @@ namespace Wpf_ComputerStore.ViewModels
 
         public ICommand cmdSale { get; private set; }
 
-        public void Sale()
+        public async void Sale()
         {
             try { 
                 using(DBContext db = new DBContext())
@@ -253,12 +267,20 @@ namespace Wpf_ComputerStore.ViewModels
                     db.Add(OrderCart);
                     db.SaveChanges();
                     bill += $"Total bill: {sum}";
+                   
+                    for (int i = 0; i <= 100; i += 10)
+                    {
+                        await Task.Delay(500); // асинхронная задержка без блокировки основного потока
+                        ProgressValue = i;
+                        NotifyPropertyChanged(nameof(ProgressValue));
+                    }
 
                     MessageBoxResult res = MessageBox.Show(bill,"Do you want to send the bill on e-mail?", MessageBoxButton.YesNo);
                     if(res == MessageBoxResult.Yes) 
                     {
                         windowService.openSMTPWindow(new SMTPViewModel(bill));
                     }
+                    ProgressValue = 0;
                     OrderCart = new OrderCart { Items = new List<ItemForSale>() };
                     Items = OrderCart.Items;
                     getComputerDetails();
