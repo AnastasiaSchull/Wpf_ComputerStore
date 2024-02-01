@@ -32,11 +32,12 @@
     </Window.Background>
  
     <Window.Resources>
-   
+
         <Style TargetType="ScrollBar">
             <Setter Property="Background" Value="#BFEEEE"/>
+            <Setter Property="BorderBrush" Value="Purple"/>
         </Style>
-        
+
         <!-- Стиль для всплывающей подсказки -->
         <Style x:Key="ToolTipStyle" TargetType="ToolTip">
             <Setter Property="Foreground" Value="#7861ae"/>
@@ -110,8 +111,10 @@
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Sale Computer"   />
                         </Button.ToolTip>
                     </Button>
-                    <Label Grid.Row="0" Grid.Column="5" Margin="10,30,10,10" Grid.ColumnSpan="2" >Find by:</Label>
-                    <ComboBox Grid.Row="0" Grid.Column="6" Padding="0" Margin="0,10,10,10" Style="{StaticResource ComboBoxStyle}" SelectedIndex="{Binding SelectedFindCriteriaC}">
+                    <Label Grid.Row="0" Grid.Column="5" Margin="10,30,10,10" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="14" Foreground="#6600CC" >Find by:</Label>
+
+
+                    <ComboBox Grid.Row="0" Grid.Column="6" Padding="0" Margin="0,10,10,10"  Style="{StaticResource ComboBoxStyle}"  SelectedIndex="{Binding SelectedFindCriteriaC}">   
                         <!--SelectedIndex="0"-->
                         <ComboBoxItem>Name</ComboBoxItem>
                         <ComboBoxItem>Type</ComboBoxItem>
@@ -133,8 +136,8 @@
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Find Computer "/>
                         </Button.ToolTip>
                     </Button>
-                    <ListView ItemContainerStyle="{StaticResource ListViewItemOptionStyle}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="9" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding ComputersList}"  SelectedItem="{Binding SelectedComputer}">
-                        <ListView.View>
+                    <ListView ItemContainerStyle="{StaticResource ListViewItemOptionStyle}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="9" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding ComputersList}"  SelectedItem="{Binding SelectedComputer}"  >
+                        <ListView.View >
                             <GridView AllowsColumnReorder="true" >
                                 <GridView.ColumnHeaderToolTip>
                                     <ToolTip Style="{StaticResource ToolTipStyle}" Content="Computers Information "/>
@@ -218,7 +221,7 @@
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Sale Components "/>
                         </Button.ToolTip>
                     </Button>
-                    <Label Grid.Row="0" Grid.Column="5" Margin="10,30,10,10">Find by:</Label>
+                    <Label Grid.Row="0" Grid.Column="5" Margin="10,30,10,10"  FontWeight="Bold" FontSize="14" Foreground="#6600CC" >Find by:</Label>
                     <ComboBox Grid.Row="0" Grid.Column="6" Padding="0"  Style="{StaticResource ComboBoxStyle}" SelectedIndex="{Binding SelectedFindCriteriaCD}">
                       
                     
@@ -263,7 +266,7 @@
                     <TextBlock Text="Category" FontSize="16" />
                 </TabItem.Header>
                 <TabControl>
-                    <TabItem Header="Motherboard">
+                    <TabItem Header="Motherboard"  >
                         <Grid >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="50"/>
@@ -293,7 +296,7 @@
                             <Image Grid.Row="2" Width="700" Source="/static/ram.jpg" Margin="0,0,10,20"/>
                         </Grid>
                     </TabItem>
-                    <TabItem Header="CPU">
+                    <TabItem Header="CPU" >
                         <Grid >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="50"/>
@@ -419,7 +422,7 @@
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Sale Peripheral "/>
                         </Button.ToolTip>
                     </Button>
-                    <Label Grid.Row="0" Grid.Column="5" Margin="10,30,10,10">Find by:</Label>
+                    <Label Grid.Row="0" Grid.Column="5" Margin="10,30,10,10" FontWeight="Bold" FontSize="14" Foreground="#6600CC" >Find by:</Label>
                         <ComboBox Grid.Row="0" Grid.Column="6" Padding="0" Style="{StaticResource ComboBoxStyle}"  SelectedIndex="{Binding SelectedFindCriteriaPeripheral}">
                         <ComboBoxItem>Name</ComboBoxItem>
                         <ComboBoxItem>Description</ComboBoxItem>
@@ -479,6 +482,8 @@
                         <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="60"/>
+                        
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
@@ -516,10 +521,12 @@
                         </Button.ToolTip>
                     </Button>
 
-                    <ListView ItemContainerStyle="{StaticResource ListViewItemOptionStyle}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="9" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
+                    <ProgressBar Grid.Column="8" Grid.Row="0" Value="{Binding ProgressValue, Mode= TwoWay }"
+                      x:Name="DeterminateCircularProgress"
+                      Style="{StaticResource MaterialDesignCircularProgressBar}" /> 
+                    <ListView ItemContainerStyle="{StaticResource ListViewItemOptionStyle}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
 
                         <ListView.View>
-
                             <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Order Cart Information"  >
                                 <GridViewColumn Header=" Name " DisplayMemberBinding="{Binding Path=Item.Name}"/>
                                 <GridViewColumn Header=" Quantity " DisplayMemberBinding="{Binding Path= Quantity}"/>
