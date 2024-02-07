@@ -17,8 +17,10 @@ namespace Wpf_ComputerStore.ViewModels
     {
         public bool IsAdmin { get; set; }
        
+        public  DBContext _dbContext; // спiльний DBContext для всiх методiв!
         public MainWindowViewModel(bool isAdmin)
         {
+            _dbContext = new DBContext();
             ProgressValue = 0;
             IsAdmin = isAdmin;
             getComputers();
@@ -272,24 +274,20 @@ namespace Wpf_ComputerStore.ViewModels
 
         public async void Sale()
         {
-            try { 
-                using(DBContext db = new DBContext())
-                {
+            try {               
                     double sum = 0;
                     OrderCart.CustomerName = CustomerName;
                     OrderCart.Date = DateTime.Now;
                     string bill = "Customer Name: "+CustomerName+"\n";
                     bill += $"Date: {OrderCart.Date}\n";
                     foreach(ItemForSale item in Items)
-                    {                 
-                        db.Attach(item.Item);
-                      
+                    {                                      
                         item.Item.Quantity -= item.Quantity;
                         sum+=item.Quantity*item.Item.Price;
                         bill += $"{item.Item.Name}\t{item.Quantity}x{item.Item.Price}={item.Item.Price * item.Quantity}\n";
                     }
-                    db.Add(OrderCart);
-                    db.SaveChanges();
+                    _dbContext.Add(OrderCart);
+                    _dbContext.SaveChanges();
                     bill += $"Total bill: {sum}";
                    
                     for (int i = 0; i <= 100; i += 10)
@@ -310,7 +308,7 @@ namespace Wpf_ComputerStore.ViewModels
                     getComputerDetails();
                     getComputers();
                     getPeripherals();
-                }
+             
             }catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
@@ -368,17 +366,15 @@ namespace Wpf_ComputerStore.ViewModels
         public void getComputerDetails()
         {
             try
-            {
-                using (DBContext db = new DBContext())
-                {
-                    ComputerDetailsList = db.ComputerDetails.ToList();
+            {              
+                    ComputerDetailsList = _dbContext.ComputerDetails.ToList();
                     string res = "";
                     foreach (ComputerDetail cd in ComputerDetailsList) //костиль бо не працюе лiнива загрузка
                     {
                         res += cd.Category.Name;
 
                     }
-                }
+             
             }
             catch (Exception ex)
             {
@@ -391,8 +387,7 @@ namespace Wpf_ComputerStore.ViewModels
         {
             try
             {
-                using (DBContext db = new DBContext())
-                {
+               
                     if (string.IsNullOrWhiteSpace(CriteriaComputerDetail))
                     {
                         MessageBox.Show("Please enter a search criteria!");
@@ -402,18 +397,18 @@ namespace Wpf_ComputerStore.ViewModels
                     switch (SelectedFindCriteriaCD)
                     {
                         case 0:
-                            ComputerDetailsList =db.ComputerDetails.Where(cd=>cd.Name.ToLower().Contains(CriteriaComputerDetail.ToLower())).ToList();
+                            ComputerDetailsList =_dbContext.ComputerDetails.Where(cd=>cd.Name.ToLower().Contains(CriteriaComputerDetail.ToLower())).ToList();
                              break;
                         case 1:
-                            ComputerDetailsList = db.ComputerDetails.Where(cd => cd.Description.ToLower().Contains(CriteriaComputerDetail.ToLower())).ToList();
+                            ComputerDetailsList = _dbContext.ComputerDetails.Where(cd => cd.Description.ToLower().Contains(CriteriaComputerDetail.ToLower())).ToList();
 
                             break;
                         case 2:
-                            ComputerDetailsList = db.ComputerDetails.Where(cd => cd.Category.Name.ToLower().Contains(CriteriaComputerDetail.ToLower())).ToList();
+                            ComputerDetailsList = _dbContext.ComputerDetails.Where(cd => cd.Category.Name.ToLower().Contains(CriteriaComputerDetail.ToLower())).ToList();
 
                             break;
                         case 3:
-                            ComputerDetailsList = db.ComputerDetails.Where(cd => cd.ID == Int32.Parse(CriteriaComputerDetail)).ToList();
+                            ComputerDetailsList = _dbContext.ComputerDetails.Where(cd => cd.ID == Int32.Parse(CriteriaComputerDetail)).ToList();
 
                             break;
                     }
@@ -423,7 +418,7 @@ namespace Wpf_ComputerStore.ViewModels
                         res += cd.Category.Name;
 
                     }
-                }
+      
             }
             catch(Exception ex)
             {
@@ -457,12 +452,11 @@ namespace Wpf_ComputerStore.ViewModels
             }
             try
             {
-                using (DBContext db = new DBContext())
-                {
-                    db.Attach(SelectedComputerDetail);
-                    db.Remove(SelectedComputerDetail);
-                    db.SaveChanges();
-                }
+                
+                    _dbContext.Attach(SelectedComputerDetail);
+                    _dbContext.Remove(SelectedComputerDetail);
+                    _dbContext.SaveChanges();
+               
                 getComputerDetails();
             }
             catch (Exception ex)
@@ -492,10 +486,9 @@ namespace Wpf_ComputerStore.ViewModels
         {
             try
             {
-                using (DBContext db = new DBContext())
-                {
-                    PeripheralsTypeList = db.PeripheralsType.ToList();
-                }
+               
+                PeripheralsTypeList = _dbContext.PeripheralsType.ToList();
+            
             }
             catch (Exception ex)
             {
@@ -559,16 +552,15 @@ namespace Wpf_ComputerStore.ViewModels
         {
             try
             {
-                using (DBContext db = new DBContext())
+               
+                PeripheralsList = new ObservableCollection<Peripherals>(_dbContext.Peripheralss.ToList());
+                string res = "";
+                foreach (Peripherals pr in PeripheralsList)
                 {
-                    PeripheralsList = new ObservableCollection<Peripherals>(db.Peripheralss.ToList());
-                    string res = "";
-                    foreach (Peripherals pr in PeripheralsList)
-                    {
-                        res += pr.PeripheralsType.Name;
+                    res += pr.PeripheralsType.Name;
 
-                    }
                 }
+             
             }
             catch (Exception ex)
             {
@@ -601,13 +593,11 @@ namespace Wpf_ComputerStore.ViewModels
                 return;
             }
             try
-            {
-                using (DBContext db = new DBContext())
-                {
-                    db.Attach(SelectedPeripherals);
-                    db.Remove(SelectedPeripherals);
-                    db.SaveChanges();
-                }
+            {              
+                _dbContext.Attach(SelectedPeripherals);
+                _dbContext.Remove(SelectedPeripherals);
+                _dbContext.SaveChanges();
+               
                 getPeripherals();
             }
             catch (Exception ex)
@@ -620,8 +610,7 @@ namespace Wpf_ComputerStore.ViewModels
         {
             try
             {
-                using (DBContext db = new DBContext())
-                {
+              
                     List<Peripherals> result = new List<Peripherals>();
 
                     if (string.IsNullOrWhiteSpace(CriteriaPeripheral))
@@ -633,19 +622,19 @@ namespace Wpf_ComputerStore.ViewModels
                     switch (SelectedFindCriteriaPeripheral)
                     {
                         case 0:
-                            result = db.Peripheralss.Where(pr => pr.Name.ToLower().Contains(CriteriaPeripheral.ToLower())).ToList();
+                            result = _dbContext.Peripheralss.Where(pr => pr.Name.ToLower().Contains(CriteriaPeripheral.ToLower())).ToList();
                             break;
                         case 1:
-                            result = db.Peripheralss.Where(pr => pr.Description.ToLower().Contains(CriteriaPeripheral.ToLower())).ToList();
+                            result = _dbContext.Peripheralss.Where(pr => pr.Description.ToLower().Contains(CriteriaPeripheral.ToLower())).ToList();
                             break;
                         case 2:
-                            result = db.Peripheralss.Where(pr => pr.PeripheralsType.Name.ToLower().Contains(CriteriaPeripheral.ToLower())).ToList();
+                            result = _dbContext.Peripheralss.Where(pr => pr.PeripheralsType.Name.ToLower().Contains(CriteriaPeripheral.ToLower())).ToList();
                             break;
                         case 3:
-                            result = db.Peripheralss.Where(pr => pr.Quantity == Int32.Parse(CriteriaPeripheral)).ToList();
+                            result = _dbContext.Peripheralss.Where(pr => pr.Quantity == Int32.Parse(CriteriaPeripheral)).ToList();
                             break;
                         case 4:
-                            result = db.Peripheralss.Where(pr => pr.Price == Int32.Parse(CriteriaPeripheral)).ToList();
+                            result = _dbContext.Peripheralss.Where(pr => pr.Price == Int32.Parse(CriteriaPeripheral)).ToList();
                             break;
                     }
 
@@ -656,8 +645,7 @@ namespace Wpf_ComputerStore.ViewModels
                     foreach (Peripherals peripheral in PeripheralsList)
                     {
                         res += peripheral.PeripheralsType.Name;
-                    }
-                }
+                    }           
             }
             catch (Exception ex)
             {
@@ -684,11 +672,8 @@ namespace Wpf_ComputerStore.ViewModels
         public void getCategoriesList()
         {
             try
-            {
-                using (DBContext db = new DBContext())
-                {
-                    CategoriesList = db.Categories.ToList();
-                }
+            {               
+                CategoriesList = _dbContext.Categories.ToList();              
             }
             catch (Exception ex)
             {
@@ -748,10 +733,8 @@ namespace Wpf_ComputerStore.ViewModels
         public void getComputers()
         {
             try
-            {
-                using (DBContext db = new DBContext())
-                {
-                    ComputersList = db.Computers.ToList();
+            {             
+                    ComputersList = _dbContext.Computers.ToList();
                     string res = "";
                     foreach (Computer computer in ComputersList) //костиль бо не працюе лiнива загрузка
                     {
@@ -802,7 +785,7 @@ namespace Wpf_ComputerStore.ViewModels
 
                     }
 
-                }
+               // }
             }
             catch (Exception ex)
             {
@@ -834,13 +817,11 @@ namespace Wpf_ComputerStore.ViewModels
             if (result == MessageBoxResult.Yes)
             {
                 try
-                {
-                    using (DBContext db = new DBContext())
-                    {
-                        db.Attach(SelectedComputer);
-                        db.Remove(SelectedComputer);
-                        db.SaveChanges();
-                    }
+                {                  
+                    _dbContext.Attach(SelectedComputer);
+                    _dbContext.Remove(SelectedComputer);
+                    _dbContext.SaveChanges();
+                
                     getComputers();
                 }
                 catch (Exception ex)
@@ -856,9 +837,8 @@ namespace Wpf_ComputerStore.ViewModels
         {
             try
             {
-                using (DBContext db = new DBContext())
-                {
-                    ComputersList = db.Computers.ToList();
+              
+                    ComputersList = _dbContext.Computers.ToList();
 
                     if (string.IsNullOrWhiteSpace(CriteriaComputer))
                     {
@@ -870,10 +850,10 @@ namespace Wpf_ComputerStore.ViewModels
                      {
                         
                          case 0:
-                             ComputersList = db.Computers.Where(c => c.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
+                             ComputersList = _dbContext.Computers.Where(c => c.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
                              break;
                         case 1:
-                            ComputersList = db.Computers.Where(c => c.ComputerType.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
+                            ComputersList = _dbContext.Computers.Where(c => c.ComputerType.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
 
                             break;
                         case 2:
@@ -899,7 +879,7 @@ namespace Wpf_ComputerStore.ViewModels
                             break;
                             
                         case 9:
-                             ComputersList = db.Computers.Where(cd => cd.Price == Int32.Parse(CriteriaComputer)).ToList();
+                             ComputersList = _dbContext.Computers.Where(cd => cd.Price == Int32.Parse(CriteriaComputer)).ToList();
 
                              break;
                      }
@@ -952,8 +932,7 @@ namespace Wpf_ComputerStore.ViewModels
                     {
                         res7 += computer.PowerSupply.Name;
 
-                    }
-                }
+                    }              
             }
             catch (Exception ex)
             {
@@ -1006,10 +985,8 @@ namespace Wpf_ComputerStore.ViewModels
                 return;
             }
             try
-            {
-                using (DBContext db = new DBContext())
-                {
-                    List<OrderCart> carts = db.OrderCarts.Where(c => c.Date.Date <= FinalDate && c.Date.Date >= StartDate.Date).ToList();
+            {              
+                    List<OrderCart> carts = _dbContext.OrderCarts.Where(c => c.Date.Date <= FinalDate && c.Date.Date >= StartDate.Date).ToList();
                     double count = 0;
                     foreach (OrderCart cart in carts)
                     {
@@ -1018,8 +995,7 @@ namespace Wpf_ComputerStore.ViewModels
                             count += item.Quantity * item.Item.Price;
                         }
                     }
-                    Money = count;
-                }
+                    Money = count;               
             }
             catch(Exception ex)
             {

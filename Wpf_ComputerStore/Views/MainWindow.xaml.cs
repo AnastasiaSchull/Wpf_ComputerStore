@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,9 +30,19 @@ namespace Wpf_ComputerStore.Views
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;//щоб розташувати вікно у центрi         
         }
 
-        public void CloseWindow(object sender, RoutedEventArgs e)
+        //public void CloseWindow(object sender, RoutedEventArgs e)
+        //{
+        //    Close();
+        //    MainWindowViewModel mainWindowViewModel = (MainWindowViewModel)DataContext;
+        //    mainWindowViewModel._dbContext.Dispose();
+        //    mainWindowViewModel._dbContext.Database.CloseConnection();
+        //}
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Close();
+            MainWindowViewModel mainWindowViewModel = (MainWindowViewModel)DataContext;
+            mainWindowViewModel._dbContext.Dispose();
+            mainWindowViewModel._dbContext.Database.CloseConnection();
         }
     }
 }
