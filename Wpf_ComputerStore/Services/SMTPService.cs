@@ -24,8 +24,9 @@ namespace Wpf_ComputerStore.Services
                  
                             //MailMessage - представляет сообщение электронной почты, которое может быть отправлено с помощью класса SmtpClient.
                             MailMessage message = new MailMessage();
-                            message.To.Add(new MailAddress(receiver)); // электронный адрес получателя (login@itstep.academy)   
-                            message.From = new MailAddress(sender); // электронный адрес отправителя (login@gmail.com)
+                            message.To.Add(new MailAddress(receiver)); // электронный адрес получателя (login@itstep.academy) polyanskiy@itstep.academy  
+                            message.From = new MailAddress(sender); // электронный адрес отправителя (login@gmail.com)        nastasia.schull@gmail.com
+                            
                             message.Subject = subject; // тема письма
                             message.Body = body; // содержимое письма                 
                             message.SubjectEncoding = Encoding.UTF8;                           
@@ -52,3 +53,4 @@ namespace Wpf_ComputerStore.Services
         }
     }
 }
+                                                                                                                                                                                                                                                                                                                                       
