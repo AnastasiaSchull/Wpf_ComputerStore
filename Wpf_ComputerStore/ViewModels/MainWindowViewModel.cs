@@ -22,6 +22,7 @@ namespace Wpf_ComputerStore.ViewModels
         public MainWindowViewModel(bool isAdmin)
         {
             _dbContext = new DBContext();
+            SoldItems =new List<ItemForSale>();
             ProgressValue = 0;
             IsAdmin = isAdmin;
             getComputers();
@@ -1007,6 +1008,16 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
+        private List<ItemForSale> soldItems;
+        public List<ItemForSale> SoldItems
+        {
+            get { return soldItems; }
+            set {
+                soldItems = value;
+                NotifyPropertyChanged("SoldItems");
+            }
+        }
+
         public ICommand cmdCountMoney { get; private set; }
 
         void CountMoney()
@@ -1020,11 +1031,25 @@ namespace Wpf_ComputerStore.ViewModels
             {              
                     List<OrderCart> carts = _dbContext.OrderCarts.Where(c => c.Date.Date <= FinalDate && c.Date.Date >= StartDate.Date).ToList();
                     double count = 0;
+                SoldItems = new List<ItemForSale>();
                     foreach (OrderCart cart in carts)
                     {
                         foreach (ItemForSale item in cart.Items)
                         {
                             count += item.Quantity * item.Item.Price;
+                        bool find = false;
+                            foreach(ItemForSale i in SoldItems)
+                        {
+                            if (i.Item.Name.Equals(item.Item.Name))
+                            {
+                                i.Quantity += item.Quantity;
+                                find = true;
+                            }
+                        }
+                        if (!find)
+                        {
+                            SoldItems.Add(item);
+                        }
                         }
                     }
                     Money = count;               

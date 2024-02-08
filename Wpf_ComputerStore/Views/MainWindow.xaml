@@ -620,7 +620,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="150"/>
                         <ColumnDefinition Width="200"/>
-
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Grid.Row="0" Margin="10" >
                         Start date
@@ -638,6 +638,17 @@
                         Total money:
                     </Label>
                     <Label Grid.Column="1" Grid.Row="3" Margin="10" Content="{Binding Money}" />
+                    <ListView ItemContainerStyle="{StaticResource ListViewItemOptionStyle}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding SoldItems}">
+
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Order Cart Information"  >
+                                <GridViewColumn Header=" Name " DisplayMemberBinding="{Binding Path=Item.Name}"/>
+                                <GridViewColumn Header=" Quantity " DisplayMemberBinding="{Binding Path= Quantity}"/>
+                                <GridViewColumn Header=" Price " DisplayMemberBinding="{Binding Path=Item.Price}"/>
+                            </GridView>
+                        </ListView.View>
+
+                    </ListView>
                 </Grid>
             </TabItem>
             <TabItem>
