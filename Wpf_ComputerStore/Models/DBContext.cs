@@ -354,10 +354,16 @@ namespace Wpf_ComputerStore.Models
 
                 Customers.Add(customer);
 
+                Seller seller1 = new Seller { Name = "Iryna" };
+                Seller seller2 = new Seller { Name = "Anastasia" };
+                Seller seller3 = new Seller { Name = "Vlad" };
+
+                Sellers.AddRange(seller1, seller2, seller3);
                 SaveChanges();
             }
 
         }
+        public DbSet<Seller> Sellers { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Computer> Computers { get; set; }
         public DbSet<ComputerDetail> ComputerDetails { get; set; }

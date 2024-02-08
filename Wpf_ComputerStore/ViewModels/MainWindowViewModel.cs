@@ -30,6 +30,8 @@ namespace Wpf_ComputerStore.ViewModels
             getComputerDetails();
             getCategoriesList();
             getPeripheralsTypes();
+            getSellers();
+            SelectedSeller = Sellers[0];
             cmdAddComputer = new RelayCommand((param) => AddComputer(),(param) => IsAdmin );// щоб тільки адмін міг додати комп'ютер
             cmdDeleteComputer = new RelayCommand((param) => DeleteComputer(), (param) => SelectedComputer != null && IsAdmin );
             cmdEditComputer = new RelayCommand((param) => EditComputer(), (param) => SelectedComputer != null && IsAdmin);
@@ -51,7 +53,7 @@ namespace Wpf_ComputerStore.ViewModels
             cmdFindComputerDetail = new RelayCommand ((param) => FindComputerDetail());
             cmdSaleComputerDetail = new RelayCommand((param) => SaleComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);           
            
-            cmdSale = new RelayCommand((param) => Sale(), (param) => !Items.IsNullOrEmpty() && !CustomerName.IsNullOrEmpty());
+            cmdSale = new RelayCommand((param) => Sale(), (param) => !Items.IsNullOrEmpty() && !CustomerName.IsNullOrEmpty() && SelectedSeller!=null);
             cmdPlus = new RelayCommand((param)=>PlusItem(), (param)=> SelectedItem != null);
             cmdMinus = new RelayCommand((param) => MinusItem(), (param) => SelectedItem != null);
             cmdClearCart = new RelayCommand((param) => ClearCart(), (param) =>  !Items.IsNullOrEmpty());
@@ -282,6 +284,7 @@ namespace Wpf_ComputerStore.ViewModels
                 OrderCart.CustomerName = CustomerName;
                 OrderCart.Date = DateTime.Now;
                 string bill = "Customer Name: " + CustomerName + "\n";
+                bill += $"Seller: {SelectedSeller.Name}\n";
                 bill += $"Date: {OrderCart.Date}\n";
                 foreach (ItemForSale item in Items)
                 {
@@ -289,6 +292,7 @@ namespace Wpf_ComputerStore.ViewModels
                     sum += item.Quantity * item.Item.Price;
                     bill += $"{item.Item.Name}\t{item.Quantity}x{item.Item.Price}={item.Item.Price * item.Quantity}\n";
                 }
+                OrderCart.Seller = SelectedSeller;
                 _dbContext.Add(OrderCart);
                
 
@@ -1018,7 +1022,33 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
+        private List<Seller> sellers;
+        public List<Seller> Sellers
+        {
+            get { return sellers; }
+            set
+            {
+                sellers = value;
+                NotifyPropertyChanged("Sellers");
+            }
+        }
+
+        private Seller selectedSeller;
+        public Seller SelectedSeller
+        {
+            get { return selectedSeller;  }
+            set
+            {
+                selectedSeller = value;
+                NotifyPropertyChanged("SelectedSeller");
+            }
+        }
+
         public ICommand cmdCountMoney { get; private set; }
+        public void getSellers()
+        {
+            Sellers = _dbContext.Sellers.ToList();
+        }
 
         void CountMoney()
         {
