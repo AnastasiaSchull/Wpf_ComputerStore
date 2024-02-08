@@ -11,6 +11,7 @@ using Wpf_ComputerStore.Models;
 using Wpf_ComputerStore.Services;
 using System.Threading;
 using System.Threading.Tasks;
+using Castle.Core.Resource;
 namespace Wpf_ComputerStore.ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
@@ -274,22 +275,53 @@ namespace Wpf_ComputerStore.ViewModels
 
         public async void Sale()
         {
-            try {               
-                    double sum = 0;
-                    OrderCart.CustomerName = CustomerName;
-                    OrderCart.Date = DateTime.Now;
-                    string bill = "Customer Name: "+CustomerName+"\n";
-                    bill += $"Date: {OrderCart.Date}\n";
-                    foreach(ItemForSale item in Items)
-                    {                                      
-                        item.Item.Quantity -= item.Quantity;
-                        sum+=item.Quantity*item.Item.Price;
-                        bill += $"{item.Item.Name}\t{item.Quantity}x{item.Item.Price}={item.Item.Price * item.Quantity}\n";
-                    }
-                    _dbContext.Add(OrderCart);
-                    _dbContext.SaveChanges();
-                    bill += $"Total bill: {sum}";
+            try
+            {
+                double sum = 0;
+                OrderCart.CustomerName = CustomerName;
+                OrderCart.Date = DateTime.Now;
+                string bill = "Customer Name: " + CustomerName + "\n";
+                bill += $"Date: {OrderCart.Date}\n";
+                foreach (ItemForSale item in Items)
+                {
+                    item.Item.Quantity -= item.Quantity;
+                    sum += item.Quantity * item.Item.Price;
+                    bill += $"{item.Item.Name}\t{item.Quantity}x{item.Item.Price}={item.Item.Price * item.Quantity}\n";
+                }
+                _dbContext.Add(OrderCart);
+               
+
+                if (_dbContext.Customers.Where(c => c.Name.Equals(CustomerName)).Any())
+                {
+                    
+                    Customer customer = _dbContext.Customers.Where(c => c.Name.Equals(CustomerName)).First();
+                    if ( customer.Points > 0)
+                    { 
                    
+                        MessageBoxResult point = MessageBox.Show($"You have {customer.Points} points", "Do you want to use your points?", MessageBoxButton.YesNo);
+                        if (point == MessageBoxResult.Yes)
+                        {
+                            if (sum <= customer.Points)
+                            {
+                                customer.Points -= (int)sum;
+                                sum = 0;
+                            }
+                            
+                            else
+                            {
+                                sum -= customer.Points;
+                                customer.Points = 0;
+
+                            }
+
+                        }
+                      
+                    }
+                    customer.Points += (int)sum / 100;
+                }
+                
+                bill += $"Total bill: {sum}";
+                    _dbContext.SaveChanges();
                     for (int i = 0; i <= 100; i += 10)
                     {
                         await Task.Delay(500); // асинхронная задержка без блокировки основного потока
