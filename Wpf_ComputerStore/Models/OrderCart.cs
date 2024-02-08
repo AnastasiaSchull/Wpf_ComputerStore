@@ -12,6 +12,8 @@ namespace Wpf_ComputerStore.Models
         public string CustomerName { get; set; }
         public DateTime Date { get; set; }
         public virtual List<ItemForSale> Items { get; set; }
+
+        public virtual Seller Seller { get; set; }
       
     }
 }
