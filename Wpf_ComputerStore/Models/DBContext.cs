@@ -166,7 +166,7 @@ namespace Wpf_ComputerStore.Models
                 ComputerDetail cd12_HD = new ComputerDetail { Name = "Seagate SkyHawk 4TB", Category = c4, Quantity = 50, Price = 3859, Description = " Жорсткий диск Seagate SkyHawk 4TB \r\n256MB ST4000VX016 3.5\" SATAIII" };
                 ComputerDetail cd13_HD = new ComputerDetail { Name = "Silicon Power Armor A30 1TB", Category = c4, Quantity = 80, Price = 2109, Description = " Жорсткий диск Silicon Power Armor A66 1TB\r\n SP010TBPHD66SS3B 2.5 USB 3.2 External Blue" };
                 ComputerDetail cd14_HD = new ComputerDetail { Name = "Western Digital Purple 1TB", Category = c4, Quantity = 50, Price = 2059, Description = " Жорсткий диск Western Digital Purple 1TB  \r\n 64MB 5400rpm WD10PURZ 3.5 SATA III" };
-               
+
 
                 ComputerDetail cd1_SSD = new ComputerDetail { Name = "SSD Western Digital", Category = c5, Quantity = 70, Price = 3495, Description = "SSD Western Digital PC SN740 1Tb\r\n M.2 2230 PCIE Gen4 x4 NVME \r\n(SDDPTQD-1T00) OEM" };
                 ComputerDetail cd2_SSD = new ComputerDetail { Name = "Apacer AS340X 120GB", Category = c5, Quantity = 80, Price = 479, Description = "SSD диск Apacer AS340X 120GB 2.5 \r\n SATAIII 3D NAND (AP120GAS340XC-1)" };
@@ -182,7 +182,7 @@ namespace Wpf_ComputerStore.Models
                 ComputerDetail cd12_SSD = new ComputerDetail { Name = "Kingston XS2000 Portable 4TB", Category = c5, Quantity = 70, Price = 11999, Description = "SSD диск Kingston XS2000 Portable 4TB USB  \r\n 3.2 Gen2 (2x2) Type-C IP55 3D NAND (SXS2000/4000G)" };
                 ComputerDetail cd13_SSD = new ComputerDetail { Name = "Samsung 980 Pro 500GB", Category = c5, Quantity = 87, Price = 2949, Description = "SSD диск Samsung 980 Pro 500GB \r\n M.2 PCIe 4.0 x4 V-NAND 3bit MLC \r\n (MZ-V8P500BW)" };
                 ComputerDetail cd14_SSD = new ComputerDetail { Name = "Kingston FURY Renegade with Heatsink 4TB", Category = c5, Quantity = 70, Price = 16599, Description = "SSD диск Kingston FURY Renegade with Heatsink 4TB \r\n  NVMe M.2 2280 PCIe 4.0 x4 3D NAND TLC \r\n (SFYRDK/4000G)" };
-                
+
 
 
                 ComputerDetail cd1_SP = new ComputerDetail { Name = "DeepCool PF750 750W ", Category = c7, Quantity = 100, Price = 2299, Description = "Блок живлення DeepCool PF750 \r\n750W (R-PF750D-HA0B-EU)" };
@@ -343,13 +343,16 @@ namespace Wpf_ComputerStore.Models
                 Computer comp1 = new Computer { Name = "Tor AMD Ryzen", ComputerType = ct1, ComputerDetails = list1, Quantity = 5, Price = 100000 };
                 Computer comp2 = new Computer { Name = "ARTLINE Business", ComputerType = ct2, ComputerDetails = list2, Quantity = 5, Price = 100000 };
                 Computer comp3 = new Computer { Name = "Lenovo IdeaCentre ", ComputerType = ct1, ComputerDetails = list3, Quantity = 5, Price = 100000 };
-                
+
 
 
                 Computers.Add(comp1);
                 Computers.Add(comp2);
                 Computers.Add(comp3);
-               
+
+                Customer customer = new Customer { Name = "Vitaliy", Phone = "6345678908", Points = 100 };
+
+                Customers.Add(customer);
 
                 SaveChanges();
             }
@@ -363,6 +366,7 @@ namespace Wpf_ComputerStore.Models
         public DbSet<PeripheralsType> PeripheralsType { get; set; }
         public DbSet<ComputerType> ComputerTypes { get; set; }
 
+        public DbSet<Customer> Customers { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
