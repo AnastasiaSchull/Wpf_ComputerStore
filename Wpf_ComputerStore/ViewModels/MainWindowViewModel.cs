@@ -31,6 +31,7 @@ namespace Wpf_ComputerStore.ViewModels
             getCategoriesList();
             getPeripheralsTypes();
             getSellers();
+            getSellersList();
             SelectedSeller = Sellers[0];
             cmdAddComputer = new RelayCommand((param) => AddComputer(),(param) => IsAdmin );// щоб тільки адмін міг додати комп'ютер
             cmdDeleteComputer = new RelayCommand((param) => DeleteComputer(), (param) => SelectedComputer != null && IsAdmin );
@@ -51,8 +52,12 @@ namespace Wpf_ComputerStore.ViewModels
             cmdDeleteComputerDetail = new RelayCommand((param) => DeleteComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
             cmdGetComputerDetail = new RelayCommand((param)=> getComputerDetails());
             cmdFindComputerDetail = new RelayCommand ((param) => FindComputerDetail());
-            cmdSaleComputerDetail = new RelayCommand((param) => SaleComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);           
-           
+            cmdSaleComputerDetail = new RelayCommand((param) => SaleComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
+
+            cmdAddSeller = new RelayCommand((param) => AddSeller(), (param)=>isAdmin);
+            cmdEditSeller = new RelayCommand((param) => EditSeller(), (param) => SelectSeller != null && isAdmin);
+            cmdDeleteSeller = new RelayCommand((param) => DeleteSeller(), (param) => SelectSeller != null && isAdmin);
+
             cmdSale = new RelayCommand((param) => Sale(), (param) => !Items.IsNullOrEmpty() && !CustomerName.IsNullOrEmpty() && SelectedSeller!=null);
             cmdPlus = new RelayCommand((param)=>PlusItem(), (param)=> SelectedItem != null);
             cmdMinus = new RelayCommand((param) => MinusItem(), (param) => SelectedItem != null);
@@ -66,6 +71,72 @@ namespace Wpf_ComputerStore.ViewModels
             OrderCart = new OrderCart { Items = new List<ItemForSale>() };
             windowService = new WindowService();
         }
+
+        #region sellers
+        private List<Seller> sellersList;
+        public List<Seller> SellersList
+        {
+            get { return sellersList; }
+            set { sellersList = value;
+                NotifyPropertyChanged("SellersList");
+            }
+        }
+        private Seller selectSeller;
+        public Seller SelectSeller
+        {
+            get { return selectSeller; }
+            set { selectSeller = value;
+                NotifyPropertyChanged("SelectSeller");
+            }
+        }
+        public void getSellersList()
+        {
+            SellersList=_dbContext.Sellers.ToList();
+        }
+        public ICommand cmdAddSeller { get; private set; }
+
+        public void AddSeller()
+        {
+            windowService.openSellerWindow(new SellerViewModel());
+            getSellers();
+            getSellersList();
+        }
+
+        public ICommand cmdEditSeller { get; private set; }
+
+        public void EditSeller()
+        {
+            windowService.openSellerWindow(new SellerViewModel(SelectSeller));
+            getSellers();
+            getSellersList();
+        }
+
+        public ICommand cmdDeleteSeller { get; private set; }
+
+        public void DeleteSeller()
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to delete this seller?", "Delete seller", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.No)
+            {
+                return;
+            }
+            try
+            {
+                _dbContext.Remove(SelectSeller);
+                _dbContext.SaveChanges();
+                getSellers();
+                getSellersList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        #endregion
+
+
+
         #region order
 
         private string customerName;
