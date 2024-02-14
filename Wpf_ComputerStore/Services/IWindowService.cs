@@ -12,6 +12,7 @@ namespace Wpf_ComputerStore.Services
     {
         void openComputerDetailWindow(BaseViewModel viewModel);      
         void openMainWindow(BaseViewModel viewModel);
+        void openSellerWindow(BaseViewModel viewModel);
         void openComputerWindow(BaseViewModel viewModel);
         void openPasswordWindow(BaseViewModel viewModel);
         void openPeripheralWindow(BaseViewModel viewModel);
