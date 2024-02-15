@@ -45,6 +45,7 @@ namespace Wpf_ComputerStore.ViewModels
             GetPeripheralsCommand = new RelayCommand((param) => getPeripherals());
             FindCommand = new RelayCommand((param) => FindPeripheral());
             SalePeripheralCommand = new RelayCommand((param) => SalePeripheral(), (param) => SelectedPeripherals != null && IsAdmin);
+            SortCommand = new RelayCommand((param) => SortPeripheral());
 
             cmdAddComputerDetail = new RelayCommand((param) => AddComputerDetail(), (param) => IsAdmin);
             cmdEditComputerDetail = new RelayCommand((param) => EditComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
@@ -585,6 +586,17 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
+        private int selectedSortCriterion;
+        public int SelectedSortCriterion
+        {
+            get { return selectedSortCriterion; }
+            set
+            {
+                selectedSortCriterion = value;
+                NotifyPropertyChanged("SelectedSortCriterion");
+            }
+        }
+
         public void getPeripherals()
         {
             try
@@ -609,6 +621,7 @@ namespace Wpf_ComputerStore.ViewModels
         public ICommand DeleteCommand { get; private set; }
         public ICommand FindCommand { get; private set; }
         public ICommand GetPeripheralsCommand { get; private set; }
+        public ICommand SortCommand { get; private set; }
 
         public void AddPeripheral()
         {
@@ -683,6 +696,27 @@ namespace Wpf_ComputerStore.ViewModels
                     {
                         res += peripheral.PeripheralsType.Name;
                     }           
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void SortPeripheral()
+        {
+            try
+            {
+                List<Peripherals> result = new List<Peripherals>();
+
+                switch (SelectedSortCriterion)
+                {
+                    case 0:
+                        result = _dbContext.Peripheralss.OrderBy(p => p.Name).ToList();
+                        break;
+                }
+
+                PeripheralsList = new ObservableCollection<Peripherals>(result);
             }
             catch (Exception ex)
             {
