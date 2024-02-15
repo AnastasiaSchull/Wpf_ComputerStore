@@ -708,7 +708,7 @@ namespace Wpf_ComputerStore.ViewModels
 
         public void DeletePeripheral()
         {
-            MessageBoxResult result = MessageBox.Show("Do you want to delete this computer detail?", "Delete computer detail", MessageBoxButton.YesNo);
+            MessageBoxResult result = MessageBox.Show("Do you want to delete this peripheral?", "Delete peripheral", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.No)
             {
                 return;
@@ -784,6 +784,12 @@ namespace Wpf_ComputerStore.ViewModels
                 {
                     case 0:
                         result = _dbContext.Peripheralss.OrderBy(p => p.Name).ToList();
+                        break;
+                    case 1:
+                        result = _dbContext.Peripheralss.OrderBy(p => p.Quantity).ToList();
+                        break;
+                    case 2:
+                        result = _dbContext.Peripheralss.OrderBy(p => p.Price).ToList();
                         break;
                 }
 
