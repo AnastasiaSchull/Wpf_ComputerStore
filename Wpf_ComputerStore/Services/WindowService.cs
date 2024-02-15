@@ -47,5 +47,11 @@ namespace Wpf_ComputerStore.Services
             SMTPWindow window = new SMTPWindow(vm);
             window.ShowDialog();
         }
+
+        public void openCustomerWindow(BaseViewModel vm)
+        {
+            CustomerWindow window = new CustomerWindow(vm);
+            window.ShowDialog();
+        }
     }
 }

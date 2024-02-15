@@ -31,7 +31,9 @@ namespace Wpf_ComputerStore.ViewModels
             getCategoriesList();
             getPeripheralsTypes();
             getSellers();
+            getCustomers();
             SelectedSeller = Sellers[0];
+            SelectedCustomer = CustomersList[0];
             cmdAddComputer = new RelayCommand((param) => AddComputer(),(param) => IsAdmin );// щоб тільки адмін міг додати комп'ютер
             cmdDeleteComputer = new RelayCommand((param) => DeleteComputer(), (param) => SelectedComputer != null && IsAdmin );
             cmdEditComputer = new RelayCommand((param) => EditComputer(), (param) => SelectedComputer != null && IsAdmin);
@@ -53,11 +55,16 @@ namespace Wpf_ComputerStore.ViewModels
             cmdFindComputerDetail = new RelayCommand ((param) => FindComputerDetail());
             cmdSaleComputerDetail = new RelayCommand((param) => SaleComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);           
            
-            cmdSale = new RelayCommand((param) => Sale(), (param) => !Items.IsNullOrEmpty() && !CustomerName.IsNullOrEmpty() && SelectedSeller!=null);
+            cmdSale = new RelayCommand((param) => Sale(), (param) => !Items.IsNullOrEmpty() && SelectedSeller!=null && SelectedCustomer != null);
             cmdPlus = new RelayCommand((param)=>PlusItem(), (param)=> SelectedItem != null);
             cmdMinus = new RelayCommand((param) => MinusItem(), (param) => SelectedItem != null);
             cmdClearCart = new RelayCommand((param) => ClearCart(), (param) =>  !Items.IsNullOrEmpty());
             cmdDeleteFromCart= new RelayCommand((param)=>DeleteFromCart(), (param)=> SelectedItem != null);
+
+            cmdAddCustomer = new RelayCommand((param) => AddCustomer(), (param) => IsAdmin); 
+            cmdDeleteCustomer = new RelayCommand((param) => DeleteCustomer(), (param) => SelectedCustomer != null && IsAdmin);
+            cmdEditCustomer = new RelayCommand((param) => EditCustomer(), (param) => SelectedCustomer != null && IsAdmin);
+
             StartDate = DateTime.Now.AddMonths(-1);
             FinalDate = DateTime.Now;
             cmdCountMoney = new RelayCommand((param) => CountMoney());
@@ -69,11 +76,17 @@ namespace Wpf_ComputerStore.ViewModels
         #region order
 
         private string customerName;
+
         public string CustomerName
         {
             get { return customerName; }
-            set { customerName = value;
-                NotifyPropertyChanged("CustomerName");
+            set
+            {
+                if (customerName != value)
+                {
+                    customerName = value;
+                    NotifyPropertyChanged(nameof(CustomerName));
+                }
             }
         }
 
@@ -281,7 +294,8 @@ namespace Wpf_ComputerStore.ViewModels
             try
             {
                 double sum = 0;
-                OrderCart.CustomerName = CustomerName;
+                OrderCart.CustomerName = SelectedCustomer.Name;
+                CustomerName = SelectedCustomer.Name;
                 OrderCart.Date = DateTime.Now;
                 string bill = "Customer Name: " + CustomerName + "\n";
                 bill += $"Seller: {SelectedSeller.Name}\n";
@@ -298,7 +312,7 @@ namespace Wpf_ComputerStore.ViewModels
 
                 if (_dbContext.Customers.Where(c => c.Name.Equals(CustomerName)).Any())
                 {
-                    
+
                     Customer customer = _dbContext.Customers.Where(c => c.Name.Equals(CustomerName)).First();
                     if ( customer.Points > 0)
                     { 
@@ -321,7 +335,7 @@ namespace Wpf_ComputerStore.ViewModels
 
                         }
                       
-                    }
+                     }
                     customer.Points += (int)sum / 100;
                 }
                 
@@ -345,8 +359,10 @@ namespace Wpf_ComputerStore.ViewModels
                     getComputerDetails();
                     getComputers();
                     getPeripherals();
-             
-            }catch(Exception ex)
+                    getCustomers();
+
+            }
+            catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -820,9 +836,7 @@ namespace Wpf_ComputerStore.ViewModels
                     {
                         res7 += computer.PowerSupply.Name;
 
-                    }
-
-               // }
+                    }              
             }
             catch (Exception ex)
             {
@@ -1091,6 +1105,87 @@ namespace Wpf_ComputerStore.ViewModels
         }
         #endregion
 
+
+
+        #region customers
+        private Customer selectedCustomer;
+
+        public Customer SelectedCustomer
+        {
+            get { return selectedCustomer; }
+            set
+            {
+                selectedCustomer = value;
+                NotifyPropertyChanged(nameof(SelectedCustomer));
+            }
+        }
+
+
+        private List<Customer> customersList = new List<Customer>();
+
+
+        public List<Customer> CustomersList
+        {
+            get { return customersList; }
+            set
+            {
+                customersList = value;
+                NotifyPropertyChanged("CustomersList");
+            }
+        }
+      
+        public void getCustomers()
+        {
+            try
+            {
+                CustomersList = _dbContext.Customers.ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        public ICommand cmdEditCustomer { get; private set; }
+
+        public void EditCustomer()
+        {
+            windowService.openCustomerWindow(new CustomerViewModel(SelectedCustomer));               
+            getCustomers();
+        }
+        public ICommand cmdAddCustomer { get; private set; }
+
+        public void AddCustomer()
+        {
+            windowService.openCustomerWindow(new CustomerViewModel());
+            getCustomers();
+        }
+
+        public ICommand cmdDeleteCustomer { get; private set; }
+
+        public void DeleteCustomer()
+        {
+
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this customer?", "Delete Customer", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {                  
+                    _dbContext.Remove(SelectedCustomer);
+                    _dbContext.SaveChanges();
+
+                    getCustomers();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+       
+
+        #endregion
     }
 
 }

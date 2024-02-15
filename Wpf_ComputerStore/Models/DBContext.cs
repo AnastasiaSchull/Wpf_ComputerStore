@@ -350,12 +350,12 @@ namespace Wpf_ComputerStore.Models
                 Computers.Add(comp2);
                 Computers.Add(comp3);
 
-                Customer customer = new Customer { Name = "Vitaliy", Phone = "6345678908", Points = 100 };
+                Customer customer = new Customer { Name = "Vitaliy", Email = "polyanskiy@itstep.academy", Points = 100 };
 
                 Customers.Add(customer);
 
                 Seller seller1 = new Seller { Name = "Iryna" };
-                Seller seller2 = new Seller { Name = "Anastasia" };
+                Seller seller2 = new Seller { Name = "Anastasia" };//nastasia.schull@gmail.com
                 Seller seller3 = new Seller { Name = "Vlad" };
 
                 Sellers.AddRange(seller1, seller2, seller3);
@@ -363,7 +363,7 @@ namespace Wpf_ComputerStore.Models
             }
 
         }
-        public DbSet<Seller> Sellers { get; set; }
+       
         public DbSet<Category> Categories { get; set; }
         public DbSet<Computer> Computers { get; set; }
         public DbSet<ComputerDetail> ComputerDetails { get; set; }
@@ -371,10 +371,8 @@ namespace Wpf_ComputerStore.Models
         public DbSet<Peripherals> Peripheralss { get; set; }
         public DbSet<PeripheralsType> PeripheralsType { get; set; }
         public DbSet<ComputerType> ComputerTypes { get; set; }
-
         public DbSet<Customer> Customers { get; set; }
-
-
+        public DbSet<Seller> Sellers { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //if (!optionsBuilder.IsConfigured)
