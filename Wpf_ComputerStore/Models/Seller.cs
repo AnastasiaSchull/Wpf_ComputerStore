@@ -10,6 +10,7 @@ namespace Wpf_ComputerStore.Models
     {
         public int ID { get; set; }
         public string Name { get; set; }
+        public string Email {get;set;}
         public virtual ICollection<OrderCart> OrderCarts { get; set; }
     }
 }
