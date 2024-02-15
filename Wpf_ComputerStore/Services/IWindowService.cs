@@ -17,6 +17,7 @@ namespace Wpf_ComputerStore.Services
         void openPasswordWindow(BaseViewModel viewModel);
         void openPeripheralWindow(BaseViewModel viewModel);
         void openSMTPWindow(BaseViewModel viewModel);
+        void openCustomerWindow(BaseViewModel viewModel);
 
     }
 }

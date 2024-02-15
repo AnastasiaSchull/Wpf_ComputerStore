@@ -532,7 +532,7 @@
                                     </Style>
                                 </GridView.ColumnHeaderContainerStyle>
                                 <GridViewColumn  Header=" Name" DisplayMemberBinding="{Binding Path=Name}"   />
-                                <GridViewColumn  Header=" Phone" DisplayMemberBinding="{Binding Path=Phone}"   />
+                                <GridViewColumn  Header=" E-mail" DisplayMemberBinding="{Binding Path=Email}"   />
                                 <GridViewColumn  Header=" Points" DisplayMemberBinding="{Binding Path=Points}"   />
                             </GridView>
                         </ListView.View>
@@ -593,11 +593,10 @@
                         </Button.ToolTip>
                     </Button>
                     <Label  Grid.Column="5" Grid.Row="0" Content="Customer name:"  FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBox  Grid.Column="6" Grid.Row="0" FontSize="20" Text="{Binding CustomerName}" VerticalAlignment="Center"/>
+                    <ComboBox Grid.Column="6" Grid.Row="0" Padding="0" Margin="0,10,10,10" SelectedItem="{Binding SelectedCustomer}" ItemsSource="{Binding CustomersList}" DisplayMemberPath="Name" Style="{StaticResource ComboBoxStyle}"/>
+
                     <Label  Grid.Column="7" Grid.Row="0" Content="Seller:"  FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <ComboBox Grid.Row="0" Grid.Column="8" Padding="0" Margin="0,10,10,10"  Style="{StaticResource ComboBoxStyle}"  SelectedItem="{Binding SelectedSeller}" ItemsSource="{Binding Sellers}" DisplayMemberPath="Name"/>
-
-
 
                     <Button Grid.Column="9" Grid.Row="0"  Style="{StaticResource ButtonStyle}" Padding="0" Height="30" Width="30" Command="{Binding cmdSale}">
                         <Image Source="/static/cart3.png" Height="25" />
@@ -605,7 +604,6 @@
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Sale"/>
                         </Button.ToolTip>
                     </Button>
-
 
                     <ProgressBar Grid.Column="10" Grid.Row="0" Value="{Binding ProgressValue, Mode= TwoWay }"
                       x:Name="DeterminateCircularProgress"
