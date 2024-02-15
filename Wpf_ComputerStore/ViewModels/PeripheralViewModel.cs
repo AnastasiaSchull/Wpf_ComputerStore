@@ -114,7 +114,6 @@ namespace Wpf_ComputerStore.ViewModels
 
         public void AddPeripheral()
         {
-
             try
             {
                 using (DBContext db = new DBContext())
@@ -122,10 +121,8 @@ namespace Wpf_ComputerStore.ViewModels
                     db.Attach(Peripheraltype);
                     if (peripheral == null)
                     {
-
                         Peripherals peripheral = new Peripherals { Name = Name, Quantity = Quantity, PeripheralsType = Peripheraltype, Description = Description, Price = Price };
                         db.Peripheralss.Add(peripheral);
-
                     }
                     else
                     {
@@ -138,14 +135,11 @@ namespace Wpf_ComputerStore.ViewModels
                     }
                     db.SaveChanges();
                 }
-
-
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
             }
-
         }
 
         public bool CanExecute

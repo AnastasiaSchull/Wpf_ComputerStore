@@ -32,6 +32,8 @@ namespace Wpf_ComputerStore.ViewModels
             getPeripheralsTypes();
             getSellers();
             getCustomers();
+            getSellersList();
+
             SelectedSeller = Sellers[0];
             SelectedCustomer = CustomersList[0];
             cmdAddComputer = new RelayCommand((param) => AddComputer(),(param) => IsAdmin );// щоб тільки адмін міг додати комп'ютер
@@ -47,15 +49,21 @@ namespace Wpf_ComputerStore.ViewModels
             GetPeripheralsCommand = new RelayCommand((param) => getPeripherals());
             FindCommand = new RelayCommand((param) => FindPeripheral());
             SalePeripheralCommand = new RelayCommand((param) => SalePeripheral(), (param) => SelectedPeripherals != null && IsAdmin);
+            SortCommand = new RelayCommand((param) => SortPeripheral());
 
             cmdAddComputerDetail = new RelayCommand((param) => AddComputerDetail(), (param) => IsAdmin);
             cmdEditComputerDetail = new RelayCommand((param) => EditComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
             cmdDeleteComputerDetail = new RelayCommand((param) => DeleteComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
             cmdGetComputerDetail = new RelayCommand((param)=> getComputerDetails());
-            cmdFindComputerDetail = new RelayCommand ((param) => FindComputerDetail());
-            cmdSaleComputerDetail = new RelayCommand((param) => SaleComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);           
+            cmdFindComputerDetail = new RelayCommand ((param) => FindComputerDetail());          
            
             cmdSale = new RelayCommand((param) => Sale(), (param) => !Items.IsNullOrEmpty() && SelectedSeller!=null && SelectedCustomer != null);
+            cmdSaleComputerDetail = new RelayCommand((param) => SaleComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
+
+            cmdAddSeller = new RelayCommand((param) => AddSeller(), (param)=>isAdmin);
+            cmdEditSeller = new RelayCommand((param) => EditSeller(), (param) => SelectSeller != null && isAdmin);
+            cmdDeleteSeller = new RelayCommand((param) => DeleteSeller(), (param) => SelectSeller != null && isAdmin);
+           
             cmdPlus = new RelayCommand((param)=>PlusItem(), (param)=> SelectedItem != null);
             cmdMinus = new RelayCommand((param) => MinusItem(), (param) => SelectedItem != null);
             cmdClearCart = new RelayCommand((param) => ClearCart(), (param) =>  !Items.IsNullOrEmpty());
@@ -73,6 +81,72 @@ namespace Wpf_ComputerStore.ViewModels
             OrderCart = new OrderCart { Items = new List<ItemForSale>() };
             windowService = new WindowService();
         }
+
+        #region sellers
+        private List<Seller> sellersList;
+        public List<Seller> SellersList
+        {
+            get { return sellersList; }
+            set { sellersList = value;
+                NotifyPropertyChanged("SellersList");
+            }
+        }
+        private Seller selectSeller;
+        public Seller SelectSeller
+        {
+            get { return selectSeller; }
+            set { selectSeller = value;
+                NotifyPropertyChanged("SelectSeller");
+            }
+        }
+        public void getSellersList()
+        {
+            SellersList=_dbContext.Sellers.ToList();
+        }
+        public ICommand cmdAddSeller { get; private set; }
+
+        public void AddSeller()
+        {
+            windowService.openSellerWindow(new SellerViewModel());
+            getSellers();
+            getSellersList();
+        }
+
+        public ICommand cmdEditSeller { get; private set; }
+
+        public void EditSeller()
+        {
+            windowService.openSellerWindow(new SellerViewModel(SelectSeller));
+            getSellers();
+            getSellersList();
+        }
+
+        public ICommand cmdDeleteSeller { get; private set; }
+
+        public void DeleteSeller()
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to delete this seller?", "Delete seller", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.No)
+            {
+                return;
+            }
+            try
+            {
+                _dbContext.Remove(SelectSeller);
+                _dbContext.SaveChanges();
+                getSellers();
+                getSellersList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        #endregion
+
+
+
         #region order
 
         private string customerName;
@@ -601,6 +675,17 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
+        private int selectedSortCriterion;
+        public int SelectedSortCriterion
+        {
+            get { return selectedSortCriterion; }
+            set
+            {
+                selectedSortCriterion = value;
+                NotifyPropertyChanged("SelectedSortCriterion");
+            }
+        }
+
         public void getPeripherals()
         {
             try
@@ -625,6 +710,7 @@ namespace Wpf_ComputerStore.ViewModels
         public ICommand DeleteCommand { get; private set; }
         public ICommand FindCommand { get; private set; }
         public ICommand GetPeripheralsCommand { get; private set; }
+        public ICommand SortCommand { get; private set; }
 
         public void AddPeripheral()
         {
@@ -640,7 +726,7 @@ namespace Wpf_ComputerStore.ViewModels
 
         public void DeletePeripheral()
         {
-            MessageBoxResult result = MessageBox.Show("Do you want to delete this computer detail?", "Delete computer detail", MessageBoxButton.YesNo);
+            MessageBoxResult result = MessageBox.Show("Do you want to delete this peripheral?", "Delete peripheral", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.No)
             {
                 return;
@@ -699,6 +785,33 @@ namespace Wpf_ComputerStore.ViewModels
                     {
                         res += peripheral.PeripheralsType.Name;
                     }           
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void SortPeripheral()
+        {
+            try
+            {
+                List<Peripherals> result = new List<Peripherals>();
+
+                switch (SelectedSortCriterion)
+                {
+                    case 0:
+                        result = _dbContext.Peripheralss.OrderBy(p => p.Name).ToList();
+                        break;
+                    case 1:
+                        result = _dbContext.Peripheralss.OrderBy(p => p.Quantity).ToList();
+                        break;
+                    case 2:
+                        result = _dbContext.Peripheralss.OrderBy(p => p.Price).ToList();
+                        break;
+                }
+
+                PeripheralsList = new ObservableCollection<Peripherals>(result);
             }
             catch (Exception ex)
             {

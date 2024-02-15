@@ -17,6 +17,11 @@ namespace Wpf_ComputerStore.Services
             window.ShowDialog();
         }
 
+        public void openSellerWindow(BaseViewModel vm)
+        {
+            SellerWindow window = new SellerWindow(vm);
+            window.ShowDialog();
+        }
         public void openMainWindow(BaseViewModel vm)
         {
            // throw new NotImplementedException();

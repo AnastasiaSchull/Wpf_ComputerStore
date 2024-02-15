@@ -354,9 +354,12 @@ namespace Wpf_ComputerStore.Models
 
                 Customers.Add(customer);
 
-                Seller seller1 = new Seller { Name = "Iryna" };
-                Seller seller2 = new Seller { Name = "Anastasia" };//nastasia.schull@gmail.com
-                Seller seller3 = new Seller { Name = "Vlad" };
+
+
+                Seller seller1 = new Seller { Name = "Iryna", Email="chumachenko.bc@gmail.com" };
+                Seller seller2 = new Seller { Name = "Anastasia", Email="nastasia.schull@gmail.com" };
+                Seller seller3 = new Seller { Name = "Vlad", Email="vlad@gmail.com" };
+
 
                 Sellers.AddRange(seller1, seller2, seller3);
                 SaveChanges();
