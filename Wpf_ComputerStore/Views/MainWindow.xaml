@@ -57,7 +57,7 @@
     <Grid >
         <TabControl IsSynchronizedWithCurrentItem="True" HorizontalContentAlignment="Left"  >
 
-            <TabItem Width="94" Padding="0" >
+            <TabItem Width="138" Padding="0" >
                 <TabItem.Header>
                     <TextBlock Text="Computer" FontSize="16" />
                 </TabItem.Header>
@@ -167,7 +167,7 @@
             </TabItem>
 
             <!--<TabItem Header="Computer Details">-->
-            <TabItem >
+            <TabItem Width="158">
                 <TabItem.Header>
                     <TextBlock Text="Computer Details" FontSize="16" />
                 </TabItem.Header>
@@ -260,115 +260,9 @@
                     </ListView>
                 </Grid>
             </TabItem>
-            <!--<TabItem Header="Category">-->
-            <TabItem >
-                <TabItem.Header>
-                    <TextBlock Text="Category" FontSize="16" />
-                </TabItem.Header>
-                <TabControl>
-                    <TabItem Header="Motherboard"  >
-                        <Grid >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="100"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-
-                            <Label Grid.Row="0"  Content="Motherboard" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Матери́нська пла́та, систе́мна пла́та відома також як головна плата на якій містяться основні компоненти комп'ютера, що забезпечують логіку.
-                                Від материнської плати залежить функціональність комп'ютера, що визначається елементами самої плати і підключеними до неї пристроями.</TextBlock>
-
-                            <Image Grid.Row="2" Width="700" Source="/static/matplata.jpg" Margin="0,0,10,20"/>
-                        </Grid>
-                    </TabItem>
-                    <TabItem Header="RAM">
-                        <Grid >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="100"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-
-                            <Label Grid.Row="0"  Content="Random access memory" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Операти́вна па́м'ять (англ. random-access memory, дослівно — пам'ять з довільним доступом, ПДД,[1][2] первинна пам'ять) —
-                            пам'ять ЕОМ, призначена для зберігання коду та даних програм під час їхнього виконання. У сучасних комп'ютерах оперативна пам'ять переважно представлена динамічною пам'яттю з довільним доступом DRAM.</TextBlock>
-
-                            <Image Grid.Row="2" Width="700" Source="/static/ram.jpg" Margin="0,0,10,20"/>
-                        </Grid>
-                    </TabItem>
-                    <TabItem Header="CPU" >
-                        <Grid >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="100"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-
-                            <Label Grid.Row="0"  Content="Central processing unit" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Процесор – це пристрій, що управляє обчисленнями, від нього подаються команди всім частинам комп’ютера.
-                                Тактова частота процесора, розрядність, і адресне визначають характерні особливості процесора. Частота процесора визначає швидкодію комп’ютера, це обсяг операцій, вироблених за 1 секунду.</TextBlock>
-                            <Image Grid.Row="2" Width="700" Source="/static/cpu.jpg" Margin="0,0,10,20"/>
-                        </Grid>
-                    </TabItem>
-                    <TabItem Header="HardDrive">
-                        <Grid >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="100"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-
-                            <Label Grid.Row="0"  Content="Hard Drive" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Жорстки́й диск, або жорстки́й магні́тний диск, або накопичувач на магнітних дисках. Mагнітний диск, основа якого виконана з жорсткого твердого матеріалу (скла, алюмінію тощо). У більшості ЕОМ виконує функцію енергонезалежного носія інформації (комп'ютерної пам'яті чи накопичувача інформації) з довільним доступом.</TextBlock>
-                            <Image Grid.Row="2" Width="700" Source="/static/hdd.png" Margin="0,0,10,20"/>
-                        </Grid>
-                    </TabItem>
-                    <TabItem Header="SSD">
-                        <Grid >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="120"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-
-                            <Label Grid.Row="0"  Content="Solid-state drive" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Твердотілий накопичувач (англ. SSD, solid-state drive) — комп'ютерний запам'ятовувальний пристрій на основі мікросхем пам'яті та контролера керування ними, що не містить рухомих механічних частин.
-                               Розрізняють два види твердотілих накопичувачів: SSD на основі динамічної пам’яті (подібної до оперативної пам'яті комп'ютерів) і SSD на основі флеш-пам'яті.</TextBlock>
-                            <Image Grid.Row="2" Width="700" Source="/static/ssd.jpg" Margin="0,0,10,20"/>
-                        </Grid>
-                    </TabItem>
-                    <TabItem Header="Videocard">
-                        <Grid >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="150"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-
-                            <Label Grid.Row="0"  Content="Video card" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Відеока́рта (англ. video card, також графічна карта, графічний адаптер, графічний прискорювач) — електронний пристрій, частина комп'ютера, призначена для генерації та обробки зображень з подальшим їхнім виведенням на екран периферійного пристрою.
-                               Відеокарта зазвичай є платою розширення і вставляється у слот розширення, універсальний (PCI-Express, PCI, ISA, VLB, EISA, MCA) або спеціалізований (AGP). Проте відеокарта може бути і вбудованою у материнську плату як у вигляді окремого елемента, так і як складової частини північного мосту чипсету або центрального процесора.</TextBlock>
-                            <Image Grid.Row="2" Width="700" Source="/static/videocard.jpg" Margin="0,0,10,20"/>
-                        </Grid>
-                    </TabItem>
-                    <TabItem Header="PowerSupply">
-                        <Grid >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="110"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-
-                            <Label Grid.Row="0"  Content="Power Supply" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Комп'ю́терний блок жи́влення — блок живлення (вторинне джерело живлення), призначений для забезпечення вузлів комп'ютера електричною енергією постійного струму. У його завдання входить перетворення мережевої напруги до заданих значень напруги живлення, її стабілізація і захист від незначних перешкод з боку електричних мереж живлення. Також, завдяки вбудованому вентилятору, він бере участь в охолоджуванні системного блоку.</TextBlock>
-                            <Image Grid.Row="2" Width="700" Source="/static/powersupply.jpg" Margin="0,0,10,20"/>
-                        </Grid>
-                    </TabItem>
-                </TabControl>
-            </TabItem>
-
+           
             <!--<TabItem Header="Peripherals">-->
-            <TabItem>
+            <TabItem Width="138">
                 <TabItem.Header>
                     <TextBlock Text="Peripherals" FontSize="16" />
                 </TabItem.Header>
@@ -478,8 +372,7 @@
                 </Grid>
             </TabItem>
 
-
-            <TabItem>
+            <TabItem Width="138">
                 <TabItem.Header>
                     <TextBlock Text="Customers" FontSize="16" />
                 </TabItem.Header>
@@ -541,7 +434,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem>
+            <TabItem Width="134">
                 <TabItem.Header>
                     <TextBlock Text="OrderCart" FontSize="16" />
                 </TabItem.Header>
@@ -622,7 +515,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem >
+            <TabItem Width="134">
                 <TabItem.Header >
                     <TextBlock Text="Sellers" FontSize="16" />
 
@@ -685,7 +578,7 @@
                     </ListView>
                 </Grid>
             </TabItem>
-            <TabItem>
+            <TabItem Width="138">
                 <TabItem.Header>
                     <TextBlock Text="Statistics" FontSize="16" />
                 </TabItem.Header>
@@ -732,7 +625,115 @@
                     </ListView>
                 </Grid>
             </TabItem>
-            <TabItem HorizontalAlignment="Left">
+
+            <!--<TabItem Header="Category">-->
+            <TabItem Width="134">
+                <TabItem.Header>
+                    <TextBlock Text="Category" FontSize="16" />
+                </TabItem.Header>
+                <TabControl>
+                    <TabItem Header="Motherboard"  >
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0"  Content="Motherboard" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Матери́нська пла́та, систе́мна пла́та відома також як головна плата на якій містяться основні компоненти комп'ютера, що забезпечують логіку.
+                     Від материнської плати залежить функціональність комп'ютера, що визначається елементами самої плати і підключеними до неї пристроями.</TextBlock>
+
+                            <Image Grid.Row="2" Width="700" Source="/static/matplata.jpg" Margin="0,0,10,20"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="RAM">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0"  Content="Random access memory" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Операти́вна па́м'ять (англ. random-access memory, дослівно — пам'ять з довільним доступом, ПДД,[1][2] первинна пам'ять) —
+                 пам'ять ЕОМ, призначена для зберігання коду та даних програм під час їхнього виконання. У сучасних комп'ютерах оперативна пам'ять переважно представлена динамічною пам'яттю з довільним доступом DRAM.</TextBlock>
+
+                            <Image Grid.Row="2" Width="700" Source="/static/ram.jpg" Margin="0,0,10,20"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="CPU" >
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0"  Content="Central processing unit" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Процесор – це пристрій, що управляє обчисленнями, від нього подаються команди всім частинам комп’ютера.
+                     Тактова частота процесора, розрядність, і адресне визначають характерні особливості процесора. Частота процесора визначає швидкодію комп’ютера, це обсяг операцій, вироблених за 1 секунду.</TextBlock>
+                            <Image Grid.Row="2" Width="700" Source="/static/cpu.jpg" Margin="0,0,10,20"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="HardDrive">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0"  Content="Hard Drive" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Жорстки́й диск, або жорстки́й магні́тний диск, або накопичувач на магнітних дисках. Mагнітний диск, основа якого виконана з жорсткого твердого матеріалу (скла, алюмінію тощо). У більшості ЕОМ виконує функцію енергонезалежного носія інформації (комп'ютерної пам'яті чи накопичувача інформації) з довільним доступом.</TextBlock>
+                            <Image Grid.Row="2" Width="700" Source="/static/hdd.png" Margin="0,0,10,20"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="SSD">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="120"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0"  Content="Solid-state drive" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Твердотілий накопичувач (англ. SSD, solid-state drive) — комп'ютерний запам'ятовувальний пристрій на основі мікросхем пам'яті та контролера керування ними, що не містить рухомих механічних частин.
+                    Розрізняють два види твердотілих накопичувачів: SSD на основі динамічної пам’яті (подібної до оперативної пам'яті комп'ютерів) і SSD на основі флеш-пам'яті.</TextBlock>
+                            <Image Grid.Row="2" Width="700" Source="/static/ssd.jpg" Margin="0,0,10,20"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Videocard">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="150"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0"  Content="Video card" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Відеока́рта (англ. video card, також графічна карта, графічний адаптер, графічний прискорювач) — електронний пристрій, частина комп'ютера, призначена для генерації та обробки зображень з подальшим їхнім виведенням на екран периферійного пристрою.
+                    Відеокарта зазвичай є платою розширення і вставляється у слот розширення, універсальний (PCI-Express, PCI, ISA, VLB, EISA, MCA) або спеціалізований (AGP). Проте відеокарта може бути і вбудованою у материнську плату як у вигляді окремого елемента, так і як складової частини північного мосту чипсету або центрального процесора.</TextBlock>
+                            <Image Grid.Row="2" Width="700" Source="/static/videocard.jpg" Margin="0,0,10,20"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="PowerSupply">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="110"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0"  Content="Power Supply" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Комп'ю́терний блок жи́влення — блок живлення (вторинне джерело живлення), призначений для забезпечення вузлів комп'ютера електричною енергією постійного струму. У його завдання входить перетворення мережевої напруги до заданих значень напруги живлення, її стабілізація і захист від незначних перешкод з боку електричних мереж живлення. Також, завдяки вбудованому вентилятору, він бере участь в охолоджуванні системного блоку.</TextBlock>
+                            <Image Grid.Row="2" Width="700" Source="/static/powersupply.jpg" Margin="0,0,10,20"/>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+          
+            <TabItem Width="134" >     
                 <TabItem.Header>
                     <TextBlock Text="About us" FontSize="16" />
                 </TabItem.Header>
