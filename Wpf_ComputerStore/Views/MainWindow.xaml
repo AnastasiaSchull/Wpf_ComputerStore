@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_ComputerStore"
         xmlns:VM="clr-namespace:Wpf_ComputerStore.ViewModels"
+        xmlns:util="clr-namespace:Wpf_ComputerStore.Services"
         mc:Ignorable="d"     
         Title="Computer store"  Height="750" Width="1250" 
         Icon = "/Wpf_ComputerStore;component/static/comp.jpg"
@@ -136,7 +137,7 @@
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Find Computer "/>
                         </Button.ToolTip>
                     </Button>
-                    <ListView ItemContainerStyle="{StaticResource ListViewItemOptionStyle}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="9" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding ComputersList}"  SelectedItem="{Binding SelectedComputer}"  >
+                    <ListView util:GridViewSort.AutoSort="True"  ItemContainerStyle="{StaticResource ListViewItemOptionStyle}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="9" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding ComputersList}"  SelectedItem="{Binding SelectedComputer}"  >
                         <ListView.View >
                             <GridView AllowsColumnReorder="true" >
                                 <GridView.ColumnHeaderToolTip>
@@ -148,7 +149,7 @@
                                         <Setter Property="FontSize" Value="16" />
                                     </Style>
                                 </GridView.ColumnHeaderContainerStyle>
-                                <GridViewColumn  Header=" Name" DisplayMemberBinding="{Binding Path=Name}"   />
+                                <GridViewColumn  Header=" Name" DisplayMemberBinding="{Binding Path=Name}" util:GridViewSort.PropertyName="Name"  />
                                 <GridViewColumn  Header=" Computer Type" DisplayMemberBinding="{Binding Path=ComputerType.Name}"   />
                                 <GridViewColumn  Header=" RAM" DisplayMemberBinding="{Binding Path=RAM.Name}"   />
                                 <GridViewColumn  Header=" Motherboard" DisplayMemberBinding="{Binding Path=Motherboard.Name}"   />
@@ -157,8 +158,8 @@
                                 <GridViewColumn  Header=" SDD" DisplayMemberBinding="{Binding Path=SDD.Name}"   />
                                 <GridViewColumn  Header=" VideoCard" DisplayMemberBinding="{Binding Path=VideoCard.Name}"   />
                                 <GridViewColumn  Header=" PowerSupply" DisplayMemberBinding="{Binding Path=PowerSupply.Name}"   />
-                                <GridViewColumn  Header=" Quantity" DisplayMemberBinding="{Binding Path=Quantity}" />
-                                <GridViewColumn  Header=" Price" DisplayMemberBinding="{Binding Path=Price}" />
+                                <GridViewColumn  Header=" Quantity" DisplayMemberBinding="{Binding Path=Quantity}" util:GridViewSort.PropertyName="Quantity" />
+                                <GridViewColumn  Header=" Price" DisplayMemberBinding="{Binding Path=Price}" util:GridViewSort.PropertyName="Price" />
                             </GridView>
                         </ListView.View>
 
