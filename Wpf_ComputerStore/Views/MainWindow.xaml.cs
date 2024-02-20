@@ -36,7 +36,7 @@ namespace Wpf_ComputerStore.Views
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             MainWindowViewModel mainWindowViewModel = (MainWindowViewModel)DataContext;
-            mainWindowViewModel._dbContext.Dispose();
+           // mainWindowViewModel._dbContext.Dispose();
             mainWindowViewModel._dbContext.Database.CloseConnection();
         }
          
