@@ -655,22 +655,31 @@ namespace Wpf_ComputerStore.ViewModels
         {
             try
             {
-                List<ComputerDetail> result = new List<ComputerDetail>();
-
-                switch (SelectedCDSortCriterion)
+                using (DBContext db = new DBContext())
                 {
-                    case 0:
-                        result = _dbContext.ComputerDetails.OrderBy(p => p.Name).ToList();
-                        break;
-                    case 1:
-                        result = _dbContext.ComputerDetails.OrderBy(p => p.Quantity).ToList();
-                        break;
-                    case 2:
-                        result = _dbContext.ComputerDetails.OrderBy(p => p.Price).ToList();
-                        break;
-                }
+                    List<ComputerDetail> result = new List<ComputerDetail>();
 
-                ComputerDetailsList = new List<ComputerDetail>(result);
+                    switch (SelectedCDSortCriterion)
+                    {
+                        case 0:
+                            result = db.ComputerDetails.OrderBy(p => p.Name).ToList();
+                            break;
+                        case 1:
+                            result = db.ComputerDetails.OrderBy(p => p.Quantity).ToList();
+                            break;
+                        case 2:
+                            result = db.ComputerDetails.OrderBy(p => p.Price).ToList();
+                            break;
+                    }
+
+                    ComputerDetailsList = new List<ComputerDetail>(result);
+
+                    string res = "";
+                    foreach (ComputerDetail cd in ComputerDetailsList)
+                    {
+                        res += cd.Category.Name;
+                    }
+                }
             }
             catch (Exception ex)
             {
