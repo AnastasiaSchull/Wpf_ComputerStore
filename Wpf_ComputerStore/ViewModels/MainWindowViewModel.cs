@@ -899,7 +899,8 @@ namespace Wpf_ComputerStore.ViewModels
         public void getComputers()
         {
             try
-            {             
+            {
+             //   _dbContext = new DBContext();
                     ComputersList = _dbContext.Computers.ToList();
                     string res = "";
                     foreach (Computer computer in ComputersList) //костиль бо не працюе лiнива загрузка
