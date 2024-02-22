@@ -12,7 +12,7 @@ namespace Wpf_ComputerStore.ViewModels
     public class PeripheralViewModel : BaseViewModel
     {
         private Peripherals peripheral;
-
+    
         public PeripheralViewModel()
         {
             getPeripherals();
@@ -20,8 +20,9 @@ namespace Wpf_ComputerStore.ViewModels
             AddCommand = new RelayCommand((param) => AddPeripheral(), (param) => CanExecute);
         }
 
-        public PeripheralViewModel(Peripherals peripheral)
-        {
+      
+        public PeripheralViewModel(Peripherals peripheral) 
+        {         
             this.peripheral = peripheral;
             getPeripherals();
             Peripheraltype = Peripheralstype.Find(c => c.ID == peripheral.PeripheralsType.ID);

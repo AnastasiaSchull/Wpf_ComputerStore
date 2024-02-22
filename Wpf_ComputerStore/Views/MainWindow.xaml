@@ -372,68 +372,6 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Width="138">
-                <TabItem.Header>
-                    <TextBlock Text="Customers" FontSize="16" />
-                </TabItem.Header>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="70"/>
-
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-
-                        <ColumnDefinition Width="60" />
-                        <ColumnDefinition Width="60" />
-                        <ColumnDefinition Width="60" />
-                        <ColumnDefinition  />
-
-                    </Grid.ColumnDefinitions>
-
-                    <Button   Grid.Column="0" Grid.Row="0" Style="{StaticResource ButtonStyle}" Command="{Binding cmdAddCustomer}" Padding="0" Height="33" Width="33" >
-                        <Image Source="/static/plus-circle.png" Height="25"  />
-                        <Button.ToolTip>
-                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Add Customer "/>
-                        </Button.ToolTip>
-                    </Button>
-                    <Button Grid.Column="1" Grid.Row="0"  Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdEditCustomer}" Padding="0" Height="30" Width="30" >
-                        <Image Source="/static/pencil.png" Height="25"  />
-                        <Button.ToolTip>
-                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Edit Customer "/>
-                        </Button.ToolTip>
-                    </Button>
-                    <Button Grid.Column="2" Grid.Row="0"  Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdDeleteCustomer}" Padding="0" Height="30" Width="30" >
-                        <Image Source="/static/trash3.png" Height="25"  />
-                        <Button.ToolTip>
-                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Delete Customer "/>
-                        </Button.ToolTip>
-                    </Button>
-
-
-                    <ListView ItemContainerStyle="{StaticResource ListViewItemOptionStyle}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding CustomersList}"  SelectedItem="{Binding SelectedCustomer}"  >
-                        <ListView.View >
-                            <GridView AllowsColumnReorder="true" >
-                                <GridView.ColumnHeaderToolTip>
-                                    <ToolTip Style="{StaticResource ToolTipStyle}" Content="Customers Information" />
-                                </GridView.ColumnHeaderToolTip>
-                                <GridView.ColumnHeaderContainerStyle>
-                                    <Style TargetType="{x:Type GridViewColumnHeader}">
-                                        <Setter Property="Foreground" Value="#b47fff" />
-                                        <Setter Property="FontSize" Value="16" />
-                                    </Style>
-                                </GridView.ColumnHeaderContainerStyle>
-                                <GridViewColumn  Header=" Name" DisplayMemberBinding="{Binding Path=Name}"   />
-                                <GridViewColumn  Header=" E-mail" DisplayMemberBinding="{Binding Path=Email}"   />
-                                <GridViewColumn  Header=" Points" DisplayMemberBinding="{Binding Path=Points}"   />
-                            </GridView>
-                        </ListView.View>
-
-                    </ListView>
-                </Grid>
-            </TabItem>
-
             <TabItem Width="134">
                 <TabItem.Header>
                     <TextBlock Text="OrderCart" FontSize="16" />
@@ -499,8 +437,8 @@
                     </Button>
 
                     <ProgressBar Grid.Column="10" Grid.Row="0" Value="{Binding ProgressValue, Mode= TwoWay }"
-                      x:Name="DeterminateCircularProgress"
-                      Style="{StaticResource MaterialDesignCircularProgressBar}" />
+           x:Name="DeterminateCircularProgress"
+           Style="{StaticResource MaterialDesignCircularProgressBar}" />
                     <ListView ItemContainerStyle="{StaticResource ListViewItemOptionStyle}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="12" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
 
                         <ListView.View>
@@ -515,6 +453,70 @@
                 </Grid>
             </TabItem>
 
+
+            <TabItem Width="138">
+                <TabItem.Header>
+                    <TextBlock Text="Customers" FontSize="16" />
+                </TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition  />
+
+                    </Grid.ColumnDefinitions>
+
+                    <Button   Grid.Column="0" Grid.Row="0" Style="{StaticResource ButtonStyle}" Command="{Binding cmdAddCustomer}" Padding="0" Height="33" Width="33" >
+                        <Image Source="/static/plus-circle.png" Height="25"  />
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Add Customer "/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Column="1" Grid.Row="0"  Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdEditCustomer}" Padding="0" Height="30" Width="30" >
+                        <Image Source="/static/pencil.png" Height="25"  />
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Edit Customer "/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Column="2" Grid.Row="0"  Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdDeleteCustomer}" Padding="0" Height="30" Width="30" >
+                        <Image Source="/static/trash3.png" Height="25"  />
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Delete Customer "/>
+                        </Button.ToolTip>
+                    </Button>
+
+
+                    <ListView ItemContainerStyle="{StaticResource ListViewItemOptionStyle}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding CustomersList}"  SelectedItem="{Binding SelectedCustomer}"  >
+                        <ListView.View >
+                            <GridView AllowsColumnReorder="true" >
+                                <GridView.ColumnHeaderToolTip>
+                                    <ToolTip Style="{StaticResource ToolTipStyle}" Content="Customers Information" />
+                                </GridView.ColumnHeaderToolTip>
+                                <GridView.ColumnHeaderContainerStyle>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="Foreground" Value="#b47fff" />
+                                        <Setter Property="FontSize" Value="16" />
+                                    </Style>
+                                </GridView.ColumnHeaderContainerStyle>
+                                <GridViewColumn  Header=" Name" DisplayMemberBinding="{Binding Path=Name}"   />
+                                <GridViewColumn  Header=" E-mail" DisplayMemberBinding="{Binding Path=Email}"   />
+                                <GridViewColumn  Header=" Points" DisplayMemberBinding="{Binding Path=Points}"   />
+                            </GridView>
+                        </ListView.View>
+
+                    </ListView>
+                </Grid>
+            </TabItem>
+
+           
             <TabItem Width="134">
                 <TabItem.Header >
                     <TextBlock Text="Sellers" FontSize="16" />
@@ -578,6 +580,7 @@
                     </ListView>
                 </Grid>
             </TabItem>
+            
             <TabItem Width="138">
                 <TabItem.Header>
                     <TextBlock Text="Statistics" FontSize="16" />

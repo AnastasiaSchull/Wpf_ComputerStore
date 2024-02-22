@@ -11,9 +11,9 @@ namespace Wpf_ComputerStore.ViewModels
     public class ComputerViewModel: BaseViewModel
     {
         private Computer computer;
+      
         public ComputerViewModel()
-        {
-           
+        {       
             getRams();
             getPowerSupplys();
             getCPUs();
@@ -33,8 +33,8 @@ namespace Wpf_ComputerStore.ViewModels
             cmdAddComputer = new RelayCommand((param) => AddComputer(), (param) => CanExecute);//додали параметр param
 
         }
-        public ComputerViewModel(Computer computer)
-        {
+        public ComputerViewModel(Computer computer) 
+        {           
             this.computer = computer;
             getComputerTypes(); // наповнюємо список типами і заодно заповнюємо комбобокс через binding
             getRams();
