@@ -55,7 +55,8 @@ namespace Wpf_ComputerStore.ViewModels
             cmdEditComputerDetail = new RelayCommand((param) => EditComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
             cmdDeleteComputerDetail = new RelayCommand((param) => DeleteComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
             cmdGetComputerDetail = new RelayCommand((param)=> getComputerDetails());
-            cmdFindComputerDetail = new RelayCommand ((param) => FindComputerDetail());          
+            cmdFindComputerDetail = new RelayCommand ((param) => FindComputerDetail());
+            cmdSortComputerDetail = new RelayCommand((param) => SortComputerDetail());
            
             cmdSale = new RelayCommand((param) => Sale(), (param) => !Items.IsNullOrEmpty() && SelectedSeller!=null && SelectedCustomer != null);
             cmdSaleComputerDetail = new RelayCommand((param) => SaleComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
@@ -585,6 +586,46 @@ namespace Wpf_ComputerStore.ViewModels
                     _dbContext.SaveChanges();
                
                 getComputerDetails();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public ICommand cmdSortComputerDetail { get; private set; }
+
+        private int selectedCDSortCriterion;
+        public int SelectedCDSortCriterion
+        {
+            get { return selectedCDSortCriterion; }
+            set
+            {
+                selectedCDSortCriterion = value;
+                NotifyPropertyChanged("SelectedCDSortCriterion");
+            }
+        }
+
+        public void SortComputerDetail()
+        {
+            try
+            {
+                List<ComputerDetail> result = new List<ComputerDetail>();
+
+                switch (SelectedCDSortCriterion)
+                {
+                    case 0:
+                        result = _dbContext.ComputerDetails.OrderBy(p => p.Name).ToList();
+                        break;
+                    case 1:
+                        result = _dbContext.ComputerDetails.OrderBy(p => p.Quantity).ToList();
+                        break;
+                    case 2:
+                        result = _dbContext.ComputerDetails.OrderBy(p => p.Price).ToList();
+                        break;
+                }
+
+                ComputerDetailsList = new List<ComputerDetail>(result);
             }
             catch (Exception ex)
             {
