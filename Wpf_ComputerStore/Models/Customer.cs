@@ -12,6 +12,7 @@ namespace Wpf_ComputerStore.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public int Points { get; set; }
-    
+
+
     }
 }

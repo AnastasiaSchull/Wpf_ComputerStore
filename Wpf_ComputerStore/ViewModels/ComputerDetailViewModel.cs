@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,16 +15,20 @@ namespace Wpf_ComputerStore.ViewModels
     {
         private ComputerDetail computerDetail;
 
-        public ComputerDetailViewModel()
+      //  private DBContext db;
+       
+            public ComputerDetailViewModel()//DBContext dbContext)
         {
-            getCategories();
+               // db = dbContext;
+                getCategories();
             Category = Categories[0];        
             cmdAddComputerDetail = new RelayCommand((param) => AddComputerDetail(), (param) => CanExecute);
 
         }
 
-        public ComputerDetailViewModel(ComputerDetail computerDetail)
+        public ComputerDetailViewModel(ComputerDetail computerDetail)//, DBContext dbContext) 
         {
+            //db = dbContext;
             this.computerDetail = computerDetail;
             getCategories();
             Category = Categories.Find(c => c.ID == computerDetail.Category.ID);
@@ -136,7 +141,7 @@ namespace Wpf_ComputerStore.ViewModels
                         db.ComputerDetails.Update(computerDetail);
                     }
                     db.SaveChanges();
-                }
+               }
 
 
             }

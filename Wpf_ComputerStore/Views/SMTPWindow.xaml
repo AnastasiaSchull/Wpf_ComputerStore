@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_ComputerStore.Views"
         mc:Ignorable="d"
-        Title="SMTPWindow" Height="250" Width="400" FontSize="15" 
+        Title="SMTPWindow" Height="250" Width="430" FontSize="15" 
           Icon = "/Wpf_ComputerStore;component/static/comp.jpg"
  
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -21,11 +21,11 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width ="150"/>
+            <ColumnDefinition Width ="165"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
@@ -47,9 +47,9 @@
             secure password:
         </Label>
         <PasswordBox x:Name="MyPasswordBox" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" MinWidth="72" PasswordChanged="MyPasswordBox_PasswordChanged"/>
-        
 
-        <Button Grid.Row="3" Grid.ColumnSpan="2" Command="{Binding cmdSend}" Click="close_Window"  >
+
+        <Button Grid.Row="3" Grid.ColumnSpan="2" Style="{StaticResource ButtonStyle}" Command="{Binding cmdSend}" Click="close_Window"  >
             Надiслати
         </Button>
     </Grid>

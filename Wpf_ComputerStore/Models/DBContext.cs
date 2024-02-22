@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -356,9 +357,9 @@ namespace Wpf_ComputerStore.Models
 
 
 
-                Seller seller1 = new Seller { Name = "Iryna", Email="chumachenko.bc@gmail.com" };
-                Seller seller2 = new Seller { Name = "Anastasia", Email="nastasia.schull@gmail.com" };
-                Seller seller3 = new Seller { Name = "Vlad", Email="vlad@gmail.com" };
+                Seller seller1 = new Seller { Name = "Iryna", Email = "chumachenko.bc@gmail.com" };
+                Seller seller2 = new Seller { Name = "Anastasia", Email = "nastasia.schull@gmail.com" };
+                Seller seller3 = new Seller { Name = "Vlad", Email = "vlad@gmail.com" };
 
 
                 Sellers.AddRange(seller1, seller2, seller3);
@@ -366,7 +367,7 @@ namespace Wpf_ComputerStore.Models
             }
 
         }
-       
+
         public DbSet<Category> Categories { get; set; }
         public DbSet<Computer> Computers { get; set; }
         public DbSet<ComputerDetail> ComputerDetails { get; set; }
@@ -381,8 +382,9 @@ namespace Wpf_ComputerStore.Models
             //if (!optionsBuilder.IsConfigured)
             //{
             optionsBuilder.UseLazyLoadingProxies();//@"Server=LAPTOP-DG4K3PMR;Database=ComputerStore;Integrated Security=SSPI;TrustServerCertificate=true", options => options.EnableRetryOnFailure());
-                                                   // }
-        }
-    }
 
+        }
+
+    }
 }
+

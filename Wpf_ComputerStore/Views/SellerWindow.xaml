@@ -5,25 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_ComputerStore.Views"
         mc:Ignorable="d"
-        Title="SellerWindow" Height="200" Width="300">
+        Title="SellerWindow" Height="250" Width="350">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="200"/>
 
         </Grid.ColumnDefinitions>
-        <Label Content="Seller" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="24"/>
-        <Label Content="Name:" Grid.Row="1" FontSize="18"/>
-        <Label Content="Email:" Grid.Row="2" FontSize="18"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name}"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Email}"/>
-        <Button Content="Save" Grid.Row="3" Command="{Binding cmdSave}" Click="CloseWindow" />
-        <Button Content="Cancel" Grid.Column="1" Grid.Row="3" Width="100" HorizontalAlignment="Right" Click="CloseWindow"/>
+        <Label Content="Seller" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="24" VerticalAlignment="Bottom"/>
+        <Label Content="Name:" Grid.Row="1" FontSize="16" VerticalAlignment="Bottom" Margin="5"/>
+        <Label Content="Email:" Grid.Row="2" FontSize="16" VerticalAlignment="Bottom" Margin="5"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Bottom" Margin="5"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Email}" VerticalAlignment="Bottom" Margin="5"/>
+        <Button Content="Cancel" Style="{StaticResource ButtonStyle}" Grid.Row="3"  Click="CloseWindow" />
+        <Button Content="Save" Style="{StaticResource ButtonStyle}" Grid.Column="1" Grid.Row="3" Width="130" Command="{Binding cmdSave}" HorizontalAlignment="Center" Click="CloseWindow"/>
     </Grid>
 </Window>

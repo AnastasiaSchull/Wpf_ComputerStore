@@ -14,6 +14,8 @@ namespace Wpf_ComputerStore.Models
         public virtual List<ItemForSale> Items { get; set; }
 
         public virtual Seller Seller { get; set; }
-      
+
+       
+
     }
 }

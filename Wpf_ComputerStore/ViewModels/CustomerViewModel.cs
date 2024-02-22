@@ -14,15 +14,17 @@ namespace Wpf_ComputerStore.ViewModels
     public class CustomerViewModel : BaseViewModel
     {
         public Customer customer;
-
-        public CustomerViewModel()
-        {
+              
+            
+            public CustomerViewModel()
+        {           
             getCustomers();
             AddCommand = new RelayCommand((param) => AddCustomer(), (param) => CanExecute);
         }
 
         public CustomerViewModel(Customer customer)
         {
+            
             getCustomers();
             this.customer = customer;
             Name = customer.Name;

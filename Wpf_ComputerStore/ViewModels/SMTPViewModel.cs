@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Wpf_ComputerStore.Services;
-
+using Wpf_ComputerStore.Models;
 namespace Wpf_ComputerStore.ViewModels
 {
     public class SMTPViewModel: BaseViewModel
     {
-        public SMTPViewModel(string mes)
+        public SMTPViewModel(string mes, Customer c, Seller s)
         {
             Message = mes;
             cmdSend = new RelayCommand((param) => Send());
-          
+            ManagerEmail = s.Email;
+            ClientEmail = c.Email;
         }
 
         private string password;
