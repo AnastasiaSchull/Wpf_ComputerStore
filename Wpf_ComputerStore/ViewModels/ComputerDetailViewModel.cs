@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using Wpf_ComputerStore.Commands;
 using Wpf_ComputerStore.Models;
 
 namespace Wpf_ComputerStore.ViewModels
