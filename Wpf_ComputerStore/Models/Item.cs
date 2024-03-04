@@ -12,7 +12,19 @@ namespace Wpf_ComputerStore.Models
         public string Name { get; set; }
         public int Quantity { get; set; }
         public double Price { get; set; }
-        
+        public int? Discount { get; set; }
+        public DateTime? DiscountDate { get; set; }
+        public DateTime DateIn { get; set; }
+
+
+        public void ApplyDiscount(double discountPercentage, int days)
+        {           
+            Discount =(int) discountPercentage ;
+            // дата окончания скидки
+            DiscountDate = DateTime.Now.AddDays(days);
+        }
+
+
 
     }
 }

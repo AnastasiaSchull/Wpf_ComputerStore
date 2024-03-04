@@ -1,0 +1,44 @@
+﻿<Window x:Class="Wpf_ComputerStore.Views.DiscountWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_ComputerStore.Views"
+        mc:Ignorable="d"
+        Title="DiscountWindow" Height="250" Width="400"
+        Icon = "/Wpf_ComputerStore;component/static/comp.jpg"
+        
+
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+     TextElement.Foreground="{DynamicResource MaterialDesignBody}" 
+     TextElement.FontWeight="Regular"
+     TextElement.FontSize="18"        
+     TextOptions.TextFormattingMode="Ideal"
+     TextOptions.TextRenderingMode="Auto"
+     FontFamily="{DynamicResource MaterialDesignFont}"  Foreground="#6600CC" ResizeMode="NoResize" >
+
+    <Grid>
+        <Grid.RowDefinitions>
+            
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <Label Grid.Row="0" Grid.Column="0" Margin="10,30,10,10" FontSize="14" >Enter discount:</Label>
+        <TextBox Grid.Row="0" Grid.Column="1" Margin="10,30,10,10" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" PreviewTextInput="TextBox_PreviewTextInput"  Text="{Binding Discount}" ></TextBox>
+        <Label Grid.Row="1" Grid.Column="0" Margin="10,30,10,10" FontSize="14">Choose amount of days:</Label>
+        <ComboBox Grid.Row="1" Grid.Column="1" Margin="10" SelectedIndex="{Binding ItemIndex}" >
+            <ComboBoxItem>One day</ComboBoxItem>
+            <ComboBoxItem>One week</ComboBoxItem>
+            <ComboBoxItem>Two weeks</ComboBoxItem>
+        </ComboBox>
+        <Button Grid.Column="0" Grid.Row="3" Margin="10" Content="Cansel" Style="{StaticResource ButtonStyle}"  Click="CloseWindow"/>
+        <Button Grid.Column="1" Grid.Row="3" Margin="10" Content="Make discount" Style="{StaticResource ButtonStyle}" Command="{Binding cmdMakeDiscount}" Click="clickMakeDicount"/>
+
+    </Grid>
+</Window>
