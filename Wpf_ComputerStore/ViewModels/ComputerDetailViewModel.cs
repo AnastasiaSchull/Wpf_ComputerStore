@@ -14,20 +14,17 @@ namespace Wpf_ComputerStore.ViewModels
     {
         private ComputerDetail computerDetail;
 
-      //  private DBContext db;
        
-            public ComputerDetailViewModel()//DBContext dbContext)
+            public ComputerDetailViewModel()
         {
-               // db = dbContext;
-                getCategories();
+            getCategories();
             Category = Categories[0];        
             cmdAddComputerDetail = new RelayCommand((param) => AddComputerDetail(), (param) => CanExecute);
 
         }
 
-        public ComputerDetailViewModel(ComputerDetail computerDetail)//, DBContext dbContext) 
-        {
-            //db = dbContext;
+        public ComputerDetailViewModel(ComputerDetail computerDetail) 
+        {       
             this.computerDetail = computerDetail;
             getCategories();
             Category = Categories.Find(c => c.ID == computerDetail.Category.ID);

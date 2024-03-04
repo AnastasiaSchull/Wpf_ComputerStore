@@ -44,7 +44,7 @@
         <Label Content="Description:" Grid.Row="5" Grid.Column="0" Margin="5"/>
         <TextBox Text="{Binding Description}" Grid.Row="5" Grid.Column="1" Margin="5"/>
 
-         <Button Grid.Row="6" Grid.Column="0" Content="Cancel" Margin="10" Click="CloseWindow"/>
-        <Button Grid.Row="6" Grid.Column="1" Content="Save" Margin="10" Command="{Binding cmdAddComputerDetail}" Click="CloseWindow"/>
+        <Button Grid.Row="6" Grid.Column="0" Content="Cancel" Margin="10" Style="{StaticResource ButtonStyle}" Click="CloseWindow"/>
+        <Button Grid.Row="6" Grid.Column="1" Content="Save" Margin="10" Style="{StaticResource ButtonStyle}" Command="{Binding cmdAddComputerDetail}" Click="CloseWindow"/>
     </Grid>
 </Window>

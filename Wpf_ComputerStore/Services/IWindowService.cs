@@ -18,6 +18,6 @@ namespace Wpf_ComputerStore.Services
         void openPeripheralWindow(BaseViewModel viewModel);
         void openSMTPWindow(BaseViewModel viewModel);
         void openCustomerWindow(BaseViewModel viewModel);
-
+        void OpenDiscountWindow(BaseViewModel viewModel);
     }
 }

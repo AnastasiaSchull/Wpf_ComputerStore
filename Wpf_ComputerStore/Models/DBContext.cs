@@ -100,7 +100,7 @@ namespace Wpf_ComputerStore.Models
                 ComputerDetail cd9_CPU = new ComputerDetail { Name = "AMD Ryzen 9 7900X3D", Category = c3, Quantity = 75, Price = 19889, Description = "Процесор AMD Ryzen 9 7900X3D \r\n4.4GHz/128MB (100-100000909WOF) sAM5 BOX" };
                 ComputerDetail cd10_CPU = new ComputerDetail { Name = "Intel Core i5-13400", Category = c3, Quantity = 50, Price = 10199, Description = "Процесор Intel Core i5-13400 \r\n 2.5GHz/20MB (BX8071513400) s1700 BOX" };
                 ComputerDetail cd11_CPU = new ComputerDetail { Name = "Intel Core i5-12500", Category = c3, Quantity = 70, Price = 9999, Description = "Процесор Intel Core i5-12500 \r\n 3.0GHz/18MB (BX8071512500) s1700 BOX" };
-                ComputerDetail cd12_CPU = new ComputerDetail { Name = " Intel Pentium Gold G6405", Category = c3, Quantity = 30, Price = 4448, Description = "Процесор Intel Pentium Gold G6405 \r\n 4.1GHz/4MB (BX80701G6405) s1200 BOX" };
+                ComputerDetail cd12_CPU = new ComputerDetail { Name = "Intel Pentium Gold G6405", Category = c3, Quantity = 30, Price = 4448, Description = "Процесор Intel Pentium Gold G6405 \r\n 4.1GHz/4MB (BX80701G6405) s1200 BOX" };
                 ComputerDetail cd13_CPU = new ComputerDetail { Name = "Intel Core i7-13700", Category = c3, Quantity = 80, Price = 16799, Description = "Процесор Intel Core i7-13700  \r\n 2.1GHz/30MB (BX8071513700) s1700 BOX" };
                 ComputerDetail cd14_CPU = new ComputerDetail { Name = "AMD Ryzen 3 4100", Category = c3, Quantity = 80, Price = 2499, Description = "Процесор AMD Ryzen 3 4100 \r\n 3.8GHz/4MB (100-100000510BOX) sAM4 BOX" };
 
@@ -128,7 +128,7 @@ namespace Wpf_ComputerStore.Models
                 ComputerDetail cd5_VC = new ComputerDetail { Name = "Asus PCI-Ex Radeon RX 6750 XT Dual", Category = c6, Quantity = 50, Price = 16999, Description = "Відеокарта Asus PCI-Ex Radeon RX 6750 XT Dual \r\n OC 12GB GDDR6 (192bit) (2512/18000)\r\n (HDMI, 3 x DisplayPort) (DUAL-RX6750XT-O12G)" };
                 ComputerDetail cd6_VC = new ComputerDetail { Name = "XFX PCI-Ex Radeon RX 6800", Category = c6, Quantity = 30, Price = 18709, Description = "XFX PCI-Ex Radeon RX 6800 Speedster SWFT 319 \r\n 16GB GDDR6 (256bit) (1700/16000)\r\n (HDMI, 3 x DisplayPort) (RX-68XLAQFD9)" };
                 ComputerDetail cd7_VC = new ComputerDetail { Name = "Gigabyte PCI-Ex GeForce RTX 4070 Ti Aero", Category = c6, Quantity = 40, Price = 38499, Description = "Відеокарта Gigabyte PCI-Ex GeForce RTX 4070  \r\n Ti Aero OC V2 12GB GDDR6X  \r\n (192bit) (2640/21000) (HDMI, 3 x DisplayPort)  \r\n (GV-N407TAERO OCV2-12GD)" };
-                ComputerDetail cd8_VC = new ComputerDetail { Name = " XFX Radeon RX 580 ", Category = c6, Quantity = 50, Price = 3340, Description = "Вiдеокарта XFX Radeon RX 580 (2048sp) 8GB GDDR5  \r\n (256bit) (1286/7000)  \r\n (DVI, HDMI, 3 x DisplayPort) (RX-580-2048SP) Б/В" };
+                ComputerDetail cd8_VC = new ComputerDetail { Name = "XFX Radeon RX 580 ", Category = c6, Quantity = 50, Price = 3340, Description = "Вiдеокарта XFX Radeon RX 580 (2048sp) 8GB GDDR5  \r\n (256bit) (1286/7000)  \r\n (DVI, HDMI, 3 x DisplayPort) (RX-580-2048SP) Б/В" };
                 ComputerDetail cd9_VC = new ComputerDetail { Name = "SAPPHIRE Radeon RX 470", Category = c6, Quantity = 30, Price = 2940, Description = "Відеокарта SAPPHIRE Radeon RX 470 4GB NITRO  \r\n (1236/7000) with DVI Б/В" };
                 ComputerDetail cd10_VC = new ComputerDetail { Name = "Gainward GeForce GTX 1660 ", Category = c6, Quantity = 40, Price = 7940, Description = "Вiдеокарта Gainward GeForce GTX 1660 Ti Ghost \r\n OC 6GB GDDR6 (192bit) (1815/12000)\r\n (HDMI, DisplayPort, DVI-D) (426018336-4436)" };
                 ComputerDetail cd11_VC = new ComputerDetail { Name = "Sapphire Radeon RX580 (2048sp)", Category = c6, Quantity = 50, Price = 5450, Description = "Відеокарта Sapphire Radeon RX580 \r\n (2048sp) 8Gb 256bit DDR5 DVI HDMI DPort OEM" };
@@ -345,8 +345,6 @@ namespace Wpf_ComputerStore.Models
                 Computer comp2 = new Computer { Name = "ARTLINE Business", ComputerType = ct2, ComputerDetails = list2, Quantity = 5, Price = 100000 };
                 Computer comp3 = new Computer { Name = "Lenovo IdeaCentre ", ComputerType = ct1, ComputerDetails = list3, Quantity = 5, Price = 100000 };
 
-
-
                 Computers.Add(comp1);
                 Computers.Add(comp2);
                 Computers.Add(comp3);
@@ -377,6 +375,7 @@ namespace Wpf_ComputerStore.Models
         public DbSet<ComputerType> ComputerTypes { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Seller> Sellers { get; set; }
+        public DbSet<Item> Items { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //if (!optionsBuilder.IsConfigured)

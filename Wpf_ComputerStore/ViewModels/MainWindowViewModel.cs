@@ -12,6 +12,7 @@ using Wpf_ComputerStore.Services;
 using System.Threading;
 using System.Threading.Tasks;
 using Castle.Core.Resource;
+using System.Collections;
 namespace Wpf_ComputerStore.ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
@@ -31,9 +32,9 @@ namespace Wpf_ComputerStore.ViewModels
             getSellers();
             getCustomers();
             getSellersList();
-            getCustomersList();
+            getCustomersList();            
             SelectedSeller = Sellers[0];
-            SelectedCustomer = CustomersList[0];
+            SelectedCustomer = CustomersList[0];           
             cmdAddComputer = new RelayCommand((param) => AddComputer(),(param) => IsAdmin );// щоб тільки адмін міг додати комп'ютер
             cmdDeleteComputer = new RelayCommand((param) => DeleteComputer(), (param) => SelectedComputer != null && IsAdmin );
             cmdEditComputer = new RelayCommand((param) => EditComputer(), (param) => SelectedComputer != null && IsAdmin);
@@ -71,6 +72,10 @@ namespace Wpf_ComputerStore.ViewModels
             cmdAddCustomer = new RelayCommand((param) => AddCustomer(), (param) => IsAdmin); 
             cmdDeleteCustomer = new RelayCommand((param) => DeleteCustomer(), (param) => SelectedCustomer != null && IsAdmin);
             cmdEditCustomer = new RelayCommand((param) => EditCustomer(), (param) => SelectedCustomer != null && IsAdmin);
+
+            cmdMakeDiscount = new RelayCommand((param) => MakeDiscount(), (param) => IsAdmin);
+            
+
 
             StartDate = DateTime.Now.AddMonths(-1);
             FinalDate = DateTime.Now;
@@ -394,7 +399,8 @@ namespace Wpf_ComputerStore.ViewModels
                     cart.Items = new List<ItemForSale>();
                     foreach (ItemForSale item in Items)
                     {
-                        if( item.Item is Computer)
+                       
+                        if ( item.Item is Computer)
                         {
                             ItemForSale it = new ItemForSale { Item = db.Computers.Where(c => c.ID == item.Item.ID).First(), Quantity = item.Quantity };
                             cart.Items.Add(it);
@@ -541,6 +547,14 @@ namespace Wpf_ComputerStore.ViewModels
                     {
                         res += cd.Category.Name;
 
+                        if (cd.DiscountDate != null && cd.DiscountDate > DateTime.Now)
+                        {
+                            cd.Price *= (100.0 - (int)cd.Discount) / 100;
+
+                            double discountedPrice = cd.Price;
+                            cd.Price = Math.Round(discountedPrice, 2);
+                        }
+
                     }
                 }
             }
@@ -586,7 +600,15 @@ namespace Wpf_ComputerStore.ViewModels
                 {
                     res += cd.Category.Name;
 
-                }
+                        if (cd.DiscountDate != null && cd.DiscountDate > DateTime.Now)
+                        {
+                            cd.Price *= (100.0 - (int)cd.Discount) / 100;
+
+                            double discountedPrice = cd.Price;
+                            cd.Price = Math.Round(discountedPrice, 2);
+                        }
+
+                    }
 
             }
             }
@@ -673,11 +695,19 @@ namespace Wpf_ComputerStore.ViewModels
                     }
 
                     ComputerDetailsList = new List<ComputerDetail>(result);
-
                     string res = "";
                     foreach (ComputerDetail cd in ComputerDetailsList)
                     {
                         res += cd.Category.Name;
+
+                        if (cd.DiscountDate != null && cd.DiscountDate > DateTime.Now)
+                        {
+                            cd.Price *= (100.0 - (int)cd.Discount) / 100;
+
+                            double discountedPrice = cd.Price;
+                            cd.Price = Math.Round(discountedPrice, 2);
+                        }
+
                     }
                 }
             }
@@ -795,6 +825,14 @@ namespace Wpf_ComputerStore.ViewModels
                     {
                         res += pr.PeripheralsType.Name;
 
+                        if (pr.DiscountDate != null && pr.DiscountDate > DateTime.Now)
+                        {
+                            pr.Price *= (100.0 - (int)pr.Discount) / 100;
+
+                            double discountedPrice = pr.Price;
+                            pr.Price = Math.Round(discountedPrice, 2);
+                        }
+
                     }
 
                 }
@@ -882,9 +920,7 @@ namespace Wpf_ComputerStore.ViewModels
                     case 3:
                         result = db.Peripheralss.Where(pr => pr.Quantity == Int32.Parse(CriteriaPeripheral)).ToList();
                         break;
-                    case 4:
-                        result = db.Peripheralss.Where(pr => pr.Price == Int32.Parse(CriteriaPeripheral)).ToList();
-                        break;
+                   
                 }
 
                 // Створюємо новий об'єкт ObservableCollection на основі результатів запиту
@@ -894,6 +930,14 @@ namespace Wpf_ComputerStore.ViewModels
                 foreach (Peripherals peripheral in PeripheralsList)
                 {
                     res += peripheral.PeripheralsType.Name;
+
+                    if (peripheral.DiscountDate != null && peripheral.DiscountDate > DateTime.Now)
+                    {
+                        peripheral.Price *= (100.0 - (int)peripheral.Discount) / 100;
+
+                        double discountedPrice = peripheral.Price;
+                        peripheral.Price = Math.Round(discountedPrice, 2);
+                    }
                 }
             }
             }
@@ -929,6 +973,14 @@ namespace Wpf_ComputerStore.ViewModels
                     foreach (Peripherals peripheral in PeripheralsList)
                     {
                         res += peripheral.PeripheralsType.Name;
+
+                        if (peripheral.DiscountDate != null && peripheral.DiscountDate > DateTime.Now)
+                        {
+                            peripheral.Price *= (100.0 - (int)peripheral.Discount) / 100;
+
+                            double discountedPrice = peripheral.Price;
+                            peripheral.Price = Math.Round(discountedPrice, 2);                           
+                        }
                     }
                 }
             }
@@ -1074,6 +1126,13 @@ namespace Wpf_ComputerStore.ViewModels
                     foreach (Computer computer in ComputersList)
                     {
                         res7 += computer.PowerSupply.Name;
+                        if(computer.DiscountDate!=null && computer.DiscountDate > DateTime.Now)
+                        {
+                            computer.Price *= (100.0 - (int)computer.Discount) / 100;
+
+                            double discountedPrice = computer.Price;
+                            computer.Price = Math.Round(discountedPrice, 2);
+                        }
 
                     }
                 }
@@ -1184,6 +1243,15 @@ namespace Wpf_ComputerStore.ViewModels
                     foreach (Computer computer in ComputersList) //костиль бо не працюе лiнива загрузка
                     {
                         res += computer.ComputerType.Name;
+
+                        if (computer.DiscountDate != null && computer.DiscountDate > DateTime.Now)
+                        {
+                             computer.Price *= (100.0 - (int)computer.Discount) / 100;
+
+                            double discountedPrice = computer.Price;
+                            computer.Price = Math.Round(discountedPrice, 2);
+
+                        }
 
                     }
                     string res1 = "";
@@ -1361,8 +1429,8 @@ namespace Wpf_ComputerStore.ViewModels
 
         #region customers
 
-        private List<Customer> customers;//
-        public List<Customer> Customers//
+        private List<Customer> customers;
+        public List<Customer> Customers
         {
             get { return customers; }
             set
@@ -1384,9 +1452,9 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
-        private Customer selectCustomer;//
+        private Customer selectCustomer;
 
-        public Customer SelectCustomer//
+        public Customer SelectCustomer
         {
             get { return selectCustomer; }
             set
@@ -1478,10 +1546,34 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
-       
+
 
         #endregion
+
+
+        public ICommand cmdMakeDiscount { get; private set; }
+
+        void MakeDiscount()
+        {
+            windowService.OpenDiscountWindow(new DiscountViewModel(tabIndex));       
+            getComputers();
+            getComputerDetails();
+            getPeripherals();
+
+        }
+
+        private int tabIndex;
+
+        public int TabIndex
+        {
+            get { return tabIndex; }
+            set { tabIndex = value;
+            NotifyPropertyChanged(nameof(TabIndex));}
+        }
+
+
     }
+
 
 }
 

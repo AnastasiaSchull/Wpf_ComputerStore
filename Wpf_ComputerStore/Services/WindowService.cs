@@ -58,5 +58,13 @@ namespace Wpf_ComputerStore.Services
             CustomerWindow window = new CustomerWindow(vm);
             window.ShowDialog();
         }
+
+        public void OpenDiscountWindow(BaseViewModel vm)
+        {
+            DiscountWindow window = new DiscountWindow(vm);            
+            window.ShowDialog();
+        }
+
     }
 }
+
