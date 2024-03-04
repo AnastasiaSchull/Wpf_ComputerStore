@@ -16,7 +16,7 @@ namespace Wpf_ComputerStore.ViewModels
         public Customer customer;
               
             
-            public CustomerViewModel()
+        public CustomerViewModel()
         {           
             getCustomers();
             AddCommand = new RelayCommand((param) => AddCustomer(), (param) => CanExecute);

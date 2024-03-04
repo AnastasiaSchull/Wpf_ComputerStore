@@ -707,6 +707,7 @@ namespace Wpf_ComputerStore.ViewModels
                             double discountedPrice = cd.Price;
                             cd.Price = Math.Round(discountedPrice, 2);
                         }
+
                     }
                 }
             }
