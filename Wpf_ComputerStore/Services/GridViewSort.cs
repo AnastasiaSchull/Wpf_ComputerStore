@@ -6,22 +6,24 @@ using System.Windows.Media;
 
 namespace Wpf_ComputerStore.Services
 {
-
+    // Клас, який надає функціональність сортування GridView
     public class GridViewSort
     {
         #region Attached properties
 
+        // Отримати команду
         public static ICommand GetCommand(DependencyObject obj)
         {
             return (ICommand)obj.GetValue(CommandProperty);
         }
 
+        // Встановити команду
         public static void SetCommand(DependencyObject obj, ICommand value)
         {
             obj.SetValue(CommandProperty, value);
         }
 
-        // Using a DependencyProperty as the backing store for Command.  This enables animation, styling, binding, etc...
+        // Властивість команди
         public static readonly DependencyProperty CommandProperty =
             DependencyProperty.RegisterAttached(
                 "Command",
@@ -34,7 +36,7 @@ namespace Wpf_ComputerStore.Services
                         ItemsControl listView = o as ItemsControl;
                         if (listView != null)
                         {
-                            if (!GetAutoSort(listView)) // Don't change click handler if AutoSort enabled
+                            if (!GetAutoSort(listView)) // Не змінювати обробник кліку, якщо ввімкнено автосортування
                             {
                                 if (e.OldValue != null && e.NewValue == null)
                                 {
@@ -50,17 +52,19 @@ namespace Wpf_ComputerStore.Services
                 )
             );
 
+        // Отримати автосортування
         public static bool GetAutoSort(DependencyObject obj)
         {
             return (bool)obj.GetValue(AutoSortProperty);
         }
 
+        // Встановити автосортування
         public static void SetAutoSort(DependencyObject obj, bool value)
         {
             obj.SetValue(AutoSortProperty, value);
         }
 
-        // Using a DependencyProperty as the backing store for AutoSort.  This enables animation, styling, binding, etc...
+        // Властивість автосортування
         public static readonly DependencyProperty AutoSortProperty =
             DependencyProperty.RegisterAttached(
                 "AutoSort",
@@ -73,7 +77,7 @@ namespace Wpf_ComputerStore.Services
                         ListView listView = o as ListView;
                         if (listView != null)
                         {
-                            if (GetCommand(listView) == null) // Don't change click handler if a command is set
+                            if (GetCommand(listView) == null) // Не змінювати обробник кліку, якщо встановлено команду
                             {
                                 bool oldValue = (bool)e.OldValue;
                                 bool newValue = (bool)e.NewValue;
@@ -91,17 +95,19 @@ namespace Wpf_ComputerStore.Services
                 )
             );
 
+        // Отримати назву властивості
         public static string GetPropertyName(DependencyObject obj)
         {
             return (string)obj.GetValue(PropertyNameProperty);
         }
 
+        // Встановити назву властивості
         public static void SetPropertyName(DependencyObject obj, string value)
         {
             obj.SetValue(PropertyNameProperty, value);
         }
 
-        // Using a DependencyProperty as the backing store for PropertyName.  This enables animation, styling, binding, etc...
+        // Властивість назви властивості
         public static readonly DependencyProperty PropertyNameProperty =
             DependencyProperty.RegisterAttached(
                 "PropertyName",
@@ -146,6 +152,7 @@ namespace Wpf_ComputerStore.Services
 
         #region Helper methods
 
+        // Отримати предка типу T
         public static T GetAncestor<T>(DependencyObject reference) where T : DependencyObject
         {
             DependencyObject parent = VisualTreeHelper.GetParent(reference);
@@ -159,6 +166,7 @@ namespace Wpf_ComputerStore.Services
                 return null;
         }
 
+        // Застосувати сортування
         public static void ApplySort(ICollectionView view, string propertyName)
         {
             ListSortDirection direction = ListSortDirection.Ascending;
@@ -182,5 +190,4 @@ namespace Wpf_ComputerStore.Services
 
         #endregion
     }
-
 }

@@ -156,14 +156,14 @@
                                     </Style>
                                 </GridView.ColumnHeaderContainerStyle>
                                 <GridViewColumn  Header=" Name" DisplayMemberBinding="{Binding Path=Name}" util:GridViewSort.PropertyName="Name"  />
-                                <GridViewColumn  Header=" Computer Type" DisplayMemberBinding="{Binding Path=ComputerType.Name}"   />
-                                <GridViewColumn  Header=" RAM" DisplayMemberBinding="{Binding Path=RAM.Name}"   />
-                                <GridViewColumn  Header=" Motherboard" DisplayMemberBinding="{Binding Path=Motherboard.Name}"   />
-                                <GridViewColumn  Header=" CPU" DisplayMemberBinding="{Binding Path=CPU.Name}"   />
-                                <GridViewColumn  Header=" HardDrive" DisplayMemberBinding="{Binding Path=HardDrive.Name}"   />
-                                <GridViewColumn  Header=" SDD" DisplayMemberBinding="{Binding Path=SDD.Name}"   />
-                                <GridViewColumn  Header=" VideoCard" DisplayMemberBinding="{Binding Path=VideoCard.Name}"   />
-                                <GridViewColumn  Header=" PowerSupply" DisplayMemberBinding="{Binding Path=PowerSupply.Name}"   />
+                                <GridViewColumn  Header=" Computer Type" DisplayMemberBinding="{Binding Path=ComputerType.Name}"  util:GridViewSort.PropertyName="ComputerType.Name" />
+                                <GridViewColumn  Header=" RAM" DisplayMemberBinding="{Binding Path=RAM.Name}"  util:GridViewSort.PropertyName="RAM.Name" />
+                                <GridViewColumn  Header=" Motherboard" DisplayMemberBinding="{Binding Path=Motherboard.Name}"  util:GridViewSort.PropertyName="Motherboard.Name"  />
+                                <GridViewColumn  Header=" CPU" DisplayMemberBinding="{Binding Path=CPU.Name}" util:GridViewSort.PropertyName="CPU.Name"  />
+                                <GridViewColumn  Header=" HardDrive" DisplayMemberBinding="{Binding Path=HardDrive.Name}" util:GridViewSort.PropertyName="HardDrive.Name"  />
+                                <GridViewColumn  Header=" SDD" DisplayMemberBinding="{Binding Path=SDD.Name}" util:GridViewSort.PropertyName="SDD.Name"  />
+                                <GridViewColumn  Header=" VideoCard" DisplayMemberBinding="{Binding Path=VideoCard.Name}" util:GridViewSort.PropertyName="VideoCard.Name"  />
+                                <GridViewColumn  Header=" PowerSupply" DisplayMemberBinding="{Binding Path=PowerSupply.Name}"  util:GridViewSort.PropertyName="PowerSupply.Name" />
                                 <GridViewColumn  Header=" Quantity" DisplayMemberBinding="{Binding Path=Quantity}" util:GridViewSort.PropertyName="Quantity" />
                                 <GridViewColumn  Header=" Price" DisplayMemberBinding="{Binding Path=Price}" util:GridViewSort.PropertyName="Price" />
                             </GridView>
