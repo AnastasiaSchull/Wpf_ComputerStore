@@ -16,10 +16,8 @@ namespace Wpf_ComputerStore.ViewModels
         private Seller seller;
 
         public SellerViewModel()
-        {
-           
+        {           
             cmdSave = new RelayCommand((param) => Save(), (param) => CanExecute);
-
         }
 
         public SellerViewModel(Seller seller)

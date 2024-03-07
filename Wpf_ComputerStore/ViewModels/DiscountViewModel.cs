@@ -19,13 +19,13 @@ namespace Wpf_ComputerStore.ViewModels
             
             cmdMakeDiscount = new RelayCommand((param) => MakeDiscount(), (param) => CanExecute);
             
-            this.tab = tab; 
-            getItems();
-            SelectedItem = ItemsList[0];
+            this.tab = tab;            
             Discount = "0";
         }
+
         private int tab;
         private string discount;
+
         public string Discount
         {
             get { return discount; }
@@ -35,17 +35,7 @@ namespace Wpf_ComputerStore.ViewModels
                 NotifyPropertyChanged("Discount");
             }
         }
-
-        private Item selectedItem;
-        public Item SelectedItem
-        {
-            get { return selectedItem; }
-            set
-            {
-                selectedItem = value;
-                NotifyPropertyChanged("SelectedItem");
-            }
-        }
+      
 
         private int itemIndex;
         public int ItemIndex
@@ -58,25 +48,7 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
-        private List<Item> itemsList;
-        public List<Item> ItemsList
-        {
-            get { return itemsList; }
-            set
-            {
-                itemsList = value;
-                NotifyPropertyChanged("ItemsList");
-            }
-        }
-
-        private void getItems()
-        {
-            using (DBContext db = new DBContext())
-            {
-                ItemsList = db.Items.ToList();
-            }
-        }
-
+        
         public ICommand cmdMakeDiscount
         {
             get;
@@ -132,8 +104,7 @@ namespace Wpf_ComputerStore.ViewModels
                     }
                    
                         db.SaveChanges();
-                      
-                       // MessageBox.Show("Discount applied successfully.");
+                                           
                 }
             }
             catch (Exception ex)
@@ -142,10 +113,6 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
-        //public bool CanExecute
-        //{
-        //    get { return !string.IsNullOrEmpty(Discount) ; }
-        //}
 
         public bool CanExecute
         {

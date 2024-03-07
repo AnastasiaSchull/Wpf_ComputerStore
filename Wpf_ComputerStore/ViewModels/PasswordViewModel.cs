@@ -21,6 +21,7 @@ namespace Wpf_ComputerStore.ViewModels
             windowService = new WindowService();
             cmdLogIn = new RelayCommand((param) => clickLogIn()) ;      
         }
+
         public ICommand cmdLogIn { get; private set; }
        
         public void clickLogIn()
@@ -36,8 +37,8 @@ namespace Wpf_ComputerStore.ViewModels
             }
            
         }
-        private string pass;
 
+        private string pass;
         public string Pass
         {
             get { return pass; }
