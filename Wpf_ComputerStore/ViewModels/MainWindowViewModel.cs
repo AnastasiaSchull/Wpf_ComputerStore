@@ -132,7 +132,9 @@ namespace Wpf_ComputerStore.ViewModels
 
         public void DeleteSeller()
         {
-            MessageBoxResult result = MessageBox.Show("Do you want to delete this seller?", "Delete seller", MessageBoxButton.YesNo);
+
+            MessageBoxResult result = MessageBox.Show("Do you want to delete this seller?", "Delete seller", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
             if (result == MessageBoxResult.No)
             {
                 return;
@@ -154,7 +156,6 @@ namespace Wpf_ComputerStore.ViewModels
         }
 
         #endregion
-
 
 
         #region order
@@ -433,7 +434,7 @@ namespace Wpf_ComputerStore.ViewModels
                         if (customer.Points > 0)
                         {
 
-                            MessageBoxResult point = MessageBox.Show($"You have {customer.Points} points", "Do you want to use your points?", MessageBoxButton.YesNo);
+                            MessageBoxResult point = MessageBox.Show($"You have {customer.Points} points", "Do you want to use your points?", MessageBoxButton.YesNo, MessageBoxImage.Question);
                             if (point == MessageBoxResult.Yes)
                             {
                                 if (sum <= customer.Points)
@@ -441,19 +442,14 @@ namespace Wpf_ComputerStore.ViewModels
                                     customer.Points -= (int)sum;
                                     sum = 0;
                                 }
-
                                 else
                                 {
                                     sum -= customer.Points;
                                     customer.Points = 0;
-
                                 }
-
                             }
-
                         }
-                        customer.Points += (int)sum / 100;
-                      
+                        customer.Points += (int)sum / 100;                      
                     }
 
                     bill += $"Total bill: {sum}";
@@ -466,7 +462,7 @@ namespace Wpf_ComputerStore.ViewModels
                         NotifyPropertyChanged(nameof(ProgressValue));
                     }
 
-                    MessageBoxResult res = MessageBox.Show(bill, "Do you want to send the bill on e-mail?", MessageBoxButton.YesNo);
+                    MessageBoxResult res = MessageBox.Show(bill, "Do you want to send the bill on e-mail?", MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (res == MessageBoxResult.Yes)
                     {
                         windowService.openSMTPWindow(new SMTPViewModel(bill, SelectedCustomer, SelectedSeller));
@@ -638,7 +634,9 @@ namespace Wpf_ComputerStore.ViewModels
 
         public void DeleteComputerDetail()
         {
-            MessageBoxResult result = MessageBox.Show("Do you want to delete this computer detail?", "Delete computer detail", MessageBoxButton.YesNo);
+
+            MessageBoxResult result = MessageBox.Show("Do you want to delete this computer detail?", "Delete computer detail", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
             if (result == MessageBoxResult.No) {
                 return;
             }
@@ -720,6 +718,7 @@ namespace Wpf_ComputerStore.ViewModels
 
         #endregion
 
+
         #region peripherals_type
 
         private List<PeripheralsType> peripheralsTypeList = new List<PeripheralsType>();
@@ -765,8 +764,8 @@ namespace Wpf_ComputerStore.ViewModels
 
 
         #region peripheral
-        private ObservableCollection<Peripherals> peripheralsList = new ObservableCollection<Peripherals>();
 
+        private ObservableCollection<Peripherals> peripheralsList = new ObservableCollection<Peripherals>();
 
         public ObservableCollection<Peripherals> PeripheralsList
         {
@@ -863,7 +862,8 @@ namespace Wpf_ComputerStore.ViewModels
 
         public void DeletePeripheral()
         {
-            MessageBoxResult result = MessageBox.Show("Do you want to delete this peripheral?", "Delete peripheral", MessageBoxButton.YesNo);
+            MessageBoxResult result = MessageBox.Show("Do you want to delete this peripheral?", "Delete peripheral", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
             if (result == MessageBoxResult.No)
             {
                 return;
@@ -871,11 +871,11 @@ namespace Wpf_ComputerStore.ViewModels
             try
             {
                 using (DBContext db = new DBContext())
-                {
-                    // Проверяем, находится ли SelectedPeripherals в состоянии отсоединения (Detached)
+                { 
+                    // Перевіряем, чи знаходиться SelectedPeripherals в стані Від'єднано (Detached)                    
                     if (db.Entry(SelectedPeripherals).State == EntityState.Detached)
                     {
-                        // Если да, то сначала присоединяем его к контексту
+                        //Якщо так, то спочатку приєднуємо його до контексту
                         db.Attach(SelectedPeripherals);
                     }
 
@@ -1546,10 +1546,10 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
-
-
         #endregion
 
+
+        #region discount
 
         public ICommand cmdMakeDiscount { get; private set; }
 
@@ -1571,9 +1571,9 @@ namespace Wpf_ComputerStore.ViewModels
             NotifyPropertyChanged(nameof(TabIndex));}
         }
 
+        #endregion
 
     }
-
 
 }
 

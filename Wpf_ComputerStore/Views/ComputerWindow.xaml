@@ -54,7 +54,7 @@
         <TextBox Text="{Binding Price}" Grid.Row="10" Grid.Column="1" Margin="5" GotFocus="TextBox_GotFocus" />
         <Label Content="Quantity" Grid.Row="11" Grid.Column="0" Margin="5" FontSize="16"></Label>
         <TextBox Text="{Binding Quantity}" Grid.Row="11" Grid.Column="1" Margin="5" GotFocus="TextBox_GotFocus"/>
-        <Button Grid.Row="12" Grid.Column="0" Content="Save" Margin="5" FontSize="18" Style="{StaticResource ButtonStyle}" Command="{Binding cmdAddComputer}" Click="CloseWindow"></Button>
-        <Button Grid.Row="12" Grid.Column="1" Content="Cancel" Margin="5" FontSize="18" Style="{StaticResource ButtonStyle}" Click="CloseWindow"></Button>
+        <Button Grid.Row="12" Grid.Column="1" Content="Save" Margin="5" FontSize="18" Style="{StaticResource ButtonStyle}" Command="{Binding cmdAddComputer}" Click="CloseWindow"></Button>
+        <Button Grid.Row="12" Grid.Column="0" Content="Cancel" Margin="5" FontSize="18" Style="{StaticResource ButtonStyle}" Click="CloseWindow"></Button>
     </Grid>
 </Window>
