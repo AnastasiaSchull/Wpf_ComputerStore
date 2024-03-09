@@ -25,11 +25,8 @@ namespace Wpf_ComputerStore.Views
             DataContext = vm;
             (vm as PasswordViewModel).CloseAction = new Action(() => this.Close());//iнiцiалiзуэмо делегат, щоб закривалося саме це вiкно
             InitializeComponent();
-            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-           
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;           
         }
-
-      
 
         //властивість Pass в ViewModel буде оновлюватися при кожній зміні вмісту PasswordBox
         private void MyPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
@@ -42,7 +39,6 @@ namespace Wpf_ComputerStore.Views
                
             }
            
-        }
-     
+        }    
     }
 }

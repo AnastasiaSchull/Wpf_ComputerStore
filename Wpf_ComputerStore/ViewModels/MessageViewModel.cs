@@ -33,6 +33,5 @@ namespace Wpf_ComputerStore.ViewModels
             windowService.openMainWindow(new MainWindowViewModel(false));
             CloseAction();
         }
-
     }
 }

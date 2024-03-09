@@ -22,16 +22,13 @@ namespace Wpf_ComputerStore.Views
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {
-        
+    {       
         public MainWindow(BaseViewModel vm)
         {
             InitializeComponent();
             DataContext = vm;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;//щоб розташувати вікно у центрi         
         }
-
-        
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {

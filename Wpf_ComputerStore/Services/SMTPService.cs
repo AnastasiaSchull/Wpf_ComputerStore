@@ -16,12 +16,9 @@ namespace Wpf_ComputerStore.Services
         { 
         }
         public void Send(string receiver, string body, string subject, string password, string sender)
-        {
-           
+        {         
                 try
-                {
-
-                 
+                {               
                             //MailMessage - представляет сообщение электронной почты, которое может быть отправлено с помощью класса SmtpClient.
                             MailMessage message = new MailMessage();
                             message.To.Add(new MailAddress(receiver)); // электронный адрес получателя (login@itstep.academy) polyanskiy@itstep.academy  

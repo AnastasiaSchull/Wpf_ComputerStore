@@ -14,17 +14,15 @@ namespace Wpf_ComputerStore.ViewModels
     {
         private ComputerDetail computerDetail;
 
-       
-            public ComputerDetailViewModel()
+        public ComputerDetailViewModel()
         {
             getCategories();
-            Category = Categories[0];        
+            Category = Categories[0];
             cmdAddComputerDetail = new RelayCommand((param) => AddComputerDetail(), (param) => CanExecute);
-
         }
 
-        public ComputerDetailViewModel(ComputerDetail computerDetail) 
-        {       
+        public ComputerDetailViewModel(ComputerDetail computerDetail)
+        {
             this.computerDetail = computerDetail;
             getCategories();
             Category = Categories.Find(c => c.ID == computerDetail.Category.ID);
@@ -114,7 +112,6 @@ namespace Wpf_ComputerStore.ViewModels
 
         public void AddComputerDetail()
         {
-
             try
             {
                 using (DBContext db = new DBContext())
@@ -122,10 +119,8 @@ namespace Wpf_ComputerStore.ViewModels
                     db.Attach(Category);
                     if (computerDetail == null)
                     {
-
                         ComputerDetail computerDetail = new ComputerDetail { Name = Name, Quantity = Quantity, Category = Category, Description = Description, Price = Price };
                         db.ComputerDetails.Add(computerDetail);
-
                     }
                     else
                     {
@@ -137,21 +132,17 @@ namespace Wpf_ComputerStore.ViewModels
                         db.ComputerDetails.Update(computerDetail);
                     }
                     db.SaveChanges();
-               }
-
-
+                }
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
             }
-
         }
 
         public bool CanExecute
         {
             get { return !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Description) && Quantity != 0 && Price != 0; }
         }
-
     }
 }

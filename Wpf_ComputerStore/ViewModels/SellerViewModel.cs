@@ -14,7 +14,6 @@ namespace Wpf_ComputerStore.ViewModels
     public class SellerViewModel: BaseViewModel
     {
         private Seller seller;
-
         public SellerViewModel()
         {           
             cmdSave = new RelayCommand((param) => Save(), (param) => CanExecute);
@@ -22,8 +21,7 @@ namespace Wpf_ComputerStore.ViewModels
 
         public SellerViewModel(Seller seller)
         {
-            this.seller = seller;
-           
+            this.seller = seller;          
             Name = seller.Name;
             Email = seller.Email;
             cmdSave = new RelayCommand((param) => Save(), (param) => CanExecute);
@@ -51,21 +49,16 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
         public ICommand cmdSave { get; set; }
-
         public void Save()
         {
-
             try
             {
                 using (DBContext db = new DBContext())
-                {
-                   
+                {                   
                     if (seller == null)
                     {
-
                         Seller seller = new Seller { Name = Name, Email=Email};
                         db.Sellers.Add(seller);
-
                     }
                     else
                     {
@@ -76,14 +69,11 @@ namespace Wpf_ComputerStore.ViewModels
                     }
                     db.SaveChanges();
                 }
-
-
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
             }
-
         }
 
         public bool CanExecute

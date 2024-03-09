@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 namespace Wpf_ComputerStore.Models
 {
     public class Category
-    {
-        
+    {       
         public int ID { get; set; }
         public string Name { get; set; }
 

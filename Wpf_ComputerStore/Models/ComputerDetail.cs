@@ -10,8 +10,7 @@ using System.Threading.Tasks;
 namespace Wpf_ComputerStore.Models
 {
     public class ComputerDetail:Item
-    {
-      
+    {     
         public virtual Category Category { get; set; }
         public string Description { get; set; }
         public virtual ICollection<Computer> Computers { get; set; }

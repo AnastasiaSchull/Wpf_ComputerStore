@@ -12,8 +12,7 @@ using Wpf_ComputerStore.Models;
 namespace Wpf_ComputerStore.Models
 {
     public class Computer: Item
-    {
-   
+    {  
         public virtual ComputerType ComputerType { get; set; }      
         public virtual List< ComputerDetail> ComputerDetails { get; set; }
         [NotMapped]  // щоб не створювалась колонка в базі даних
@@ -138,6 +137,5 @@ namespace Wpf_ComputerStore.Models
             }
             set { powerSupply = value; }
         }
-
     }
 }

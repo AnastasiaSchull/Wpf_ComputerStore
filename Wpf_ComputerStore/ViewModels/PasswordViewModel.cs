@@ -22,8 +22,7 @@ namespace Wpf_ComputerStore.ViewModels
             cmdLogIn = new RelayCommand((param) => clickLogIn()) ;      
         }
 
-        public ICommand cmdLogIn { get; private set; }
-       
+        public ICommand cmdLogIn { get; private set; }       
         public void clickLogIn()
         {
             if(Pass.Equals("1234"))
@@ -34,8 +33,7 @@ namespace Wpf_ComputerStore.ViewModels
             else
             {
                 MessageBox.Show("Incorrect password", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-           
+            }          
         }
 
         private string pass;

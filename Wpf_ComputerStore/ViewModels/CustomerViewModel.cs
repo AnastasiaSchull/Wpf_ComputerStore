@@ -13,9 +13,7 @@ namespace Wpf_ComputerStore.ViewModels
 {
     public class CustomerViewModel : BaseViewModel
     {
-        public Customer customer;
-              
-            
+        public Customer customer;                        
         public CustomerViewModel()
         {           
             getCustomers();
@@ -90,7 +88,6 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
         public ICommand AddCommand { get; set; }
-
 
         public void AddCustomer()
         {

@@ -11,16 +11,15 @@ namespace Wpf_ComputerStore.ViewModels
 {
     public class PeripheralViewModel : BaseViewModel
     {
-        private Peripherals peripheral;
-    
+
+        private Peripherals peripheral;    
         public PeripheralViewModel()
         {
             getPeripherals();
             Peripheraltype = Peripheralstype[0];
             AddCommand = new RelayCommand((param) => AddPeripheral(), (param) => CanExecute);
         }
-
-      
+    
         public PeripheralViewModel(Peripherals peripheral) 
         {         
             this.peripheral = peripheral;
@@ -47,7 +46,9 @@ namespace Wpf_ComputerStore.ViewModels
                 MessageBox.Show(ex.Message);
             }
         }
+
         #region variables
+
         private string name;
         public string Name
         {
@@ -58,6 +59,7 @@ namespace Wpf_ComputerStore.ViewModels
                 NotifyPropertyChanged("Name");
             }
         }
+
         private string description;
         public string Description
         {
@@ -68,6 +70,7 @@ namespace Wpf_ComputerStore.ViewModels
                 NotifyPropertyChanged("Description");
             }
         }
+
         private int quantity;
         public int Quantity
         {
@@ -78,6 +81,7 @@ namespace Wpf_ComputerStore.ViewModels
                 NotifyPropertyChanged("Quantity");
             }
         }
+
         private double price;
         public double Price
         {
@@ -88,6 +92,7 @@ namespace Wpf_ComputerStore.ViewModels
                 NotifyPropertyChanged("Price");
             }
         }
+
         private PeripheralsType peripheraltype;
         public PeripheralsType Peripheraltype
         {
@@ -112,7 +117,6 @@ namespace Wpf_ComputerStore.ViewModels
         #endregion
 
         public ICommand AddCommand { get; set; }
-
         public void AddPeripheral()
         {
             try
