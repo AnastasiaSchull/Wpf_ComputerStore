@@ -15,8 +15,7 @@ namespace Wpf_ComputerStore.ViewModels
     public class DiscountViewModel :  BaseViewModel 
     {
         public DiscountViewModel(int tab)
-        {
-            
+        {           
             cmdMakeDiscount = new RelayCommand((param) => MakeDiscount(), (param) => CanExecute);
             
             this.tab = tab;            
@@ -36,7 +35,6 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
       
-
         private int itemIndex;
         public int ItemIndex
         {
@@ -47,7 +45,6 @@ namespace Wpf_ComputerStore.ViewModels
                 NotifyPropertyChanged("ItemIndex");
             }
         }
-
         
         public ICommand cmdMakeDiscount
         {
@@ -55,7 +52,6 @@ namespace Wpf_ComputerStore.ViewModels
             private set;
         }
    
-
         public void MakeDiscount()
         {
             try
@@ -112,7 +108,6 @@ namespace Wpf_ComputerStore.ViewModels
                 MessageBox.Show(ex.Message);
             }
         }
-
 
         public bool CanExecute
         {

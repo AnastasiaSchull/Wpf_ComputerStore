@@ -25,7 +25,6 @@ namespace Wpf_ComputerStore.Views
             InitializeComponent();
             this.DataContext = vm;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;//щоб розташувати у центрi діалогове вікно додавання ( редагування) деталей
-
         }
         public void CloseWindow(object sender, RoutedEventArgs e)
         {

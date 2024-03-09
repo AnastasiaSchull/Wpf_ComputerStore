@@ -32,7 +32,6 @@ namespace Wpf_ComputerStore.Views
         {
             Close();
         }
-
        
     }
 }

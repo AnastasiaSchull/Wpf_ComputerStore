@@ -30,6 +30,6 @@ namespace Wpf_ComputerStore.Models
         }
         public int Points { get; set; }
 
-
+        public virtual ICollection<OrderCart> OrderCarts { get; set; }
     }
 }

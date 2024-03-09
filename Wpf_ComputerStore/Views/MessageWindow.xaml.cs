@@ -29,8 +29,6 @@ namespace Wpf_ComputerStore.Views
 
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;           
         }
-
-       
-    }
-   
+      
+    }   
 }

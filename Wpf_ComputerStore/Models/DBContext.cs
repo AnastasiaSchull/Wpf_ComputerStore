@@ -341,18 +341,87 @@ namespace Wpf_ComputerStore.Models
                 list3.Add(cd3_VC);
                 list3.Add(cd3_SP);
 
-                Computer comp1 = new Computer { Name = "Tor AMD Ryzen", ComputerType = ct1, ComputerDetails = list1, Quantity = 5, Price = 100000 };
-                Computer comp2 = new Computer { Name = "ARTLINE Business", ComputerType = ct2, ComputerDetails = list2, Quantity = 5, Price = 100000 };
-                Computer comp3 = new Computer { Name = "Lenovo IdeaCentre ", ComputerType = ct1, ComputerDetails = list3, Quantity = 5, Price = 100000 };
+                List<ComputerDetail> list4 = new List<ComputerDetail>();
+                list4.Add(cd4_RAM);
+                list4.Add(cd4_Motherboard);
+                list4.Add(cd4_CPU);
+                list4.Add(cd4_HD);
+                list4.Add(cd4_SSD);
+                list4.Add(cd4_VC);
+                list4.Add(cd4_SP);
+
+                List<ComputerDetail> list5 = new List<ComputerDetail>();
+                list5.Add(cd5_RAM);
+                list5.Add(cd5_Motherboard);
+                list5.Add(cd5_CPU);
+                list5.Add(cd5_HD);
+                list5.Add(cd5_SSD);
+                list5.Add(cd5_VC);
+                list5.Add(cd5_SP);
+
+                List<ComputerDetail> list6 = new List<ComputerDetail>();
+                list6.Add(cd6_RAM);
+                list6.Add(cd6_Motherboard);
+                list6.Add(cd6_CPU);
+                list6.Add(cd6_HD);
+                list6.Add(cd6_SSD);
+                list6.Add(cd6_VC);
+                list6.Add(cd6_SP);
+
+                List<ComputerDetail> list7 = new List<ComputerDetail>();
+                list7.Add(cd7_RAM);
+                list7.Add(cd7_Motherboard);
+                list7.Add(cd7_CPU);
+                list7.Add(cd7_HD);
+                list7.Add(cd7_SSD);
+                list7.Add(cd7_VC);
+                list7.Add(cd7_SP);
+
+                List<ComputerDetail> list8 = new List<ComputerDetail>();
+                list8.Add(cd8_RAM);
+                list8.Add(cd8_Motherboard);
+                list8.Add(cd8_CPU);
+                list8.Add(cd8_HD);
+                list8.Add(cd8_SSD);
+                list8.Add(cd8_VC);
+                list8.Add(cd8_SP);
+
+                List<ComputerDetail> list9 = new List<ComputerDetail>();
+                list9.Add(cd9_RAM);
+                list9.Add(cd9_Motherboard);
+                list9.Add(cd9_CPU);
+                list9.Add(cd9_HD);
+                list9.Add(cd9_SSD);
+                list9.Add(cd9_VC);
+                list9.Add(cd9_SP);
+
+
+                Computer comp1 = new Computer { Name = "Tor AMD Ryzen", ComputerType = ct1, ComputerDetails = list1, Quantity = 5, Price = 92000 };
+                Computer comp2 = new Computer { Name = "ARTLINE Business", ComputerType = ct2, ComputerDetails = list2, Quantity = 9, Price = 68000 };
+                Computer comp3 = new Computer { Name = "Lenovo IdeaCentre ", ComputerType = ct1, ComputerDetails = list3, Quantity = 8, Price = 100000 }; 
+
+                Computer comp4 = new Computer { Name = "HP ProDesk ", ComputerType = ct1, ComputerDetails = list4, Quantity = 15, Price = 49000 }; 
+                Computer comp5 = new Computer { Name = "Dell Vostro 15 ", ComputerType = ct2, ComputerDetails = list5, Quantity = 12, Price = 45000 };
+                Computer comp6 = new Computer { Name = "Asus PC Gamer ", ComputerType = ct1, ComputerDetails = list6, Quantity = 15, Price = 65000 };
+                Computer comp7 = new Computer { Name = "Lenovo IdeaPad ", ComputerType = ct2, ComputerDetails = list7, Quantity = 7, Price = 57000 };
+                Computer comp8 = new Computer { Name = "CyberPowerPC ", ComputerType = ct1, ComputerDetails = list8, Quantity = 3, Price = 99000 };
+                Computer comp9 = new Computer { Name = "HP 470 G10 ", ComputerType = ct2, ComputerDetails = list9, Quantity = 4, Price = 55000 };
+
 
                 Computers.Add(comp1);
                 Computers.Add(comp2);
                 Computers.Add(comp3);
+                Computers.Add(comp4);
+                Computers.Add(comp5);
+                Computers.Add(comp6);
+                Computers.Add(comp7);
+                Computers.Add(comp8);
+                Computers.Add(comp9);
+
 
                 Customer customer = new Customer { Name = "Vitaliy", Email = "polyanskiy@itstep.academy", Points = 100 };
 
                 Customers.Add(customer);
-
 
 
                 Seller seller1 = new Seller { Name = "Iryna", Email = "chumachenko.bc@gmail.com" };

@@ -29,6 +29,7 @@ namespace Wpf_ComputerStore.ViewModels
                 NotifyPropertyChanged("Password");
             }
         }
+
         private string managerEmail;
         public string ManagerEmail
         {
@@ -50,16 +51,14 @@ namespace Wpf_ComputerStore.ViewModels
                 NotifyPropertyChanged("ClientEmail");
             }
         }
-        public string Message { get; set; }
 
-      
+        public string Message { get; set; }
+        public ICommand cmdSend { get; private set; }
         public void Send()
         {
             SMTPService service = new SMTPService();
             service.Send(ClientEmail, Message, "Bill", Password, ManagerEmail);
-        }
-
-        public ICommand cmdSend { get; private set; }
+        }    
 
     }
 }

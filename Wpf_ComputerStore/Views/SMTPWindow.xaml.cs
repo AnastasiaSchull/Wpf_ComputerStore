@@ -25,7 +25,6 @@ namespace Wpf_ComputerStore.Views
             InitializeComponent();
             this.DataContext = vm;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
         }
 
         private void MyPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
@@ -35,9 +34,7 @@ namespace Wpf_ComputerStore.Views
             if (DataContext is SMTPViewModel viewModel)
             {
                 viewModel.Password = passwordBox.Password;
-
             }
-
         }
 
         private void close_Window(object sender, RoutedEventArgs e)

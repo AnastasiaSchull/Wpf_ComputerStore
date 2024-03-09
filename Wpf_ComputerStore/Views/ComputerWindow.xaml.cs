@@ -19,8 +19,7 @@ namespace Wpf_ComputerStore.Views
     /// Interaction logic for ComputerWindow.xaml
     /// </summary>
     public partial class ComputerWindow : Window
-    {
-       
+    {      
         public ComputerWindow(BaseViewModel vm)
         {
             DataContext = vm;
