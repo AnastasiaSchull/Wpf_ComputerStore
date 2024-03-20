@@ -22,11 +22,13 @@ namespace Wpf_ComputerStore.Views
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {       
+    {
+        bool isLight;
         public MainWindow(BaseViewModel vm)
         {
             InitializeComponent();
             DataContext = vm;
+            isLight = true;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;//щоб розташувати вікно у центрi         
         }
 
@@ -34,6 +36,20 @@ namespace Wpf_ComputerStore.Views
         {
             
         }
-         
+
+        private void ChangeTheme(object sender, RoutedEventArgs e)
+        {
+           isLight=!isLight;
+            if (isLight)
+            {
+                Properties.Settings.Default.ColorMode = "Light";
+            }
+            else
+            {
+                Properties.Settings.Default.ColorMode = "Dark";
+            }
+                Properties.Settings.Default.Save();
+
+        }
     }
 }

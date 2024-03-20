@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_ComputerStore.Views"
         mc:Ignorable="d"
+        Style="{StaticResource WindowStyle}"
         Title="" Height="200" Width="600"
         Icon = "/Wpf_ComputerStore;component/static/comp.jpg"
         
@@ -14,19 +15,9 @@
         TextElement.FontSize="30"        
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
-        FontFamily="{DynamicResource MaterialDesignFont}"  Foreground="#6600CC" ResizeMode="NoResize" >
+        FontFamily="{DynamicResource MaterialDesignFont}"  ResizeMode="NoResize" >
 
-    <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="Black"/>
-            <GradientStop Color="#FFCADDFA" Offset="1"/>
-            <GradientStop Color="#8B8BDF" Offset="0.997"/>
-            <GradientStop Color="#FF0B0C0E"/>
-            <GradientStop Color="#FF5A6270"/>
-            <GradientStop Color="#FF8490A4"/>
-            <GradientStop Color="White"/>
-        </LinearGradientBrush>
-    </Window.Background>
+ 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />

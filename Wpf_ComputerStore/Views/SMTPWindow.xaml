@@ -15,7 +15,13 @@
       TextOptions.TextFormattingMode="Ideal"
       TextOptions.TextRenderingMode="Auto"
       FontFamily="{DynamicResource MaterialDesignFont}"  Foreground="#6600CC" ResizeMode="NoResize" >
-    
+    <Window.Background  >
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FFCADDFA" Offset="1"/>
+            <GradientStop Color="#dadce1" Offset="0.997"/>
+            <GradientStop Color="White"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -30,14 +36,14 @@
         </Grid.ColumnDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Bottom">
-            e-mail менеджера: 
+            manager's e-mail: 
         </Label>
         <TextBox  Grid.Row="0" Grid.Column="1" VerticalAlignment="Bottom" Text="{Binding ManagerEmail}">
             
         </TextBox>
 
         <Label Grid.Row="1" VerticalAlignment="Bottom">
-            e-mail покупця:
+          buyer's e-mail:
         </Label>
         <TextBox  Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom" Text="{Binding ClientEmail}">
 
@@ -50,7 +56,7 @@
 
 
         <Button Grid.Row="3" Grid.ColumnSpan="2" Style="{StaticResource ButtonStyle}" Command="{Binding cmdSend}" Click="close_Window"  >
-            Надiслати
+            Send
         </Button>
     </Grid>
 </Window>
