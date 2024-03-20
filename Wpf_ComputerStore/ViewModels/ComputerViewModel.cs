@@ -51,8 +51,8 @@ namespace Wpf_ComputerStore.ViewModels
             CPU = CPUs.Find(c => c.ID == computer.CPU.ID);
             HardDrive = HardDrives.Find(c => c.ID == computer.HardDrive.ID);
             SDD = SDDs.Find(s => s.ID == computer.SDD.ID);
-            Motherboard = Motherboards.Find(m => m.ID == computer.Motherboard.ID);
-            VideoCard = VideoCards.Find(c => c.ID == computer.VideoCard.ID);
+            Motherboard = Motherboards.Find(m => m.ID == computer.Motherboard.ID)!;
+            VideoCard = VideoCards.Find(c => c.ID == computer.VideoCard.ID)!;
             Quantity = computer.Quantity;
             Price = computer.Price;
 

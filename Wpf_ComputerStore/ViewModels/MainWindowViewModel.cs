@@ -13,6 +13,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Castle.Core.Resource;
 using System.Collections;
+using MaterialDesignThemes.Wpf;
+using System.Runtime.CompilerServices;
 namespace Wpf_ComputerStore.ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
@@ -82,6 +84,8 @@ namespace Wpf_ComputerStore.ViewModels
             SelectedFindCriteriaCD = 0;
             OrderCart = new OrderCart { Items = new List<ItemForSale>() };
             windowService = new WindowService();
+
+           
         }
 
         #region sellers
@@ -1496,6 +1500,7 @@ namespace Wpf_ComputerStore.ViewModels
         }
         #endregion
 
+       
     }
 }
 
