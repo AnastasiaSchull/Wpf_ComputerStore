@@ -73,37 +73,38 @@
                         <ColumnDefinition Width="60" />
 
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Grid.Row="0"  Style="{StaticResource ButtonStyle}" Command="{Binding cmdGetComputer}"  Padding="0, -3,0,0" Height="33" Width="33" FontSize="28" >⌂                       
+                    <Button Grid.Column="0" Grid.Row="0"  Style="{StaticResource ButtonStyleForHome}" Command="{Binding cmdGetComputer}"  Padding="0, -3,0,0" Height="33" Width="33" FontSize="28" >⌂                       
                         <!--🏠-->                       
                         <!--<Image Source="/static/house.png" Height="25"  />-->
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="All Computer "/>
                         </Button.ToolTip>
                     </Button>
-                    <Button   Grid.Column="1" Grid.Row="0" Style="{StaticResource ButtonStyle}" Command="{Binding cmdAddComputer}" Padding="0, -3,0,0" Height="33" Width="33" FontSize="31" >+            
-                        <!--<Image Source="/static/plus-circle.png" Height="25"  />-->
+                    <Button   Grid.Column="1" Grid.Row="0" Style="{StaticResource ButtonStyleForPlus}" Command="{Binding cmdAddComputer}" Padding="0, -3,0,0"   Height="33" Width="33" FontSize="30" >+
+
+
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Add Computer "/>
                         </Button.ToolTip>
                     </Button>
-                    <Button Grid.Column="2" Grid.Row="0"  Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdEditComputer}" Padding="0" Height="33" Width="33"   FontSize="20" >🖊                      
+                    <Button Grid.Column="2" Grid.Row="0"  Style="{StaticResource ButtonStyleForPen}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdEditComputer}" Padding="0" Height="33" Width="33"   FontSize="20" >🖊                      
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Edit Computer "/>
                         </Button.ToolTip>
                     </Button>
-                    <Button Grid.Column="3" Grid.Row="0"  Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdDeleteComputer}" Padding="0" Height="33" Width="33" FontSize="19" >🗑                      
+                    <Button Grid.Column="3" Grid.Row="0"  Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdDeleteComputer}" Padding="0" Height="33" Width="33" FontSize="18" >🗑                      
                       
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Delete Computer "/>
                         </Button.ToolTip>
                     </Button>
-                    <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdSaleComputer}"  Padding="0" Height="33" Width="33" FontSize="22"  >🛒
+                    <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource ButtonStyleForCart}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdSaleComputer}"  Padding="0" Height="33" Width="33" FontSize="22"  >🛒
                         <!--<Image Source="/static/cart3.png" Height="25"  />-->
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Sale Computer"   />
                         </Button.ToolTip>
                     </Button>
-                    <Button Grid.Row="0" Grid.Column="5" Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdMakeDiscount}" Padding="0" Height="33" Width="33" FontWeight="Bold" FontSize="22"  >%
+                    <Button Grid.Row="0" Grid.Column="5" Style="{StaticResource ButtonStyleForCart}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdMakeDiscount}" Padding="0" Height="33" Width="33" FontWeight="Bold" FontSize="22"  >%
                     <Button.ToolTip>
                         <ToolTip Style="{StaticResource ToolTipStyle}" Content="Make Discount"   />
                     </Button.ToolTip>
@@ -126,7 +127,7 @@
 
                     </ComboBox>
                     <TextBox Grid.Row="0" Grid.Column="8"  Margin="10,20,10,20"  Text="{Binding CriteriaComputer}" ></TextBox>
-                    <Button  Grid.Row="0" Grid.Column="9" Style="{StaticResource ButtonStyle}"  Command="{Binding cmdFindComputer}"  Padding="0" Height="33" Width="33" FontSize="21">🔍
+                    <Button  Grid.Row="0" Grid.Column="9" Style="{StaticResource ButtonStyleForFind}"  Command="{Binding cmdFindComputer}"  Padding="0" Height="33" Width="33" FontSize="21">🔍
                         <!--<Image Source="/static/search.png" Height="25"  />-->
                         <Button.ToolTip>
                             <!-- Применение стиля всплывающей подсказки -->
@@ -192,39 +193,39 @@
                         <ColumnDefinition Width="80" />
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="0" Grid.Row="0"  Style="{StaticResource ButtonStyle}"  Command="{Binding cmdGetComputerDetail}" Padding="0, -3,0,0" Height="33" Width="33" FontSize="28" >⌂
+                    <Button Grid.Column="0" Grid.Row="0"  Style="{StaticResource ButtonStyleForHome}"  Command="{Binding cmdGetComputerDetail}" Padding="0, -3,0,0" Height="33" Width="33" FontSize="28" >⌂
                         <!--<Image Source="/static/house.png" Height="25"  />-->
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="All Components "/>
                         </Button.ToolTip>
                     </Button>
 
-                    <Button Grid.Column="1" Grid.Row="0" Style="{StaticResource ButtonStyle}"  Command="{Binding cmdAddComputerDetail}" Padding="0, -3,0,0" Height="33" Width="33" FontSize="31" >+
+                    <Button Grid.Column="1" Grid.Row="0" Style="{StaticResource ButtonStyleForPlus}"  Command="{Binding cmdAddComputerDetail}" Padding="0, -3,0,0" Height="33" Width="33" FontSize="30" >+
                         <!--<Image Source="/static/plus-circle.png" Height="25"  />-->
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Add Components "/>
                         </Button.ToolTip>
                     </Button>
-                    <Button Grid.Column="2" Grid.Row="0"  Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True"  Command="{Binding cmdEditComputerDetail}" Padding="0" Height="33" Width="33"   FontSize="20" >🖊
+                    <Button Grid.Column="2" Grid.Row="0"  Style="{StaticResource ButtonStyleForPen}" ToolTipService.ShowOnDisabled="True"  Command="{Binding cmdEditComputerDetail}" Padding="0" Height="33" Width="33"   FontSize="20" >🖊
                         <!--<Image Source="/static/pencil.png" Height="25"  />-->
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Edit Components "/>
                         </Button.ToolTip>
                     </Button>
-                    <Button Grid.Column="3" Grid.Row="0"  Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdDeleteComputerDetail}" Padding="0" Height="33" Width="33" FontSize="19" >🗑
+                    <Button Grid.Column="3" Grid.Row="0"  Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdDeleteComputerDetail}" Padding="0" Height="33" Width="33" FontSize="18" >🗑
                         
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Delete Components "/>
                         </Button.ToolTip>
                     </Button>
-                    <Button Grid.Column="4" Grid.Row="0"  Style="{StaticResource ButtonStyle}"  Command="{Binding cmdSaleComputerDetail}" ToolTipService.ShowOnDisabled="True"  Padding="0" Height="33" Width="33" FontSize="22"  >🛒
+                    <Button Grid.Column="4" Grid.Row="0"  Style="{StaticResource ButtonStyleForCart}"  Command="{Binding cmdSaleComputerDetail}" ToolTipService.ShowOnDisabled="True"  Padding="0" Height="33" Width="33" FontSize="22"  >🛒
                        
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Sale Components "/>
                         </Button.ToolTip>
                     </Button>
 
-                    <Button Grid.Row="0" Grid.Column="5" Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdMakeDiscount}" Padding="0" Height="33" Width="33" FontWeight="Bold" FontSize="22"  >%
+                    <Button Grid.Row="0" Grid.Column="5" Style="{StaticResource ButtonStyleForCart}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdMakeDiscount}" Padding="0" Height="33" Width="33" FontWeight="Bold" FontSize="22"  >%
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Make Discount"   />
                         </Button.ToolTip>
@@ -238,7 +239,7 @@
                         <ComboBoxItem>Number</ComboBoxItem>
                     </ComboBox>
                     <TextBox Grid.Row="0" Grid.Column="8"  Margin="10,20,10,20" Text="{Binding CriteriaComputerDetail}" ></TextBox>
-                    <Button  Grid.Row="0" Grid.Column="9" Style="{StaticResource ButtonStyle}" Command="{Binding cmdFindComputerDetail}"   Padding="0" Height="33" Width="33" FontSize="21">🔍
+                    <Button  Grid.Row="0" Grid.Column="9" Style="{StaticResource ButtonStyleForFind}" Command="{Binding cmdFindComputerDetail}"   Padding="0" Height="33" Width="33" FontSize="21">🔍
                        
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Find Components "/>
@@ -255,7 +256,7 @@
                         <ComboBoxItem>Price</ComboBoxItem>
                     </ComboBox>
 
-                    <Button Grid.Row="1" Grid.Column="9"  Style="{StaticResource ButtonStyle}" Command="{Binding cmdSortComputerDetail}"  Padding="0" Height="33" Width="33" FontSize="21">🔍
+                    <Button Grid.Row="1" Grid.Column="9"  Style="{StaticResource ButtonStyleForFind}" Command="{Binding cmdSortComputerDetail}"  Padding="0" Height="33" Width="33" FontSize="21">🔍
                         
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Sort Computer Detail "/>
@@ -314,36 +315,36 @@
                         <ColumnDefinition Width="60" />
                     </Grid.ColumnDefinitions>
 
-                    <Button  Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonStyle}" Command="{Binding GetPeripheralsCommand}" Padding="0,-3,0,0" Height="33" Width="33" FontSize="28" >⌂                    
+                    <Button  Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonStyleForHome}" Command="{Binding GetPeripheralsCommand}" Padding="0,-3,0,0" Height="33" Width="33" FontSize="28" >⌂                    
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="All Peripherias"/>
                         </Button.ToolTip>
                     </Button>
-                    <Button  Grid.Row="0" Grid.Column="1"  Style="{StaticResource ButtonStyle}" Command="{Binding AddCommand}" Padding="0, -3,0,0" Height="33" Width="33" FontSize="31" >+                       
+                    <Button  Grid.Row="0" Grid.Column="1"  Style="{StaticResource ButtonStyleForPlus}" Command="{Binding AddCommand}" Padding="0, -3,0,0" Height="33" Width="33" FontSize="30" >+                       
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}"  Content="Add Peripheral "/>
                         </Button.ToolTip>
                     </Button>
-                    <Button Grid.Row="0" Grid.Column="2"  Style="{StaticResource ButtonStyle}"  Command="{Binding EditCommand}" ToolTipService.ShowOnDisabled="True" Padding="0" Height="33" Width="33"   FontSize="20" >🖊
+                    <Button Grid.Row="0" Grid.Column="2"  Style="{StaticResource ButtonStyleForPen}"  Command="{Binding EditCommand}" ToolTipService.ShowOnDisabled="True" Padding="0" Height="33" Width="33"   FontSize="20" >🖊
                         <!--<Image Source="/static/pencil.png" Height="25"  />-->
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Edit Peripheral "/>
                         </Button.ToolTip>
                     </Button>
-                    <Button Grid.Row="0" Grid.Column="3"  Style="{StaticResource ButtonStyle}" Command="{Binding DeleteCommand}" ToolTipService.ShowOnDisabled="True" Padding="0" Height="33" Width="33" FontSize="19" >🗑
+                    <Button Grid.Row="0" Grid.Column="3"  Style="{StaticResource ButtonStyle}" Command="{Binding DeleteCommand}" ToolTipService.ShowOnDisabled="True" Padding="0" Height="33" Width="33" FontSize="18" >🗑
                         <!--<Image Source="/static/trash3.png" Height="25" />-->
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Delete Peripheral "/>
                         </Button.ToolTip>
                     </Button>
-                    <Button Grid.Row="0" Grid.Column="4"  Style="{StaticResource ButtonStyle}" Command="{Binding SalePeripheralCommand}" ToolTipService.ShowOnDisabled="True" Padding="0" Height="33" Width="33" FontSize="22"  >🛒
+                    <Button Grid.Row="0" Grid.Column="4"  Style="{StaticResource ButtonStyleForCart}" Command="{Binding SalePeripheralCommand}" ToolTipService.ShowOnDisabled="True" Padding="0" Height="33" Width="33" FontSize="22"  >🛒
                         <!--<Image Source="/static/cart3.png" Height="25" />-->
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Sale Peripheral "/>
                         </Button.ToolTip>
                     </Button>
 
-                    <Button Grid.Row="0" Grid.Column="5" Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdMakeDiscount}" Padding="0" Height="33" Width="33" FontWeight="Bold" FontSize="22"  >%
+                    <Button Grid.Row="0" Grid.Column="5" Style="{StaticResource ButtonStyleForCart}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdMakeDiscount}" Padding="0" Height="33" Width="33" FontWeight="Bold" FontSize="22"  >%
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Make Discount"   />
                         </Button.ToolTip>
@@ -356,7 +357,7 @@
                         <ComboBoxItem>Quantity</ComboBoxItem>
                     </ComboBox>
                     <TextBox Grid.Row="0" Grid.Column="8" Margin="10,20,10,20" Text="{Binding CriteriaPeripheral}" ></TextBox>
-                    <Button Grid.Row="0" Grid.Column="9"  Style="{StaticResource ButtonStyle}" Command="{Binding FindCommand}"  Padding="0" Height="33" Width="33" FontSize="21">🔍
+                    <Button Grid.Row="0" Grid.Column="9"  Style="{StaticResource ButtonStyleForFind}" Command="{Binding FindCommand}"  Padding="0" Height="33" Width="33" FontSize="21">🔍
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Find Peripheral "/>
                         </Button.ToolTip>
@@ -370,7 +371,7 @@
                         <ComboBoxItem>Price</ComboBoxItem>
                     </ComboBox>
 
-                    <Button Grid.Row="1" Grid.Column="9"  Style="{StaticResource ButtonStyle}" Command="{Binding SortCommand}"  Padding="0" Height="33" Width="33" FontSize="21">🔍                       
+                    <Button Grid.Row="1" Grid.Column="9"  Style="{StaticResource ButtonStyleForFind}" Command="{Binding SortCommand}"  Padding="0" Height="33" Width="33" FontSize="21">🔍                       
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Sort Peripheral "/>
                         </Button.ToolTip>
@@ -426,18 +427,18 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="0" Grid.Row="0"  Style="{StaticResource ButtonStyle}" Padding="-2,-2 ,0,0" Height="33" Width="33" FontSize="30" Command="{Binding cmdMinus}"> -                     
+                    <Button Grid.Column="0" Grid.Row="0"  Style="{StaticResource ButtonStyleForPlus}" Padding="-2,-3 ,0,0" Height="33" Width="33" FontSize="30" Command="{Binding cmdMinus}"> -                     
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Delete one"/>
                         </Button.ToolTip>
                     </Button>
                     <TextBox IsEnabled="False" Grid.Column="1" Grid.Row="0"  FontSize="25" Text="{Binding Quantity}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <Button Grid.Column="2" Grid.Row="0"  Style="{StaticResource ButtonStyle}" Padding="-2,-2,0,0" Height="33" Width="33" FontSize="28" Command="{Binding cmdPlus}">+                       
+                    <Button Grid.Column="2" Grid.Row="0"  Style="{StaticResource ButtonStyleForPlus}" Padding="-2,-2,0,0" Height="33" Width="33" FontSize="30" Command="{Binding cmdPlus}">+                       
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Add one"/>
                         </Button.ToolTip>
                     </Button>
-                    <Button Grid.Row="0" Grid.Column="3"  Style="{StaticResource ButtonStyle}" Command="{Binding cmdDeleteFromCart}" ToolTipService.ShowOnDisabled="True" Padding="0" Height="33" Width="33" FontSize="19" >🗑                        
+                    <Button Grid.Row="0" Grid.Column="3"  Style="{StaticResource ButtonStyle}" Command="{Binding cmdDeleteFromCart}" ToolTipService.ShowOnDisabled="True" Padding="0" Height="33" Width="33" FontSize="18" >🗑                        
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Delete selected item"/>
                         </Button.ToolTip>
@@ -452,7 +453,7 @@
 
                     <Label  Grid.Column="7" Grid.Row="0" Content="Seller:"  FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <ComboBox Grid.Row="0" Grid.Column="8" Padding="0" Margin="0,10,10,10"  Style="{StaticResource ComboBoxStyle}"  SelectedItem="{Binding SelectedSeller}" ItemsSource="{Binding Sellers}" DisplayMemberPath="Name"/>
-                    <Button Grid.Column="9" Grid.Row="0" Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdSale}"  Padding="0" Height="33" Width="33" FontSize="22"  >🛒
+                    <Button Grid.Column="9" Grid.Row="0" Style="{StaticResource ButtonStyleForCart}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdSale}"  Padding="0" Height="33" Width="33" FontSize="22"  >🛒
 
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Sale"/>
@@ -497,19 +498,19 @@
 
                     </Grid.ColumnDefinitions>
 
-                    <Button   Grid.Column="0" Grid.Row="0" Style="{StaticResource ButtonStyle}" Command="{Binding cmdAddCustomer}" Padding="-2,-2,0,0" Height="33" Width="33" FontSize="28" >+
+                    <Button   Grid.Column="0" Grid.Row="0" Style="{StaticResource ButtonStyleForPlus}" Command="{Binding cmdAddCustomer}" Padding="-2,-2,0,0" Height="33" Width="33" FontSize="30" >+
                         <!--<Image Source="/static/plus-circle.png" Height="25"  />-->
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Add Customer "/>
                         </Button.ToolTip>
                     </Button>
-                    <Button Grid.Column="1" Grid.Row="0"  Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdEditCustomer}" Padding="0" Height="33" Width="33"   FontSize="20" >🖊                      
+                    <Button Grid.Column="1" Grid.Row="0"  Style="{StaticResource ButtonStyleForPen}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdEditCustomer}" Padding="0" Height="33" Width="33"   FontSize="20" >🖊                      
                             <!--<Image Source="/static/pencil.png" Height="25"  />-->
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Edit Customer "/>
                         </Button.ToolTip>
                     </Button>
-                    <Button Grid.Column="2" Grid.Row="0"  Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdDeleteCustomer}"  Padding="0" Height="33" Width="33" FontSize="19" >🗑                        
+                    <Button Grid.Column="2" Grid.Row="0"  Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdDeleteCustomer}"  Padding="0" Height="33" Width="33" FontSize="18" >🗑                        
                             <!--<Image Source="/static/trash3.png" Height="25"  />-->
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Delete Customer "/>
@@ -562,19 +563,19 @@
 
                     </Grid.ColumnDefinitions>
 
-                    <Button   Grid.Column="0" Grid.Row="0" Style="{StaticResource ButtonStyle}" Command="{Binding cmdAddSeller}" Padding="-2,-2,0,0" Height="33" Width="33" FontSize="28" >+
+                    <Button   Grid.Column="0" Grid.Row="0" Style="{StaticResource ButtonStyleForPlus}" Command="{Binding cmdAddSeller}" Padding="-2,-2,0,0" Height="33" Width="33" FontSize="30" >+
                         <!--<Image Source="/static/plus-circle.png" Height="25"  />-->
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Add Seller "/>
                         </Button.ToolTip>
                     </Button>
-                    <Button Grid.Column="1" Grid.Row="0"  Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdEditSeller}" Padding="0" Height="33" Width="33"   FontSize="20" >🖊
+                    <Button Grid.Column="1" Grid.Row="0"  Style="{StaticResource ButtonStyleForPen}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdEditSeller}" Padding="0" Height="33" Width="33"   FontSize="20" >🖊
                         <!--<Image Source="/static/pencil.png" Height="25"  />-->
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Edit Seller "/>
                         </Button.ToolTip>
                     </Button>
-                    <Button Grid.Column="2" Grid.Row="0"  Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdDeleteSeller}"  Padding="0" Height="33" Width="33" FontSize="19" >🗑
+                    <Button Grid.Column="2" Grid.Row="0"  Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdDeleteSeller}"  Padding="0" Height="33" Width="33" FontSize="18" >🗑
                         <!--<Image Source="/static/trash3.png" Height="25"  />-->
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ToolTipStyle}" Content="Delete Seller "/>
