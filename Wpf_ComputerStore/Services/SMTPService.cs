@@ -39,10 +39,12 @@ namespace Wpf_ComputerStore.Services
                             smtp.EnableSsl = true;                                                   // Указывает, использует ли SmtpClient протокол SSL для шифрования подключения.
                                                                                                      // Send отправляет указанное сообщение на сервер SMTP для доставки
                             smtp.Send(message);
-                            MessageBox.Show("The bill nas been sent!");
-                       
-                }
-                catch (Exception ex)
+                      
+                         
+                             MessageBox.Show("The bill has been sent! 😀", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            }
+            catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
