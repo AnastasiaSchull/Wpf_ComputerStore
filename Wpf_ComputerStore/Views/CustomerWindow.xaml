@@ -6,8 +6,10 @@
         xmlns:local="clr-namespace:Wpf_ComputerStore.Views"
         mc:Ignorable="d"
         Title="CustomerWindow" Height="250" Width="350"
-    Icon = "/Wpf_ComputerStore;component/static/comp.jpg"
-        FontFamily="{DynamicResource MaterialDesignFont}" Foreground="#6600CC" >
+        Icon = "/Wpf_ComputerStore;component/static/comp.jpg"
+        FontFamily="{DynamicResource MaterialDesignFont}" Foreground="#6600CC" 
+        ResizeMode="NoResize" >
+    
     <Window.Background  >
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#FFCADDFA" Offset="1"/>

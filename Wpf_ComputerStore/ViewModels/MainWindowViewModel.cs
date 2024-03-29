@@ -1270,7 +1270,8 @@ namespace Wpf_ComputerStore.ViewModels
             get { return money; }
             set
             {
-                money = value;
+                //money = value;
+                money = Math.Round(value, 2);
                 NotifyPropertyChanged("Money");
             }
         }
