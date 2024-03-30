@@ -26,7 +26,7 @@
 
                     <!--first we will have to check which mode user wants to switch to by default we selected light in settings here... what we want is 
          when user selects the radio button for dark the ui should sweitch to dark mode n so on..-->
-     
+    
                     <Trigger Property="IsMouseOver" Value="True">
                         <Trigger.EnterActions>
                             <BeginStoryboard>
@@ -96,20 +96,32 @@
                             <Condition Property="IsSelected" Value="True" />
                         </MultiTrigger.Conditions>
                     </MultiTrigger>
-
+                
+                   
+                
                     <DataTrigger Binding="{Binding Source={x:Static properties:Settings.Default}, Path=ColorMode}" Value="Dark">
                         <Setter Property="Background" Value="#BCBCE8" />
-                       
                         <Setter Property="BorderBrush" Value="#CCFFE5" />
                         <Setter Property="Foreground" Value="White"/>
                             </DataTrigger>
                     <DataTrigger Binding="{Binding Source={x:Static properties:Settings.Default}, Path=ColorMode}" Value="Dark">
                         <Setter Property="Background" Value="#e7e8e7" />
                         <Setter Property="BorderBrush" Value="Teal" />
-                            <Setter Property="Foreground" Value="Black"/>
-                            </DataTrigger>
-                   
-                    
+                        <Setter Property="Foreground" Value="Black"/>
+                       
+                    </DataTrigger>
+
+                    <Trigger Property="IsFocused" Value="True">
+                        <Setter Property="Background"  >
+                        <Setter.Value>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="White" Offset="0.0"/>
+                                <GradientStop Color="#b6e8f1" Offset="1.0"/>
+                                  
+                                </LinearGradientBrush>
+                        </Setter.Value>
+                        </Setter>
+                    </Trigger>
                 </Style.Triggers>
             </Style>
                     
