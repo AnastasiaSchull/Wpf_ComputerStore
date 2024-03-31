@@ -1,0 +1,824 @@
+﻿<Window x:Class="Wpf_ComputerStore.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_ComputerStore"
+        xmlns:VM="clr-namespace:Wpf_ComputerStore.ViewModels"
+        xmlns:util="clr-namespace:Wpf_ComputerStore.Services"
+        mc:Ignorable="d"   
+        Style="{StaticResource WindowStyle}"
+        Title="Computer store"  Height="750" Width="1250" 
+        Icon = "/Wpf_ComputerStore;component/static/comp.jpg"
+         
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}" 
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="14"        
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{DynamicResource MaterialDesignFont}"   Closing="Window_Closing" ><!--Foreground="#6600CC"-->
+
+    <!--Налаштування з сайту materialdesigninxaml 10-16 рядок-->
+
+    <Window.Resources>
+
+        <Style TargetType="ScrollBar">
+            <Setter Property="Background" Value="#BFEEEE"/>
+            <Setter Property="BorderBrush" Value="Purple"/>
+        </Style>
+
+        <!-- Стиль для всплывающей подсказки -->
+        <Style x:Key="ToolTipStyle" TargetType="ToolTip">
+            <Setter Property="Foreground" Value="#7861ae"/>
+            <Setter Property="Padding" Value="6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToolTip">
+                        <Border Background="#efecf7" BorderBrush="#c1bad2" BorderThickness="1" CornerRadius="4" >
+                            <ContentPresenter Margin="6" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid >
+        <TabControl SelectedIndex="{Binding TabIndex}" IsSynchronizedWithCurrentItem="True" HorizontalContentAlignment="Left"  >
+
+            <TabItem Width="138" Padding="0" >
+                <TabItem.Header>
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="Computer" FontSize="16" />
+                </TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition  />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Grid.Row="0"  Style="{StaticResource ButtonStyleForHome}" Command="{Binding cmdGetComputer}"  Padding="0, -3,0,0" Height="33" Width="33" FontSize="28" >⌂                       
+                        <!--🏠-->                       
+                        <!--<Image Source="/static/house.png" Height="25"  />-->
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="All Computer "/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button   Grid.Column="1" Grid.Row="0" Style="{StaticResource ButtonStyleForPlus}" Command="{Binding cmdAddComputer}" Padding="0, -3,0,0"   Height="33" Width="33" FontSize="30" >+
+
+
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Add Computer "/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Column="2" Grid.Row="0"  Style="{StaticResource ButtonStyleForPen}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdEditComputer}" Padding="0" Height="33" Width="33"   FontSize="20" >🖊                      
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Edit Computer "/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Column="3" Grid.Row="0"  Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdDeleteComputer}" Padding="0" Height="33" Width="33" FontSize="18" >🗑                      
+                      
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Delete Computer "/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource ButtonStyleForCart}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdSaleComputer}"  Padding="0" Height="33" Width="33" FontSize="22"  >🛒
+                        <!--<Image Source="/static/cart3.png" Height="25"  />-->
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Sale Computer"   />
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="5" Style="{StaticResource ButtonStyleForCart}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdMakeDiscount}" Padding="0" Height="33" Width="33" FontWeight="Bold" FontSize="22"  >%
+                    <Button.ToolTip>
+                        <ToolTip Style="{StaticResource ToolTipStyle}" Content="Make Discount"   />
+                    </Button.ToolTip>
+                    </Button>
+
+                    <Label Style="{StaticResource LabelStyle}" Grid.Row="0" Grid.Column="6" Margin="10,30,10,10" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="14"  >Find by:</Label> 
+
+                    <ComboBox Grid.Row="0" Grid.Column="7" Padding="0" Margin="0,10,10,10"  Style="{StaticResource ComboBoxStyle}"  SelectedIndex="{Binding SelectedFindCriteriaC}">
+                        <!--SelectedIndex="0"-->
+                        <ComboBoxItem>Name</ComboBoxItem>
+                        <ComboBoxItem>Type</ComboBoxItem>
+                        <ComboBoxItem>Motherboard</ComboBoxItem>
+                        <ComboBoxItem>RAM</ComboBoxItem>
+                        <ComboBoxItem>CPU</ComboBoxItem>
+                        <ComboBoxItem>HardDrive</ComboBoxItem>
+                        <ComboBoxItem>SDD</ComboBoxItem>
+                        <ComboBoxItem>VideoCard</ComboBoxItem>
+                        <ComboBoxItem>PowerSupply</ComboBoxItem>
+                        <ComboBoxItem>Price</ComboBoxItem>
+
+                    </ComboBox>
+                    <TextBox Grid.Row="0" Grid.Column="8"  Margin="10,20,10,20"  Text="{Binding CriteriaComputer}" ></TextBox>
+                    <Button  Grid.Row="0" Grid.Column="9" Style="{StaticResource ButtonStyleForFind}"  Command="{Binding cmdFindComputer}"  Padding="0" Height="33" Width="33" FontSize="21">🔍
+                        <!--<Image Source="/static/search.png" Height="25"  />-->
+                        <Button.ToolTip>
+                            <!-- Применение стиля всплывающей подсказки -->
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Find Computer "/>
+                        </Button.ToolTip>
+                    </Button>
+                    
+                    <ToggleButton Grid.Row="0" Grid.Column="10" Margin="8,0,16,0"   IsChecked="{Binding IsDarkTheme}" Click="ChangeTheme" Background="#BFEEEE"/>
+                    <ListView util:GridViewSort.AutoSort="True"  ItemContainerStyle="{StaticResource ListViewItemOptionStyle}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="11" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding ComputersList}"  SelectedItem="{Binding SelectedComputer}"  >
+                        <ListView.View >
+                            <GridView AllowsColumnReorder="true" >
+                                <GridView.ColumnHeaderToolTip>
+                                    <ToolTip Style="{StaticResource ToolTipStyle}" Content="Computers Information "/>
+                                </GridView.ColumnHeaderToolTip>
+                                <GridView.ColumnHeaderContainerStyle>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="Foreground" Value="#b47fff" />
+                                        <Setter Property="FontSize" Value="16" />
+                                    </Style>
+                                </GridView.ColumnHeaderContainerStyle>
+                                <GridViewColumn  Header=" Name" DisplayMemberBinding="{Binding Path=Name}" util:GridViewSort.PropertyName="Name"  />
+                                <GridViewColumn  Header=" Computer Type" DisplayMemberBinding="{Binding Path=ComputerType.Name}"  util:GridViewSort.PropertyName="ComputerType.Name" />
+                                <GridViewColumn  Header=" RAM" DisplayMemberBinding="{Binding Path=RAM.Name}"  util:GridViewSort.PropertyName="RAM.Name" />
+                                <GridViewColumn  Header=" Motherboard" DisplayMemberBinding="{Binding Path=Motherboard.Name}"  util:GridViewSort.PropertyName="Motherboard.Name"  />
+                                <GridViewColumn  Header=" CPU" DisplayMemberBinding="{Binding Path=CPU.Name}" util:GridViewSort.PropertyName="CPU.Name"  />
+                                <GridViewColumn  Header=" HardDrive" DisplayMemberBinding="{Binding Path=HardDrive.Name}" util:GridViewSort.PropertyName="HardDrive.Name"  />
+                                <GridViewColumn  Header=" SDD" DisplayMemberBinding="{Binding Path=SDD.Name}" util:GridViewSort.PropertyName="SDD.Name"  />
+                                <GridViewColumn  Header=" VideoCard" DisplayMemberBinding="{Binding Path=VideoCard.Name}" util:GridViewSort.PropertyName="VideoCard.Name"  />
+                                <GridViewColumn  Header=" PowerSupply" DisplayMemberBinding="{Binding Path=PowerSupply.Name}"  util:GridViewSort.PropertyName="PowerSupply.Name" />
+                                <GridViewColumn  Header=" Quantity" DisplayMemberBinding="{Binding Path=Quantity}" util:GridViewSort.PropertyName="Quantity" />
+                                <GridViewColumn  Header=" Price" DisplayMemberBinding="{Binding Path=Price}" util:GridViewSort.PropertyName="Price" />
+                            </GridView>
+                        </ListView.View>
+
+                    </ListView>
+                </Grid>
+            </TabItem>
+
+            <!--<TabItem Header="Computer Details">-->
+            <TabItem Width="158">
+                <TabItem.Header>
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="Computer Details" FontSize="16" />
+                </TabItem.Header>
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70" />
+                        <RowDefinition Height="70" />
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition  />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="80" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Grid.Row="0"  Style="{StaticResource ButtonStyleForHome}"  Command="{Binding cmdGetComputerDetail}" Padding="0, -3,0,0" Height="33" Width="33" FontSize="28" >⌂
+                        <!--<Image Source="/static/house.png" Height="25"  />-->
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="All Components "/>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <Button Grid.Column="1" Grid.Row="0" Style="{StaticResource ButtonStyleForPlus}"  Command="{Binding cmdAddComputerDetail}" Padding="0, -3,0,0" Height="33" Width="33" FontSize="30" >+
+                        <!--<Image Source="/static/plus-circle.png" Height="25"  />-->
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Add Components "/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Column="2" Grid.Row="0"  Style="{StaticResource ButtonStyleForPen}" ToolTipService.ShowOnDisabled="True"  Command="{Binding cmdEditComputerDetail}" Padding="0" Height="33" Width="33"   FontSize="20" >🖊
+                        <!--<Image Source="/static/pencil.png" Height="25"  />-->
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Edit Components "/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Column="3" Grid.Row="0"  Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdDeleteComputerDetail}" Padding="0" Height="33" Width="33" FontSize="18" >🗑
+                        
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Delete Components "/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Column="4" Grid.Row="0"  Style="{StaticResource ButtonStyleForCart}"  Command="{Binding cmdSaleComputerDetail}" ToolTipService.ShowOnDisabled="True"  Padding="0" Height="33" Width="33" FontSize="22"  >🛒
+                       
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Sale Components "/>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <Button Grid.Row="0" Grid.Column="5" Style="{StaticResource ButtonStyleForCart}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdMakeDiscount}" Padding="0" Height="33" Width="33" FontWeight="Bold" FontSize="22"  >%
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Make Discount"   />
+                        </Button.ToolTip>
+                    </Button>
+                    <Label Style="{StaticResource LabelStyle}" Grid.Row="0" Grid.Column="6" Margin="10,30,10,10"  FontWeight="Bold" FontSize="14"  >Find by:</Label>
+                    <ComboBox Grid.Row="0" Grid.Column="7" Padding="0"  Style="{StaticResource ComboBoxStyle}" SelectedIndex="{Binding SelectedFindCriteriaCD}">
+
+                        <ComboBoxItem>Name</ComboBoxItem>
+                        <ComboBoxItem>Description</ComboBoxItem>
+                        <ComboBoxItem>Category</ComboBoxItem>
+                        <ComboBoxItem>Number</ComboBoxItem>
+                    </ComboBox>
+                    <TextBox Grid.Row="0" Grid.Column="8"  Margin="10,20,10,20" Text="{Binding CriteriaComputerDetail}" ></TextBox>
+                    <Button  Grid.Row="0" Grid.Column="9" Style="{StaticResource ButtonStyleForFind}" Command="{Binding cmdFindComputerDetail}"   Padding="0" Height="33" Width="33" FontSize="21">🔍
+                       
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Find Components "/>
+                        </Button.ToolTip>
+                    </Button>
+                    
+                    <ToggleButton Grid.Row="0" Grid.Column="10" Margin="8,0,16,0"   Click="ChangeTheme" Background="#BFEEEE"/> 
+                    
+                    <Label Style="{StaticResource LabelStyle}" Grid.Row="1" Grid.Column="7" Margin="10,28,10,10" FontWeight="Bold" FontSize="14" >Sort by:</Label>
+
+                    <ComboBox Grid.Row="1" Grid.Column="8" Padding="0" Style="{StaticResource ComboBoxStyle}" Margin="10,10,10,10" SelectedIndex="{Binding SelectedCDSortCriterion}">
+                        <ComboBoxItem>Name</ComboBoxItem>
+                        <ComboBoxItem>Quantity</ComboBoxItem>
+                        <ComboBoxItem>Price</ComboBoxItem>
+                    </ComboBox>
+
+                    <Button Grid.Row="1" Grid.Column="9"  Style="{StaticResource ButtonStyleForFind}" Command="{Binding cmdSortComputerDetail}"  Padding="0" Height="33" Width="33" FontSize="21">🔍
+                        
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Sort Computer Detail "/>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <ListView ItemContainerStyle="{StaticResource ListViewItemOptionStyle}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="11" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding ComputerDetailsList}" SelectedItem="{Binding SelectedComputerDetail}">
+                        <ListView.View >
+                            <GridView AllowsColumnReorder="true" >
+                                <GridView.ColumnHeaderToolTip>
+                                    <ToolTip Style="{StaticResource ToolTipStyle}" Content="Components Information "/>
+                                </GridView.ColumnHeaderToolTip>
+                                <GridView.ColumnHeaderContainerStyle>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="Foreground" Value="#b47fff" />
+                                        <Setter Property="FontSize" Value="16" />
+                                    </Style>
+                                </GridView.ColumnHeaderContainerStyle>
+                                <GridViewColumn Header="Name"  DisplayMemberBinding="{Binding Path=Name}"/>
+                                <GridViewColumn Header="Number" DisplayMemberBinding="{Binding Path=ID}"/>
+                                <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Path=Category.Name}"/>
+                                <GridViewColumn Header="Quantity" DisplayMemberBinding="{Binding Path=Quantity}"/>
+                                <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Path=Description}"/>
+                                <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Path=Price}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+           
+            <!--<TabItem Header="Peripherals">-->
+            <TabItem Width="138">
+                <TabItem.Header>
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="Peripherals" FontSize="16" />
+                </TabItem.Header>
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70" />
+                        <RowDefinition Height="70" />
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition  />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button  Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonStyleForHome}" Command="{Binding GetPeripheralsCommand}" Padding="0,-3,0,0" Height="33" Width="33" FontSize="28" >⌂                    
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="All Peripherias"/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button  Grid.Row="0" Grid.Column="1"  Style="{StaticResource ButtonStyleForPlus}" Command="{Binding AddCommand}" Padding="0, -3,0,0" Height="33" Width="33" FontSize="30" >+                       
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}"  Content="Add Peripheral "/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="2"  Style="{StaticResource ButtonStyleForPen}"  Command="{Binding EditCommand}" ToolTipService.ShowOnDisabled="True" Padding="0" Height="33" Width="33"   FontSize="20" >🖊
+                        <!--<Image Source="/static/pencil.png" Height="25"  />-->
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Edit Peripheral "/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="3"  Style="{StaticResource ButtonStyle}" Command="{Binding DeleteCommand}" ToolTipService.ShowOnDisabled="True" Padding="0" Height="33" Width="33" FontSize="18" >🗑
+                        <!--<Image Source="/static/trash3.png" Height="25" />-->
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Delete Peripheral "/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="4"  Style="{StaticResource ButtonStyleForCart}" Command="{Binding SalePeripheralCommand}" ToolTipService.ShowOnDisabled="True" Padding="0" Height="33" Width="33" FontSize="22"  >🛒
+                        <!--<Image Source="/static/cart3.png" Height="25" />-->
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Sale Peripheral "/>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <Button Grid.Row="0" Grid.Column="5" Style="{StaticResource ButtonStyleForCart}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdMakeDiscount}" Padding="0" Height="33" Width="33" FontWeight="Bold" FontSize="22"  >%
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Make Discount"   />
+                        </Button.ToolTip>
+                    </Button>
+                    <Label Style="{StaticResource LabelStyle}" Grid.Row="0" Grid.Column="6" Margin="10,30,10,10" FontWeight="Bold" FontSize="14" >Find by:</Label>
+                    <ComboBox Grid.Row="0" Grid.Column="7" Padding="0" Style="{StaticResource ComboBoxStyle}"  SelectedIndex="{Binding SelectedFindCriteriaPeripheral}">
+                        <ComboBoxItem>Name</ComboBoxItem>
+                        <ComboBoxItem>Description</ComboBoxItem>
+                        <ComboBoxItem>PeripheriaType</ComboBoxItem>
+                        <ComboBoxItem>Quantity</ComboBoxItem>
+                    </ComboBox>
+                    <TextBox Grid.Row="0" Grid.Column="8" Margin="10,20,10,20" Text="{Binding CriteriaPeripheral}" ></TextBox>
+                    <Button Grid.Row="0" Grid.Column="9"  Style="{StaticResource ButtonStyleForFind}" Command="{Binding FindCommand}"  Padding="0" Height="33" Width="33" FontSize="21">🔍
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Find Peripheral "/>
+                        </Button.ToolTip>
+                    </Button>
+                    <ToggleButton Grid.Row="0" Grid.Column="10" Margin="8,0,16,0" Background="#BFEEEE" Click="ChangeTheme" /> 
+                    <Label Style="{StaticResource LabelStyle}" Grid.Row="1" Grid.Column="7" Margin="10,28,10,10" FontWeight="Bold" FontSize="14" >Sort by:</Label>
+
+                    <ComboBox Grid.Row="1" Grid.Column="8" Padding="0" Style="{StaticResource ComboBoxStyle}" Margin="10,10,10,10" SelectedIndex="{Binding SelectedSortCriterion}">
+                        <ComboBoxItem>Name</ComboBoxItem>
+                        <ComboBoxItem>Quantity</ComboBoxItem>
+                        <ComboBoxItem>Price</ComboBoxItem>
+                    </ComboBox>
+
+                    <Button Grid.Row="1" Grid.Column="9"  Style="{StaticResource ButtonStyleForFind}" Command="{Binding SortCommand}"  Padding="0" Height="33" Width="33" FontSize="21">🔍                       
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Sort Peripheral "/>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <ListView Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="11" ItemContainerStyle="{StaticResource ListViewItemOptionStyle}" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding PeripheralsList}" SelectedItem="{Binding SelectedPeripherals, Mode=TwoWay}">
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="true" >
+                                <GridView.ColumnHeaderToolTip>
+                                    <ToolTip Style="{StaticResource ToolTipStyle}" Content="Peripheral Information"/>
+                                </GridView.ColumnHeaderToolTip>
+                                <GridView.ColumnHeaderContainerStyle>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="Foreground" Value="#b47fff" />
+                                        <Setter Property="FontSize" Value="16" />
+                                    </Style>
+                                </GridView.ColumnHeaderContainerStyle>
+                                <GridViewColumn  Header=" Name " DisplayMemberBinding="{Binding Path=Name}"/>
+                                <GridViewColumn  Header=" Quantity " DisplayMemberBinding="{Binding Path=Quantity}"/>
+                                <GridViewColumn  Header=" PeripheriaType " DisplayMemberBinding="{Binding Path=PeripheralsType.Name}"/>
+                                <GridViewColumn  Header=" Price " DisplayMemberBinding="{Binding Path=Price}"/>
+                                <GridViewColumn  Header="Description" DisplayMemberBinding="{Binding Path=Description}"/>
+                            </GridView>
+                        </ListView.View>
+
+                    </ListView>
+                </Grid>
+            </TabItem>
+
+            <TabItem Width="134">
+                <TabItem.Header>
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="OrderCart" FontSize="16" />
+                </TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="60"/>
+
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Grid.Row="0"  Style="{StaticResource ButtonStyleForPlus}" Padding="-2,-3 ,0,0" Height="33" Width="33" FontSize="30" Command="{Binding cmdMinus}"> -                     
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Delete one"/>
+                        </Button.ToolTip>
+                    </Button>
+                    <TextBox IsEnabled="False" Grid.Column="1" Grid.Row="0"  FontSize="25" Text="{Binding Quantity}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <Button Grid.Column="2" Grid.Row="0"  Style="{StaticResource ButtonStyleForPlus}" Padding="-2,-2,0,0" Height="33" Width="33" FontSize="30" Command="{Binding cmdPlus}">+                       
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Add one"/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="3"  Style="{StaticResource ButtonStyle}" Command="{Binding cmdDeleteFromCart}" ToolTipService.ShowOnDisabled="True" Padding="0" Height="33" Width="33" FontSize="18" >🗑                        
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Delete selected item"/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource ButtonStyle}" Command="{Binding cmdClearCart}" Padding="0" Height="33" Width="33" FontSize="18">X                        
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Clear order cart"/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Label  Grid.Column="5" Grid.Row="0" Content="Customer name:"  FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <ComboBox Grid.Column="6" Grid.Row="0" Padding="0" Margin="0,10,10,10" SelectedItem="{Binding SelectedCustomer}" ItemsSource="{Binding CustomersList}" DisplayMemberPath="Name" Style="{StaticResource ComboBoxStyle}"/>
+
+                    <Label  Grid.Column="7" Grid.Row="0" Content="Seller:"  FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <ComboBox Grid.Row="0" Grid.Column="8" Padding="0" Margin="0,10,10,10"  Style="{StaticResource ComboBoxStyle}"  SelectedItem="{Binding SelectedSeller}" ItemsSource="{Binding Sellers}" DisplayMemberPath="Name"/>
+                    <Button Grid.Column="9" Grid.Row="0" Style="{StaticResource ButtonStyleForCart}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdSale}"  Padding="0" Height="33" Width="33" FontSize="22"  >🛒
+
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Sale"/>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <ProgressBar Grid.Column="10" Grid.Row="0" Value="{Binding ProgressValue, Mode= TwoWay }"
+           x:Name="DeterminateCircularProgress"
+           Style="{StaticResource MaterialDesignCircularProgressBar}" />
+                    <ListView ItemContainerStyle="{StaticResource ListViewItemOptionStyle}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="12" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
+
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Order Cart Information"  >
+                                <GridViewColumn Header=" Name " DisplayMemberBinding="{Binding Path=Item.Name}"/>
+                                <GridViewColumn Header=" Quantity " DisplayMemberBinding="{Binding Path= Quantity}"/>
+                                <GridViewColumn Header=" Price " DisplayMemberBinding="{Binding Path=Item.Price}"/>
+                            </GridView>
+                        </ListView.View>
+
+                    </ListView>
+                </Grid>
+            </TabItem>
+
+
+            <TabItem Width="138">
+                <TabItem.Header>
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="Customers" FontSize="16" />
+                </TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition  />
+
+                    </Grid.ColumnDefinitions>
+
+                    <Button   Grid.Column="0" Grid.Row="0" Style="{StaticResource ButtonStyleForPlus}" Command="{Binding cmdAddCustomer}" Padding="-2,-2,0,0" Height="33" Width="33" FontSize="30" >+
+                        <!--<Image Source="/static/plus-circle.png" Height="25"  />-->
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Add Customer "/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Column="1" Grid.Row="0"  Style="{StaticResource ButtonStyleForPen}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdEditCustomer}" Padding="0" Height="33" Width="33"   FontSize="20" >🖊                      
+                            <!--<Image Source="/static/pencil.png" Height="25"  />-->
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Edit Customer "/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Column="2" Grid.Row="0"  Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdDeleteCustomer}"  Padding="0" Height="33" Width="33" FontSize="18" >🗑                        
+                            <!--<Image Source="/static/trash3.png" Height="25"  />-->
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Delete Customer "/>
+                        </Button.ToolTip>
+                    </Button>
+
+
+                    <ListView ItemContainerStyle="{StaticResource ListViewItemOptionStyle}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding CustomersList}"  SelectedItem="{Binding SelectedCustomer}"  >
+                        <ListView.View >
+                            <GridView AllowsColumnReorder="true" >
+                                <GridView.ColumnHeaderToolTip>
+                                    <ToolTip Style="{StaticResource ToolTipStyle}" Content="Customers Information" />
+                                </GridView.ColumnHeaderToolTip>
+                                <GridView.ColumnHeaderContainerStyle>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="Foreground" Value="#b47fff" />
+                                        <Setter Property="FontSize" Value="16" />
+                                    </Style>
+                                </GridView.ColumnHeaderContainerStyle>
+                                <GridViewColumn  Header=" Name" DisplayMemberBinding="{Binding Path=Name}"   />
+                                <GridViewColumn  Header=" E-mail" DisplayMemberBinding="{Binding Path=Email}"   />
+                                <GridViewColumn  Header=" Points" DisplayMemberBinding="{Binding Path=Points}"   />
+                            </GridView>
+                        </ListView.View>
+
+                    </ListView>
+                </Grid>
+            </TabItem>
+
+           
+            <TabItem Width="134">
+                <TabItem.Header >
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="Sellers" FontSize="16" />
+
+                </TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+
+                        <ColumnDefinition  />
+
+                    </Grid.ColumnDefinitions>
+
+                    <Button   Grid.Column="0" Grid.Row="0" Style="{StaticResource ButtonStyleForPlus}" Command="{Binding cmdAddSeller}" Padding="-2,-2,0,0" Height="33" Width="33" FontSize="30" >+
+                        <!--<Image Source="/static/plus-circle.png" Height="25"  />-->
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Add Seller "/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Column="1" Grid.Row="0"  Style="{StaticResource ButtonStyleForPen}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdEditSeller}" Padding="0" Height="33" Width="33"   FontSize="20" >🖊
+                        <!--<Image Source="/static/pencil.png" Height="25"  />-->
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Edit Seller "/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Grid.Column="2" Grid.Row="0"  Style="{StaticResource ButtonStyle}" ToolTipService.ShowOnDisabled="True" Command="{Binding cmdDeleteSeller}"  Padding="0" Height="33" Width="33" FontSize="18" >🗑
+                        <!--<Image Source="/static/trash3.png" Height="25"  />-->
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}" Content="Delete Seller "/>
+                        </Button.ToolTip>
+                    </Button>
+
+
+                    <ListView ItemContainerStyle="{StaticResource ListViewItemOptionStyle}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="9" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding SellersList}"  SelectedItem="{Binding SelectSeller}"  >
+                        <ListView.View >
+                            <GridView AllowsColumnReorder="true" >
+                                <GridView.ColumnHeaderToolTip>
+                                    <ToolTip Style="{StaticResource ToolTipStyle}" Content="Sellers Information "/>
+                                </GridView.ColumnHeaderToolTip>
+                                <GridView.ColumnHeaderContainerStyle>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="Foreground" Value="#b47fff" />
+                                        <Setter Property="FontSize" Value="16" />
+                                    </Style>
+                                </GridView.ColumnHeaderContainerStyle>
+                                <GridViewColumn  Header=" Name" DisplayMemberBinding="{Binding Path=Name}"   />
+                                <GridViewColumn  Header=" Email" DisplayMemberBinding="{Binding Path=Email}"   />
+
+                            </GridView>
+                        </ListView.View>
+
+                    </ListView>
+                </Grid>
+            </TabItem>
+            
+            <TabItem Width="138">
+                <TabItem.Header>
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="Statistics" FontSize="16" />
+                </TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="180"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Grid.Row="0" Margin="10" >
+                        Start date
+                    </Label>
+
+                    <DatePicker  Grid.Column="1" Grid.Row="0" Margin="10" SelectedDate="{Binding StartDate}"/>
+
+                    <Label Grid.Column="0"  Grid.Row="1" Margin="10">
+                        Final date
+                    </Label>
+                    <DatePicker  Grid.Column="1" Grid.Row="1" Margin="10" SelectedDate="{Binding FinalDate}"/>
+
+                    <Button Style="{StaticResource ButtonStyle}" Grid.Column="0" Grid.Row="2" Margin="10" Command="{Binding cmdCountMoney}">Count Money</Button>
+                    <Label Grid.Column="0" Grid.Row="3" Margin="10">
+                        Total money:
+                    </Label>
+                    <Label Grid.Column="1" Grid.Row="3" Margin="10" Content="{Binding Money}" />
+                    <ListView ItemContainerStyle="{StaticResource ListViewItemOptionStyle}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Margin="10,10,10,10"  BorderThickness="0 2 0 0" ItemsSource="{Binding SoldItems}">
+
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Order Cart Information"  >
+                                <GridViewColumn Header=" Name " DisplayMemberBinding="{Binding Path=Item.Name}"/>
+                                <GridViewColumn Header=" Quantity " DisplayMemberBinding="{Binding Path= Quantity}"/>
+                                <GridViewColumn Header=" Price " DisplayMemberBinding="{Binding Path=Item.Price}"/>
+                            </GridView>
+                        </ListView.View>
+
+                    </ListView>
+                </Grid>
+            </TabItem>
+
+            <!--<TabItem Header="Category">-->
+            <TabItem Width="134">
+                <TabItem.Header>
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="Category" FontSize="16" />
+                </TabItem.Header>
+                <TabControl>
+                    <TabItem >
+                        <!--Header="Motherboard">-->
+                        <TabItem.Header>
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Text="Motherboard" FontSize="14" />
+                        </TabItem.Header>
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0"  Content="Motherboard" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Матери́нська пла́та, систе́мна пла́та відома також як головна плата на якій містяться основні компоненти комп'ютера, що забезпечують логіку.
+                     Від материнської плати залежить функціональність комп'ютера, що визначається елементами самої плати і підключеними до неї пристроями.</TextBlock>
+
+                            <Image Grid.Row="2" Width="700" Source="/static/matplata.jpg" Margin="0,0,10,20"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem >
+                        <!--Header="RAM">-->
+                        <TabItem.Header>
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Text="RAM" FontSize="14" />
+                        </TabItem.Header>
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0"  Content="Random access memory" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Операти́вна па́м'ять (англ. random-access memory, дослівно — пам'ять з довільним доступом, ПДД,[1][2] первинна пам'ять) —
+                 пам'ять ЕОМ, призначена для зберігання коду та даних програм під час їхнього виконання. У сучасних комп'ютерах оперативна пам'ять переважно представлена динамічною пам'яттю з довільним доступом DRAM.</TextBlock>
+
+                            <Image Grid.Row="2" Width="700" Source="/static/ram.jpg" Margin="0,0,10,20"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem >
+                        <TabItem.Header>
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Text="CPU" FontSize="14" />
+                        </TabItem.Header>
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0"  Content="Central processing unit" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Процесор – це пристрій, що управляє обчисленнями, від нього подаються команди всім частинам комп’ютера.
+                     Тактова частота процесора, розрядність, і адресне визначають характерні особливості процесора. Частота процесора визначає швидкодію комп’ютера, це обсяг операцій, вироблених за 1 секунду.</TextBlock>
+                            <Image Grid.Row="2" Width="700" Source="/static/cpu.jpg" Margin="0,0,10,20"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem >
+                        <TabItem.Header>
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Text="HardDrive" FontSize="14" />
+                        </TabItem.Header>
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0"  Content="Hard Drive" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Жорстки́й диск, або жорстки́й магні́тний диск, або накопичувач на магнітних дисках. Mагнітний диск, основа якого виконана з жорсткого твердого матеріалу (скла, алюмінію тощо). У більшості ЕОМ виконує функцію енергонезалежного носія інформації (комп'ютерної пам'яті чи накопичувача інформації) з довільним доступом.</TextBlock>
+                            <Image Grid.Row="2" Width="700" Source="/static/hdd.png" Margin="0,0,10,20"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem >
+                        <TabItem.Header>
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Text="SSD" FontSize="14" />
+                        </TabItem.Header>
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="120"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0"  Content="Solid-state drive" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Твердотілий накопичувач (англ. SSD, solid-state drive) — комп'ютерний запам'ятовувальний пристрій на основі мікросхем пам'яті та контролера керування ними, що не містить рухомих механічних частин.
+                    Розрізняють два види твердотілих накопичувачів: SSD на основі динамічної пам’яті (подібної до оперативної пам'яті комп'ютерів) і SSD на основі флеш-пам'яті.</TextBlock>
+                            <Image Grid.Row="2" Width="700" Source="/static/ssd.jpg" Margin="0,0,10,20"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem>
+                        <TabItem.Header>
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Text="Videocard" FontSize="14" />
+                        </TabItem.Header>
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="150"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0"  Content="Video card" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Відеока́рта (англ. video card, також графічна карта, графічний адаптер, графічний прискорювач) — електронний пристрій, частина комп'ютера, призначена для генерації та обробки зображень з подальшим їхнім виведенням на екран периферійного пристрою.
+                    Відеокарта зазвичай є платою розширення і вставляється у слот розширення, універсальний (PCI-Express, PCI, ISA, VLB, EISA, MCA) або спеціалізований (AGP). Проте відеокарта може бути і вбудованою у материнську плату як у вигляді окремого елемента, так і як складової частини північного мосту чипсету або центрального процесора.</TextBlock>
+                            <Image Grid.Row="2" Width="700" Source="/static/videocard.jpg" Margin="0,0,10,20"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem>
+                        <TabItem.Header>
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Text="PowerSupply" FontSize="14" />
+                        </TabItem.Header>
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="110"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0"  Content="Power Supply" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Grid.Row="1" Width="700" FontSize="16" TextWrapping="Wrap">Комп'ю́терний блок жи́влення — блок живлення (вторинне джерело живлення), призначений для забезпечення вузлів комп'ютера електричною енергією постійного струму. У його завдання входить перетворення мережевої напруги до заданих значень напруги живлення, її стабілізація і захист від незначних перешкод з боку електричних мереж живлення. Також, завдяки вбудованому вентилятору, він бере участь в охолоджуванні системного блоку.</TextBlock>
+                            <Image Grid.Row="2" Width="700" Source="/static/powersupply.jpg" Margin="0,0,10,20"/>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+          
+            <TabItem Width="134" >     
+                <TabItem.Header>
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="About us" FontSize="16" />
+                </TabItem.Header>
+                <ScrollViewer>
+                    <Grid HorizontalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="110"/>
+                            <RowDefinition Height="300"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="300"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Content="About Us" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center"/>
+                        <TextBlock Style="{StaticResource TextBlockStyle}" Grid.Row="1" Width="500" TextWrapping="Wrap" FontSize="16" TextAlignment="Justify">We are young company! We have a lot of Computer details.In our shop you can buy ready to use computer,  
+                        any of computer detail,  accessors such as keyboard, headphone, microphone and a lot of others. Our consultants tell you all information that you need. You are always welcome!!!</TextBlock>
+                        <Image Grid.Row="2" Source="/static/about_us.jpg" Margin="20 "/>
+
+                        <Label Grid.Row="3"  Content="Contact Us" FontSize="26" FontFamily="Cascadia Mono SemiBold" HorizontalAlignment="Center" />
+                        <Label Grid.Row="4" Grid.Column="0"  Content="email:    computer.store@gmail.com" FontSize="20"  HorizontalAlignment="Center"/>
+                        <Label Grid.Row="5"  Grid.Column="0" Content="telegram: @computer_store" FontSize="20" HorizontalAlignment="Center"/>
+                        <Label Grid.Row="6"  Grid.Column="0" Content="phone:    +380676767777" FontSize="20"  HorizontalAlignment="Center"/>
+
+                        <Image Grid.Row="7" Source="/static/contact_us.jpg" Margin="10,10,10,10" />
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+
+
+        </TabControl>
+    </Grid>
+
+</Window>
+
+

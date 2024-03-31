@@ -1,17 +1,506 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.Cryptography;
 using System.Windows;
+using System.Windows.Input;
 using Wpf_ComputerStore.Models;
-
+using Wpf_ComputerStore.Services;
+using System.Threading;
+using System.Threading.Tasks;
+using Castle.Core.Resource;
+using System.Collections;
+using MaterialDesignThemes.Wpf;
+using System.Runtime.CompilerServices;
 namespace Wpf_ComputerStore.ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
     {
+        public bool IsAdmin { get; set; }
+
+        public MainWindowViewModel(bool isAdmin)
+        {
+            SoldItems = new List<ItemForSale>();
+            ProgressValue = 0;
+            IsAdmin = isAdmin;
+            getComputers();
+            getPeripherals();
+            getComputerDetails();
+            getCategoriesList();
+            getPeripheralsTypes();
+            getSellers();
+            getCustomers();
+            getSellersList();
+            getCustomersList();
+            SelectedSeller = Sellers[0];
+            SelectedCustomer = CustomersList[0];
+            cmdAddComputer = new RelayCommand((param) => AddComputer(), (param) => IsAdmin);// щоб тільки адмін міг додати комп'ютер
+            cmdDeleteComputer = new RelayCommand((param) => DeleteComputer(), (param) => SelectedComputer != null && IsAdmin);
+            cmdEditComputer = new RelayCommand((param) => EditComputer(), (param) => SelectedComputer != null && IsAdmin);
+            cmdGetComputer = new RelayCommand((param) => getComputers());
+            cmdFindComputer = new RelayCommand((param) => FindComputer());
+            cmdSaleComputer = new RelayCommand((param) => SaleComputer(), (param) => SelectedComputer != null && IsAdmin);
+
+            AddCommand = new RelayCommand((param) => AddPeripheral(), (param) => IsAdmin);
+            DeleteCommand = new RelayCommand((param) => DeletePeripheral(), (param) => SelectedPeripherals != null && IsAdmin);
+            EditCommand = new RelayCommand((param) => EditPeripheral(), (param) => SelectedPeripherals != null && IsAdmin);
+            GetPeripheralsCommand = new RelayCommand((param) => getPeripherals());
+            FindCommand = new RelayCommand((param) => FindPeripheral());
+            SalePeripheralCommand = new RelayCommand((param) => SalePeripheral(), (param) => SelectedPeripherals != null && IsAdmin);
+            SortCommand = new RelayCommand((param) => SortPeripheral());
+
+            cmdAddComputerDetail = new RelayCommand((param) => AddComputerDetail(), (param) => IsAdmin);
+            cmdEditComputerDetail = new RelayCommand((param) => EditComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
+            cmdDeleteComputerDetail = new RelayCommand((param) => DeleteComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
+            cmdGetComputerDetail = new RelayCommand((param) => getComputerDetails());
+            cmdFindComputerDetail = new RelayCommand((param) => FindComputerDetail());
+            cmdSortComputerDetail = new RelayCommand((param) => SortComputerDetail());
+
+            cmdSale = new RelayCommand((param) => Sale(), (param) => !Items.IsNullOrEmpty() && SelectedSeller != null && SelectedCustomer != null);
+            cmdSaleComputerDetail = new RelayCommand((param) => SaleComputerDetail(), (param) => SelectedComputerDetail != null && IsAdmin);
+
+            cmdAddSeller = new RelayCommand((param) => AddSeller(), (param) => isAdmin);
+            cmdEditSeller = new RelayCommand((param) => EditSeller(), (param) => SelectSeller != null && isAdmin);
+            cmdDeleteSeller = new RelayCommand((param) => DeleteSeller(), (param) => SelectSeller != null && isAdmin);
+
+            cmdPlus = new RelayCommand((param) => PlusItem(), (param) => SelectedItem != null);
+            cmdMinus = new RelayCommand((param) => MinusItem(), (param) => SelectedItem != null);
+            cmdClearCart = new RelayCommand((param) => ClearCart(), (param) => !Items.IsNullOrEmpty());
+            cmdDeleteFromCart = new RelayCommand((param) => DeleteFromCart(), (param) => SelectedItem != null);
+
+            cmdAddCustomer = new RelayCommand((param) => AddCustomer(), (param) => IsAdmin);
+            cmdDeleteCustomer = new RelayCommand((param) => DeleteCustomer(), (param) => SelectedCustomer != null && IsAdmin);
+            cmdEditCustomer = new RelayCommand((param) => EditCustomer(), (param) => SelectedCustomer != null && IsAdmin);
+
+            cmdMakeDiscount = new RelayCommand((param) => MakeDiscount(), (param) => IsAdmin);
+
+            StartDate = DateTime.Now.AddMonths(-1);
+            FinalDate = DateTime.Now;
+            cmdCountMoney = new RelayCommand((param) => CountMoney());
+
+            SelectedFindCriteriaCD = 0;
+            OrderCart = new OrderCart { Items = new List<ItemForSale>() };
+            windowService = new WindowService();
+
+           
+        }
+
+        #region sellers
+
+        private List<Seller> sellersList;
+        public List<Seller> SellersList
+        {
+            get { return sellersList; }
+            set
+            {
+                sellersList = value;
+                NotifyPropertyChanged("SellersList");
+            }
+        }
+
+        private Seller selectSeller;
+        public Seller SelectSeller
+        {
+            get { return selectSeller; }
+            set
+            {
+                selectSeller = value;
+                NotifyPropertyChanged("SelectSeller");
+            }
+        }
+        public void getSellersList()
+        {
+            using (DBContext db = new DBContext())
+            {
+                SellersList = db.Sellers.ToList();
+            }
+        }
+
+        public ICommand cmdAddSeller { get; private set; }
+        public void AddSeller()
+        {
+            windowService.openSellerWindow(new SellerViewModel());
+            getSellers();
+            getSellersList();
+        }
+
+        public ICommand cmdEditSeller { get; private set; }
+        public void EditSeller()
+        {
+            windowService.openSellerWindow(new SellerViewModel(SelectSeller));
+            getSellers();
+            getSellersList();
+        }
+
+        public ICommand cmdDeleteSeller { get; private set; }
+        public void DeleteSeller()
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to delete this seller?", "Delete seller", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.No)
+            {
+                return;
+            }
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    db.Remove(SelectSeller);
+                    db.SaveChanges();
+                    getSellers();
+                    getSellersList();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        #endregion
+
+
+        #region order
+
+        private string customerName;
+        public string CustomerName
+        {
+            get { return customerName; }
+            set
+            {
+                if (customerName != value)
+                {
+                    customerName = value;
+                    NotifyPropertyChanged(nameof(CustomerName));
+                }
+            }
+        }
+
+        private int quantity;
+        public int Quantity
+        {
+            get { return quantity; }
+            set
+            {
+                quantity = value;
+                NotifyPropertyChanged("Quantity");
+            }
+        }
+
+        private int progressValue;
+        public int ProgressValue
+        {
+            get { return progressValue; }
+            set
+            {
+                progressValue = value;
+                NotifyPropertyChanged("ProgressValue");
+            }
+        }
+
+        private OrderCart orderCart;
+        public OrderCart OrderCart
+        {
+            get { return orderCart; }
+            set
+            {
+                orderCart = value;
+                NotifyPropertyChanged("OrderCart");
+            }
+        }
+
+        private ItemForSale selectedItem;
+        public ItemForSale SelectedItem
+        {
+            get { return selectedItem; }
+            set
+            {
+                selectedItem = value;
+                NotifyPropertyChanged("SelectedItem");
+
+                Quantity = value.Quantity;
+            }
+        }
+
+        public List<ItemForSale> Items
+        {
+            get { return orderCart.Items; }
+            set
+            {
+                orderCart.Items = value;
+                NotifyPropertyChanged("Items");
+            }
+        }
+
+        public ICommand cmdSaleComputerDetail { get; private set; }
+        public void SaleComputerDetail()
+        {
+            if (Items.Where(cd => cd.Item == SelectedComputerDetail).Any())
+            {
+                ItemForSale item = Items.Where(cd => cd.Item.ID == SelectedComputerDetail.ID).First();
+                if (item.Item.Quantity >= item.Quantity + 1)
+                    item.Quantity++;
+                else
+                    MessageBox.Show("not enough computer details in store");
+            }
+            else
+            {
+                Items.Add(new ItemForSale { Item = SelectedComputerDetail, Quantity = 1 });
+            }
+            NotifyPropertyChanged("Items");
+            getItems();
+        }
+
+        public ICommand SalePeripheralCommand { get; private set; }
+        public void SalePeripheral()
+        {
+            if (Items.Where(pr => pr.Item == SelectedPeripherals).Any())
+            {
+                ItemForSale item = Items.Where(pr => pr.Item.ID == SelectedPeripherals.ID).First();
+                if (item.Item.Quantity >= item.Quantity + 1)
+                    item.Quantity++;
+                else
+                    MessageBox.Show("Not enough computer details in store");
+            }
+            else
+            {
+                Items.Add(new ItemForSale { Item = SelectedPeripherals, Quantity = 1 });
+            }
+            getItems();
+            NotifyPropertyChanged("Items");
+        }
+
+        public ICommand cmdSaleComputer { get; private set; }
+        public void SaleComputer()
+        {
+            if (Items.Where(cd => cd.Item == SelectedComputer).Any())
+            {
+                ItemForSale item = Items.Where(cd => cd.Item.ID == SelectedComputer.ID).First();
+                if (item.Item.Quantity >= item.Quantity + 1)
+                    item.Quantity++;
+                else
+                    MessageBox.Show("not enough computers in store");
+            }
+            else
+            {
+                Items.Add(new ItemForSale { Item = SelectedComputer, Quantity = 1 });
+            }
+            NotifyPropertyChanged("Items");
+
+            getItems();
+        }
+
+        public ICommand cmdPlus { get; private set; }
+        public void PlusItem()
+        {
+            if (SelectedItem.Item.Quantity >= SelectedItem.Quantity + 1)
+                SelectedItem.Quantity++;
+            else
+                MessageBox.Show("not enough items in store");
+            Quantity = SelectedItem.Quantity;
+            getItems();
+        }
+
+        public ICommand cmdMinus { get; private set; }
+        public void MinusItem()
+        {
+            if (SelectedItem.Quantity - 1 > 0)
+            {
+                SelectedItem.Quantity--;
+                Quantity = SelectedItem.Quantity;
+            }
+            else if (SelectedItem.Quantity - 1 == 0)
+            {
+                MessageBoxResult result = MessageBox.Show("Do you want to delete this item?", "Delete item", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Items.Remove(SelectedItem);
+                }
+            }
+            else
+                MessageBox.Show("not enough items in store");
+            Items = OrderCart.Items;
+            getItems();
+        }
+
+        public void getItems()
+        {
+            List<ItemForSale> allItems = new List<ItemForSale>();
+            foreach (ItemForSale i in Items)
+            {
+                allItems.Add(i);
+            }
+            Items = allItems;
+            NotifyPropertyChanged("OrderCart");
+            if (SelectedItem != null)
+            {
+                Quantity = SelectedItem.Quantity;
+            }
+            else
+            {
+                Quantity = 0;
+            }
+        }
+
+        public ICommand cmdClearCart { get; private set; }
+        public void ClearCart()
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to clear order cart?", "Clear cart", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                Items.Clear();
+            }
+            getItems();
+        }
+
+        public ICommand cmdDeleteFromCart { get; private set; }
+        public void DeleteFromCart()
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to delete this item?", "Delete item", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                Items.Remove(SelectedItem);
+            }
+            getItems();
+        }
+
+        public ICommand cmdSale { get; private set; }
+        public async void Sale()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    OrderCart cart = new OrderCart();
+                    double sum = 0;
+                    db.Attach(SelectedSeller);
+                    cart.CustomerName = SelectedCustomer.Name;
+                    cart.Seller = SelectedSeller;
+                    CustomerName = SelectedCustomer.Name;
+                    cart.Date = DateTime.Now;
+                    string bill = "Customer Name: " + CustomerName + "\n";
+
+                    bill += $"Seller: {SelectedSeller.Name}\n";
+                    bill += $"Date: {cart.Date}\n";
+                    cart.Items = new List<ItemForSale>();
+                    foreach (ItemForSale item in Items)
+                    {
+                        if (item.Item is Computer)
+                        {
+                            ItemForSale it = new ItemForSale { Item = db.Computers.Where(c => c.ID == item.Item.ID).First(), Quantity = item.Quantity };
+                            cart.Items.Add(it);
+                            it.Item.Quantity -= it.Quantity;
+                        }
+                        else if (item.Item is ComputerDetail)
+                        {
+                            ItemForSale it = new ItemForSale { Item = db.ComputerDetails.Where(c => c.ID == item.Item.ID).First(), Quantity = item.Quantity };
+                            cart.Items.Add(it);
+                            it.Item.Quantity -= it.Quantity;
+                        }
+                        else if (item.Item is Peripherals)
+                        {
+                            ItemForSale it = new ItemForSale { Item = db.Peripheralss.Where(c => c.ID == item.Item.ID).First(), Quantity = item.Quantity };
+                            cart.Items.Add(it);
+                            it.Item.Quantity -= it.Quantity;
+                        }
+
+                        sum += item.Quantity * item.Item.Price;
+                        bill += $"{item.Item.Name}\t{item.Quantity}x{item.Item.Price}={item.Item.Price * item.Quantity}\n";
+                    }
+
+                    db.Add(cart);
+
+                    if (db.Customers.Where(c => c.Name.Equals(CustomerName)).Any())
+                    {
+                        Customer customer = db.Customers.Where(c => c.Name.Equals(CustomerName)).First();
+                        if (customer.Points > 0)
+                        {
+                            MessageBoxResult point = MessageBox.Show($"You have {customer.Points} points", "Do you want to use your points?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                            if (point == MessageBoxResult.Yes)
+                            {
+                                if (sum <= customer.Points)
+                                {
+                                    customer.Points -= (int)sum;
+                                    sum = 0;
+                                }
+                                else
+                                {
+                                    sum -= customer.Points;
+                                    customer.Points = 0;
+                                }
+                            }
+                        }
+                        customer.Points += (int)sum / 100;
+                    }
+                    bill += $"Total bill: {sum}";
+
+                    db.SaveChanges();
+                    for (int i = 0; i <= 100; i += 10)
+                    {
+                        await Task.Delay(500); // асинхронная задержка без блокировки основного потока
+                        ProgressValue = i;
+                        NotifyPropertyChanged(nameof(ProgressValue));
+                    }
+
+                    MessageBoxResult res = MessageBox.Show(bill, "Do you want to send the bill on e-mail?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (res == MessageBoxResult.Yes)
+                    {
+                        windowService.openSMTPWindow(new SMTPViewModel(bill, SelectedCustomer, SelectedSeller));
+                    }
+                    ProgressValue = 0;
+                    OrderCart = new OrderCart { Items = new List<ItemForSale>() };
+                    Items = OrderCart.Items;
+                    getComputerDetails();
+                    getComputers();
+                    getPeripherals();
+                    getCustomers();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        #endregion
+
+        #region computer_detail
+
+        private int selectedFindCriteriaCD;
+        public int SelectedFindCriteriaCD
+        {
+            get { return selectedFindCriteriaCD; }
+            set
+            {
+                selectedFindCriteriaCD = value;
+                NotifyPropertyChanged("SelectedFindCriteriaCD");
+            }
+        }
+
+        private string criteriaComputerDetail;
+        public string CriteriaComputerDetail
+        {
+            get { return criteriaComputerDetail; }
+            set
+            {
+                criteriaComputerDetail = value;
+                NotifyPropertyChanged("CriteriaComputerDetail");
+            }
+        }
+
         private List<ComputerDetail> computerDetailsList = new List<ComputerDetail>();
-        private List<Category> categoriesList = new List<Category>();
+
+        private ComputerDetail selectedComputerDetail;
+        public ComputerDetail SelectedComputerDetail
+        {
+            get { return selectedComputerDetail; }
+            set
+            {
+                selectedComputerDetail = value;
+                NotifyPropertyChanged("SelectedComputerDetail");
+            }
+        }
 
         public List<ComputerDetail> ComputerDetailsList
         {
@@ -23,148 +512,7 @@ namespace Wpf_ComputerStore.ViewModels
             }
         }
 
-        public List<Category> CategoriesList
-        {
-            get { return categoriesList; }
-
-            set
-            {
-                categoriesList = value;
-                NotifyPropertyChanged("CategoriesList");
-            }
-        }
-
-        public MainWindowViewModel()
-        {
-            //using(DBContext db = new DBContext())
-            //{
-            //    Category c1 = new Category { Name = "RAM" };
-            //    Category c2 = new Category { Name = "Motherboard" };
-            //    Category c3 = new Category { Name = "CPU" };
-            //    Category c4 = new Category { Name = "HardDrive" };
-            //    Category c5 = new Category { Name = "SDD" };
-            //    Category c6 = new Category { Name = "VideoCard" };
-            //    Category c7 = new Category { Name = "PowerSupply" };
-
-            //    db.Categories.Add(c1);
-            //    db.Categories.Add(c2);
-            //    db.Categories.Add(c3);
-            //    db.Categories.Add(c4);
-            //    db.Categories.Add(c5);
-            //    db.Categories.Add(c6);
-            //    db.Categories.Add(c7);
-
-            //    PeripheralsType pt1 = new PeripheralsType { Name = "Keyboard" };
-            //    PeripheralsType pt2 = new PeripheralsType { Name = "Printer" };
-            //    PeripheralsType pt3 = new PeripheralsType { Name = "Mouse" };
-            //    PeripheralsType pt4 = new PeripheralsType { Name = "Scanner" };
-            //    PeripheralsType pt5 = new PeripheralsType { Name = "Webcam" };
-            //    PeripheralsType pt6 = new PeripheralsType { Name = "Monitor" };
-
-
-            //    Peripherals p1 = new Peripherals { Name = "Logitech K120", PeripheralsType = pt1, Quantity = 200, Price = 399, Description = "Клавіатура дротова \r\n Logitech K120 USB UKR OEM (920-002643)\r\n кількість кнопок клавіатури: 104 \r\n розкладка:  Eng / Ukr \r\n iнтерфейс: USB \r\n призначення :  для настiльного ПК" };
-            //    Peripherals p2 = new Peripherals { Name = "Canon i-Sensys", PeripheralsType = pt2, Quantity = 120, Price = 12999, Description = "БФП Canon i-Sensys MF272dw \r\n Wi Fi, duplex (5621C013AA)\r\n Технологія друку -Лазерний друк \r\nКількість кольорів-1(чорний) \r\n Cпоживана потужність:Максимум: прибл. 1300 Вт\r\nУ режимі друку: прибл. 530 Вт\r\nУ режимі очікування: прибл. 4.8 Вт\r\nРежим сну: прибл. 1 Вт" };
-            //    Peripherals p3 = new Peripherals { Name = "Logitech M185 ", PeripheralsType = pt3, Quantity = 300, Price = 599, Description = "Миша Logitech M185 Wireless Grey (910-002238/910-002235)\r\n Під'єднання:Бездротове" };
-            //    Peripherals p4 = new Peripherals { Name = "Avision AD340GN ", PeripheralsType = pt4, Quantity = 50, Price = 20160, Description = "Протяжний сканер з мережевим інтерфейсом\r\n Avision AD340GN (000-1003-02G) \r\nОптична роздільна здатність: 600 dpi\r\nШвидкість сканування: 40 стор./хв.; 80 зображень/хв." };
-            //    Peripherals p5 = new Peripherals { Name = "Trust Trino ", PeripheralsType = pt5, Quantity = 150, Price = 249, Description = "Веб-камера Trust Trino \r\nHD Video Webcam (TR18679)\r\n Сенсор:CMOS" };
-            //    Peripherals p6 = new Peripherals { Name = "Acer Nitro ", PeripheralsType = pt6, Quantity = 200, Price = 5599, Description = "Монітор 23.8 Acer Nitro VG240YM3bmiipx \r\n(UM.QV0EE.304) FHD IPS / 180Hz / 1 ms / 8-Bit / sRGB 99% \r\n FreeSync Premium / Adaptive-Sync / G-Sync Сompatible / Динаміки 2w" };
-            //    Peripherals p7 = new Peripherals { Name = "Combo BK-3001 ", PeripheralsType = pt1, Quantity = 280, Price = 559, Description = "Бездротова клавіатура Combo BK-3001 \r\n Wireless Bluetooth Silver \r\n російська розкладка клавіатури;\r\n кількість кнопок: 78; \r\nтип: мембранна; надтонка конструкція (4 мм); \r\n бездротове підключення на частоті 2.4 ГГц;\r\n живлення: 2 х ААА" };
-            //    Peripherals p8 = new Peripherals { Name = "Canon PIXMA G3410", PeripheralsType = pt2, Quantity = 150, Price = 8999, Description = " БФП Canon PIXMA G3410 \r\n with Wi-Fi (2315C025/2315C009AA)\r\n Технологія друку- Струменевий друк\r\n Кількість кольорів-4" };
-            //    Peripherals p9 = new Peripherals { Name = "RZTK S 430", PeripheralsType = pt3, Quantity = 400, Price = 200, Description = "Миша RZTK S 430 USB Black \r\n Під'єднання: Дротове" };
-            //    Peripherals p10 = new Peripherals { Name = "Epson Perfection V39", PeripheralsType = pt4, Quantity = 100, Price = 4133, Description = "Сканер A4 Epson Perfection V39 (B11B268401)\r\n Роздільна здатність сканера: 4800 x 4800 dpi" };
-            //    Peripherals p11 = new Peripherals { Name = "Asus Webcam", PeripheralsType = pt5, Quantity = 100, Price = 1899, Description = "Веб-камера Asus Webcam C3 Black (90YH0340-B2UA00)\r\n Сенсор:Full HD" };
-            //    Peripherals p12 = new Peripherals { Name = "MSI Optix", PeripheralsType = pt6, Quantity = 120, Price = 1099, Description = "Монітор 27  MSI Optix G27CQ4 E2 -- QHD VA Curved 170Hz \r\n 8-Bit + FRC / sRGB 114% / Adaptive Sync / G-SYNC Compatible \r\n Freesync Premium / Console Mode 120Hz" };
-            //    Peripherals p13 = new Peripherals { Name = "Asus TUF Gaming VG27AQ", PeripheralsType = pt6, Quantity = 30, Price = 11599, Description = "Монітор 27 Asus TUF Gaming VG27AQ  \r\n  (90LM0500-B03370) -- IPS 2K / 165 Гц  \r\n  8-Bit / 99% sRGB / G-Sync Сompatible  \r\n  Adaptive-Sync / HDR10" };
-            //    Peripherals p14 = new Peripherals { Name = "Lenovo 29  L29w-30", PeripheralsType = pt6, Quantity = 60, Price = 7999, Description = "Монітор Lenovo 29  L29w-30 (66E5GAC3UA)   \r\n UltraWide FHD IPS / 90Гц / 8-Bit  \r\n  sRGB 99% / Adaptive-Sync  \r\n  AMD Radeon FreeSync / Speakers 3W" };
-
-
-
-            //    db.Peripheralss.Add(p1);
-            //    db.Peripheralss.Add(p2);
-            //    db.Peripheralss.Add(p3);
-            //    db.Peripheralss.Add(p4);
-            //    db.Peripheralss.Add(p5);
-            //    db.Peripheralss.Add(p6);
-            //    db.Peripheralss.Add(p7);
-            //    db.Peripheralss.Add(p8);
-            //    db.Peripheralss.Add(p9);
-            //    db.Peripheralss.Add(p10);
-            //    db.Peripheralss.Add(p11);
-            //    db.Peripheralss.Add(p12);
-            //    db.Peripheralss.Add(p13);
-            //    db.Peripheralss.Add(p14);
-
-
-            //    ComputerDetail cd1 = new ComputerDetail { Name = "Intel Core i5", Category = c3, Quantity = 100, Price = 12899, Description = "Процесор Intel Core i5-14600KF\r\n 4.0GHz/24MB (BX8071514600KF) s1700 BOX" };
-            //    ComputerDetail cd2 = new ComputerDetail { Name = "Asus PCI-Ex GeForce RTX 3060", Category = c6, Quantity = 40, Price = 13299, Description = "Відеокарта Asus PCI-Ex GeForce RTX 3060\r\n Dual OC V2 LHR 12GB GDDR6 (192bit) (1837/15000) \r\n(1 x HDMI, 3 x DisplayPort) (DUAL-RTX3060-O12G-V2)" };
-            //    ComputerDetail cd3 = new ComputerDetail { Name = "Gigabyte B550 AORUS Elite V2", Category = c2, Quantity = 100, Price = 5399, Description = "Материнська плата Gigabyte B550 AORUS Elite V2 (sAM4, AMD B550, PCI-Ex16)" };
-            //    ComputerDetail cd4 = new ComputerDetail { Name = "Western Digital Purple 4TB", Category = c4, Quantity = 80, Price = 4029, Description = "Жорсткий диск Western Digital Purple 4TB \r\n5400rpm 256MB WD43PURZ 3.5 SATA III" };
-            //    ComputerDetail cd5 = new ComputerDetail { Name = "Toshiba P300 500GB", Category = c4, Quantity = 50, Price = 849, Description = " Жорсткий диск Toshiba P300 500GB \r\n7200rpm 64MB HDWD105UZSVA 3.5 SATA III" };
-            //    ComputerDetail cd6 = new ComputerDetail { Name = "Kingston Fury DDR4-3200", Category = c1, Quantity = 70, Price = 1569, Description = "Оперативна пам'ять Kingston Fury DDR4-3200\r\n 16384 MB PC4-25600 (Kit of 2x8192)\r\n Beast Black (KF432C16BBK2/16)" };
-            //    ComputerDetail cd7 = new ComputerDetail { Name = "DeepCool PF750 750W ", Category = c7, Quantity = 100, Price = 2299, Description = "Блок живлення DeepCool PF750 \r\n750W (R-PF750D-HA0B-EU)" };
-            //    ComputerDetail cd8 = new ComputerDetail { Name = "System Power 10 750W", Category = c7, Quantity = 50, Price = 3349, Description = "Блок живлення System Power 10 750W (BN329)" };
-            //    ComputerDetail cd9 = new ComputerDetail { Name = "SSD Western Digital", Category = c5, Quantity = 70, Price = 3495, Description = "SSD Western Digital PC SN740 1Tb\r\n M.2 2230 PCIE Gen4 x4 NVME \r\n(SDDPTQD-1T00) OEM" };
-            //    ComputerDetail cd10 = new ComputerDetail { Name = "SAsus PCI-Ex Radeon RX 560", Category = c6, Quantity = 50, Price = 5209, Description = "Відеокарта Asus PCI-Ex Radeon RX 560 ROG Strix \r\n 4GB GDDR5 (128bit) (1199/6800)\r\n (HDMI, DVI-D) (ROG-STRIX-RX560-4G-V2-GAMING)" };
-            //    ComputerDetail cd11 = new ComputerDetail { Name = "ASUS PCI-Ex GeForce RTX 4070", Category = c6, Quantity = 30, Price = 29379, Description = "Відеокарта ASUS PCI-Ex GeForce RTX 4070 \r\n Dual White OC Edition 12GB GDDR6X \r\n(192bit) (2550/21000) (1 x HDMI, 3 x DisplayPort) \r\n(DUAL-RTX4070-O12G-WHITE)" };
-            //    ComputerDetail cd12 = new ComputerDetail { Name = "AMD Ryzen 7 5700X", Category = c3, Quantity = 50, Price = 7099, Description = "Процесор AMD Ryzen 7 5700X 3.4GHz/32MB \r\n(100-100000926WOF) sAM4 BOX" };
-            //    ComputerDetail cd13 = new ComputerDetail { Name = "Intel Core i9-14900K", Category = c3, Quantity = 70, Price = 25699, Description = "Процесор Intel Core i9-14900K\r\n 4.4GHz/36MB (BX8071514900K) s1700 BOX" };
-            //    ComputerDetail cd14 = new ComputerDetail { Name = "Kingston Fury SODIMM", Category = c1, Quantity = 70, Price = 2999, Description = "Оперативна пам'ять Kingston Fury SODIMM \r\nDDR4-3200 32768 MB PC4-25600 (Kit of 2x16384)\r\n Impact Black (KF432S20IBK2/32)" };
-
-
-            //    db.ComputerDetails.Add(cd1);
-            //    db.ComputerDetails.Add(cd2);
-            //    db.ComputerDetails.Add(cd3);
-            //    db.ComputerDetails.Add(cd4);
-            //    db.ComputerDetails.Add(cd5);
-            //    db.ComputerDetails.Add(cd6);
-            //    db.ComputerDetails.Add(cd7);
-            //    db.ComputerDetails.Add(cd8);
-            //    db.ComputerDetails.Add(cd9);
-            //    db.ComputerDetails.Add(cd10);
-            //    db.ComputerDetails.Add(cd11);
-            //    db.ComputerDetails.Add(cd12);
-            //    db.ComputerDetails.Add(cd13);
-            //    db.ComputerDetails.Add(cd14);
-
-            //    ComputerType ct1 = new ComputerType { Name = "Desktop" };
-            //    ComputerType ct2 = new ComputerType { Name = "Laptop" };
-            //    db.ComputerTypes.Add(ct1);
-            //    db.ComputerTypes.Add(ct2);
-
-            //    Computer comp1 = new Computer { Name = "Tor AMD Ryzen", ComputerType = ct1, Quantity = 5 };
-            //    Computer comp2 = new Computer { Name = "ARTLINE Business", ComputerType = ct1, Quantity = 5 };
-            //    Computer comp3 = new Computer { Name = "Lenovo IdeaCentre ", ComputerType = ct1, Quantity = 5 };
-            //    Computer comp4 = new Computer { Name = "ASUS TUF", ComputerType = ct2, Quantity = 10 };
-            //    Computer comp5 = new Computer { Name = "Apple MacBook Air 13.6", ComputerType = ct2, Quantity = 10 };
-            //    Computer comp6 = new Computer { Name = "ASUS Vivobook 15X OLED", ComputerType = ct2, Quantity = 8 };
-            //    db.SaveChanges();
-            //    comp1.ComputerDetails.Add(cd2);
-            //    comp1.ComputerDetails.Add(cd1);
-            //    comp1.ComputerDetails.Add(cd3);
-            //    comp2.ComputerDetails.Add(cd4);
-            //    comp2.ComputerDetails.Add(cd1);
-            //    comp2.ComputerDetails.Add(cd2);
-            //    comp2.ComputerDetails.Add(cd5);
-            //    comp3.ComputerDetails.Add(cd1);
-            //    comp3.ComputerDetails.Add(cd2);
-            //    comp3.ComputerDetails.Add(cd9);
-            //    comp4.ComputerDetails.Add(cd1);
-            //    comp4.ComputerDetails.Add(cd8);
-            //    comp4.ComputerDetails.Add(cd9);
-
-            //   db.Computers.Add(comp1);
-            //    db.Computers.Add(comp2);
-            //    db.Computers.Add(comp3);
-            //    db.Computers.Add(comp4);
-            //    //Computers.Add(comp5);
-            //    //Computers.Add(comp6);
-
-            //    db.SaveChanges();
-            //}
-            getComputerDetails();
-            getCategoriesList();
-        }
-
+        public ICommand cmdGetComputerDetail { get; private set; }
         public void getComputerDetails()
         {
             try
@@ -172,11 +520,451 @@ namespace Wpf_ComputerStore.ViewModels
                 using (DBContext db = new DBContext())
                 {
                     ComputerDetailsList = db.ComputerDetails.ToList();
+                    string res = "";
+                    foreach (ComputerDetail cd in ComputerDetailsList) //костиль бо не працюе лiнива загрузка
+                    {
+                        res += cd.Category.Name;
+
+                        if (cd.DiscountDate != null && cd.DiscountDate > DateTime.Now)
+                        {
+                            cd.Price *= (100.0 - (int)cd.Discount) / 100;
+
+                            double discountedPrice = cd.Price;
+                            cd.Price = Math.Round(discountedPrice, 2);
+                        }
+                    }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+        public ICommand cmdFindComputerDetail { get; private set; }
+        public void FindComputerDetail()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    if (string.IsNullOrWhiteSpace(CriteriaComputerDetail))
+                    {
+                        MessageBox.Show("Please enter a search criteria!");
+                        return;
+                    }
+
+                    switch (SelectedFindCriteriaCD)
+                    {
+                        case 0:
+                            ComputerDetailsList = db.ComputerDetails.Where(cd => cd.Name.ToLower().Contains(CriteriaComputerDetail.ToLower())).ToList();
+                            break;
+                        case 1:
+                            ComputerDetailsList = db.ComputerDetails.Where(cd => cd.Description.ToLower().Contains(CriteriaComputerDetail.ToLower())).ToList();
+
+                            break;
+                        case 2:
+                            ComputerDetailsList = db.ComputerDetails.Where(cd => cd.Category.Name.ToLower().Contains(CriteriaComputerDetail.ToLower())).ToList();
+
+                            break;
+                        case 3:
+                            ComputerDetailsList = db.ComputerDetails.Where(cd => cd.ID == Int32.Parse(CriteriaComputerDetail)).ToList();
+
+                            break;
+                    }
+                    string res = "";
+                    foreach (ComputerDetail cd in ComputerDetailsList) //костиль бо не працюе лiнива загрузка
+                    {
+                        res += cd.Category.Name;
+
+                        if (cd.DiscountDate != null && cd.DiscountDate > DateTime.Now)
+                        {
+                            cd.Price *= (100.0 - (int)cd.Discount) / 100;
+
+                            double discountedPrice = cd.Price;
+                            cd.Price = Math.Round(discountedPrice, 2);
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public ICommand cmdAddComputerDetail { get; private set; }
+        public void AddComputerDetail()
+        {
+            windowService.openComputerDetailWindow(new ComputerDetailViewModel());
+            getComputerDetails();
+        }
+
+        public ICommand cmdEditComputerDetail { get; private set; }
+        public void EditComputerDetail()
+        {
+            windowService.openComputerDetailWindow(new ComputerDetailViewModel(SelectedComputerDetail));
+            getComputerDetails();
+        }
+
+        public ICommand cmdDeleteComputerDetail { get; private set; }
+        public void DeleteComputerDetail()
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to delete this computer detail?", "Delete computer detail", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.No)
+            {
+                return;
+            }
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    db.Attach(SelectedComputerDetail);
+                    db.Remove(SelectedComputerDetail);
+                    db.SaveChanges();
+
+                    getComputerDetails();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public ICommand cmdSortComputerDetail { get; private set; }
+
+        private int selectedCDSortCriterion;
+        public int SelectedCDSortCriterion
+        {
+            get { return selectedCDSortCriterion; }
+            set
+            {
+                selectedCDSortCriterion = value;
+                NotifyPropertyChanged("SelectedCDSortCriterion");
+            }
+        }
+
+        public void SortComputerDetail()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    List<ComputerDetail> result = new List<ComputerDetail>();
+
+                    switch (SelectedCDSortCriterion)
+                    {
+                        case 0:
+                            result = db.ComputerDetails.OrderBy(p => p.Name).ToList();
+                            break;
+                        case 1:
+                            result = db.ComputerDetails.OrderBy(p => p.Quantity).ToList();
+                            break;
+                        case 2:
+                            result = db.ComputerDetails.OrderBy(p => p.Price).ToList();
+                            break;
+                    }
+
+                    ComputerDetailsList = new List<ComputerDetail>(result);
+                    string res = "";
+                    foreach (ComputerDetail cd in ComputerDetailsList)
+                    {
+                        res += cd.Category.Name;
+
+                        if (cd.DiscountDate != null && cd.DiscountDate > DateTime.Now)
+                        {
+                            cd.Price *= (100.0 - (int)cd.Discount) / 100;
+
+                            double discountedPrice = cd.Price;
+                            cd.Price = Math.Round(discountedPrice, 2);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        #endregion
+
+        #region peripherals_type
+
+        private List<PeripheralsType> peripheralsTypeList = new List<PeripheralsType>();
+        public List<PeripheralsType> PeripheralsTypeList
+        {
+            get { return peripheralsTypeList; }
+            set
+            {
+                peripheralsTypeList = value;
+                NotifyPropertyChanged("PeripheralsTypeList");
+            }
+        }
+
+        public void getPeripheralsTypes()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    PeripheralsTypeList = db.PeripheralsType.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private Peripherals selectedPeripherals;
+        public Peripherals SelectedPeripherals
+        {
+            get { return selectedPeripherals; }
+            set
+            {
+                selectedPeripherals = value;
+                NotifyPropertyChanged("SelectedPeripherals");
+            }
+        }
+
+        #endregion
+
+
+        #region peripheral
+
+        private ObservableCollection<Peripherals> peripheralsList = new ObservableCollection<Peripherals>();
+
+        public ObservableCollection<Peripherals> PeripheralsList
+        {
+            get { return peripheralsList; }
+
+            set
+            {
+                peripheralsList = value;
+                NotifyPropertyChanged("PeripheralsList");
+            }
+        }
+
+        private int selectedFindCriteriaPeripheral;
+        public int SelectedFindCriteriaPeripheral
+        {
+            get { return selectedFindCriteriaPeripheral; }
+            set
+            {
+                selectedFindCriteriaPeripheral = value;
+                NotifyPropertyChanged("SelectedFindCriteriaPeripheral");
+            }
+        }
+
+        private string criteriaPeripheral;
+        public string CriteriaPeripheral
+        {
+            get { return criteriaPeripheral; }
+            set
+            {
+                criteriaPeripheral = value;
+                NotifyPropertyChanged("CriteriaPeripheral");
+            }
+        }
+
+        private int selectedSortCriterion;
+        public int SelectedSortCriterion
+        {
+            get { return selectedSortCriterion; }
+            set
+            {
+                selectedSortCriterion = value;
+                NotifyPropertyChanged("SelectedSortCriterion");
+            }
+        }
+
+        public void getPeripherals()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    PeripheralsList = new ObservableCollection<Peripherals>(db.Peripheralss.ToList());
+                    string res = "";
+                    foreach (Peripherals pr in PeripheralsList)
+                    {
+                        res += pr.PeripheralsType.Name;
+
+                        if (pr.DiscountDate != null && pr.DiscountDate > DateTime.Now)
+                        {
+                            pr.Price *= (100.0 - (int)pr.Discount) / 100;
+
+                            double discountedPrice = pr.Price;
+                            pr.Price = Math.Round(discountedPrice, 2);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        public ICommand AddCommand { get; private set; }
+        public ICommand EditCommand { get; private set; }
+        public ICommand DeleteCommand { get; private set; }
+        public ICommand FindCommand { get; private set; }
+        public ICommand GetPeripheralsCommand { get; private set; }
+        public ICommand SortCommand { get; private set; }
+
+        public void AddPeripheral()
+        {
+            windowService.openPeripheralWindow(new PeripheralViewModel());
+            getPeripherals();
+        }
+
+        public void EditPeripheral()
+        {
+            windowService.openPeripheralWindow(new PeripheralViewModel(SelectedPeripherals));
+            getPeripherals();
+        }
+
+        public void DeletePeripheral()
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to delete this peripheral?", "Delete peripheral", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.No)
+            {
+                return;
+            }
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    // Перевіряем, чи знаходиться SelectedPeripherals в стані Від'єднано (Detached)                    
+                    if (db.Entry(SelectedPeripherals).State == EntityState.Detached)
+                    {
+                        //Якщо так, то спочатку приєднуємо його до контексту
+                        db.Attach(SelectedPeripherals);
+                    }
+
+                    db.Attach(SelectedPeripherals);
+                    db.Remove(SelectedPeripherals);
+                    db.SaveChanges();
+
+                    getPeripherals();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void FindPeripheral()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    List<Peripherals> result = new List<Peripherals>();
+
+                    if (string.IsNullOrWhiteSpace(CriteriaPeripheral))
+                    {
+                        MessageBox.Show("Please enter a search criteria!");
+                        return;
+                    }
+
+                    switch (SelectedFindCriteriaPeripheral)
+                    {
+                        case 0:
+                            result = db.Peripheralss.Where(pr => pr.Name.ToLower().Contains(CriteriaPeripheral.ToLower())).ToList();
+                            break;
+                        case 1:
+                            result = db.Peripheralss.Where(pr => pr.Description.ToLower().Contains(CriteriaPeripheral.ToLower())).ToList();
+                            break;
+                        case 2:
+                            result = db.Peripheralss.Where(pr => pr.PeripheralsType.Name.ToLower().Contains(CriteriaPeripheral.ToLower())).ToList();
+                            break;
+                        case 3:
+                            result = db.Peripheralss.Where(pr => pr.Quantity == Int32.Parse(CriteriaPeripheral)).ToList();
+                            break;
+                    }
+
+                    // Створюємо новий об'єкт ObservableCollection на основі результатів запиту
+                    PeripheralsList = new ObservableCollection<Peripherals>(result);
+
+                    string res = "";
+                    foreach (Peripherals peripheral in PeripheralsList)
+                    {
+                        res += peripheral.PeripheralsType.Name;
+
+                        if (peripheral.DiscountDate != null && peripheral.DiscountDate > DateTime.Now)
+                        {
+                            peripheral.Price *= (100.0 - (int)peripheral.Discount) / 100;
+
+                            double discountedPrice = peripheral.Price;
+                            peripheral.Price = Math.Round(discountedPrice, 2);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void SortPeripheral()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    List<Peripherals> result = new List<Peripherals>();
+
+                    switch (SelectedSortCriterion)
+                    {
+                        case 0:
+                            result = db.Peripheralss.OrderBy(p => p.Name).ToList();
+                            break;
+                        case 1:
+                            result = db.Peripheralss.OrderBy(p => p.Quantity).ToList();
+                            break;
+                        case 2:
+                            result = db.Peripheralss.OrderBy(p => p.Price).ToList();
+                            break;
+                    }
+
+                    PeripheralsList = new ObservableCollection<Peripherals>(result);
+                    string res = "";
+                    foreach (Peripherals peripheral in PeripheralsList)
+                    {
+                        res += peripheral.PeripheralsType.Name;
+
+                        if (peripheral.DiscountDate != null && peripheral.DiscountDate > DateTime.Now)
+                        {
+                            peripheral.Price *= (100.0 - (int)peripheral.Discount) / 100;
+
+                            double discountedPrice = peripheral.Price;
+                            peripheral.Price = Math.Round(discountedPrice, 2);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        #endregion
+
+        #region category
+
+        private List<Category> categoriesList = new List<Category>();
+        public List<Category> CategoriesList
+        {
+            get { return categoriesList; }
+            set
+            {
+                categoriesList = value;
+                NotifyPropertyChanged("CategoriesList");
             }
         }
 
@@ -194,5 +982,527 @@ namespace Wpf_ComputerStore.ViewModels
                 MessageBox.Show(ex.Message);
             }
         }
+
+        #endregion
+
+        #region computers
+
+        private Computer selectedComputer;
+        public Computer SelectedComputer
+        {
+            get { return selectedComputer; }
+            set
+            {
+                selectedComputer = value;
+                NotifyPropertyChanged("SelectedComputer");
+            }
+        }
+
+        private int selectedFindCriteriaC;
+        public int SelectedFindCriteriaC
+        {
+            get { return selectedFindCriteriaC; }
+            set
+            {
+                selectedFindCriteriaC = value;
+                NotifyPropertyChanged("SelectedFindCriteriaC");
+            }
+        }
+        private string criteriaComputer;
+        public string CriteriaComputer
+        {
+            get { return criteriaComputer; }
+            set
+            {
+                criteriaComputer = value;
+                NotifyPropertyChanged("CriteriaComputer");
+            }
+        }
+        private List<Computer> computersList = new List<Computer>();
+
+        public List<Computer> ComputersList
+        {
+            get { return computersList; }
+            set
+            {
+                computersList = value;
+                NotifyPropertyChanged("ComputersList");
+            }
+        }
+
+        public ICommand cmdGetComputer { get; private set; }
+        public void getComputers()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    ComputersList = db.Computers.ToList();
+
+                    string res = "";
+                    foreach (Computer computer in ComputersList) //костиль бо не працюе лiнива загрузка
+                    {
+                        res += computer.ComputerType.Name;
+                    }
+                    string res1 = "";
+
+                    foreach (Computer computer in ComputersList) //костиль бо не працюе лiнива загрузка
+                    {
+                        res1 += computer.RAM.Name;
+                    }
+                    string res2 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        res2 += computer.Motherboard.Name;
+                    }
+                    string res3 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        res3 += computer.CPU.Name;
+                    }
+                    string res4 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        res4 += computer.HardDrive.Name;
+                    }
+                    string res5 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        res5 += computer.SDD.Name;
+                    }
+                    string res6 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        res6 += computer.VideoCard.Name;
+                    }
+                    string res7 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        res7 += computer.PowerSupply.Name;
+                        if (computer.DiscountDate != null && computer.DiscountDate > DateTime.Now)
+                        {
+                            computer.Price *= (100.0 - (int)computer.Discount) / 100;
+
+                            double discountedPrice = computer.Price;
+                            computer.Price = Math.Round(discountedPrice, 2);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        public ICommand cmdEditComputer { get; private set; }
+        public void EditComputer()
+        {
+            windowService.openComputerWindow(new ComputerViewModel(SelectedComputer));
+            getComputers();
+        }
+
+        public ICommand cmdAddComputer { get; private set; }
+        public void AddComputer()
+        {
+            windowService.openComputerWindow(new ComputerViewModel());
+            getComputers();
+        }
+
+        public ICommand cmdDeleteComputer { get; private set; }
+        public void DeleteComputer()
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this computer?", "Delete Computer", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    using (DBContext db = new DBContext())
+                    {
+                        db.Attach(SelectedComputer);
+                        db.Remove(SelectedComputer);
+                        db.SaveChanges();
+
+                        getComputers();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        public ICommand cmdFindComputer { get; private set; }
+        public void FindComputer()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    ComputersList = db.Computers.ToList();
+
+                    if (string.IsNullOrWhiteSpace(CriteriaComputer))
+                    {
+                        MessageBox.Show("Please enter a search criteria!");
+                        return;
+                    }
+
+                    switch (SelectedFindCriteriaC)
+                    {
+                        case 0:
+                            ComputersList = db.Computers.Where(c => c.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
+                            break;
+                        case 1:
+                            ComputersList = db.Computers.Where(c => c.ComputerType.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
+                            break;
+                        case 2:
+                            ComputersList = ComputersList.Where(c => c.Motherboard.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
+                            break;
+                        case 3:
+                            ComputersList = ComputersList.Where(c => c.RAM.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
+                            break;
+                        case 4:
+                            ComputersList = ComputersList.Where(c => c.CPU.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
+                            break;
+                        case 5:
+                            ComputersList = ComputersList.Where(c => c.HardDrive.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
+                            break;
+                        case 6:
+                            ComputersList = ComputersList.Where(c => c.SDD.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
+                            break;
+                        case 7:
+                            ComputersList = ComputersList.Where(c => c.VideoCard.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
+                            break;
+                        case 8:
+                            ComputersList = ComputersList.Where(c => c.PowerSupply.Name.ToLower().Contains(CriteriaComputer.ToLower())).ToList();
+                            break;
+                        case 9:
+                            ComputersList = db.Computers.Where(cd => cd.Price == Int32.Parse(CriteriaComputer)).ToList();
+                            break;
+                    }
+
+                    string res = "";
+                    foreach (Computer computer in ComputersList) //костиль бо не працюе лiнива загрузка
+                    {
+                        res += computer.ComputerType.Name;
+
+                        if (computer.DiscountDate != null && computer.DiscountDate > DateTime.Now)
+                        {
+                            computer.Price *= (100.0 - (int)computer.Discount) / 100;
+
+                            double discountedPrice = computer.Price;
+                            computer.Price = Math.Round(discountedPrice, 2);
+                        }
+                    }
+                    string res1 = "";
+
+                    foreach (Computer computer in ComputersList) //костиль бо не працюе лiнива загрузка
+                    {
+                        res1 += computer.RAM.Name;
+                    }
+                    string res2 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        res2 += computer.Motherboard.Name;
+                    }
+                    string res3 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        res3 += computer.CPU.Name;
+                    }
+                    string res4 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        res4 += computer.HardDrive.Name;
+                    }
+                    string res5 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        res5 += computer.SDD.Name;
+                    }
+                    string res6 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        res6 += computer.VideoCard.Name;
+                    }
+                    string res7 = "";
+                    foreach (Computer computer in ComputersList)
+                    {
+                        res7 += computer.PowerSupply.Name;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        #endregion
+
+        #region statistics
+
+        private DateTime startDate;
+        public DateTime StartDate
+        {
+            get { return startDate; }
+            set
+            {
+                startDate = value;
+                NotifyPropertyChanged("StartDate");
+            }
+        }
+
+        private DateTime finalDate;
+        public DateTime FinalDate
+        {
+            get { return finalDate; }
+            set
+            {
+                finalDate = value;
+                NotifyPropertyChanged("FinalDate");
+            }
+        }
+
+        private double money;
+        public double Money
+        {
+            get { return money; }
+            set
+            {
+                //money = value;
+                money = Math.Round(value, 2);
+                NotifyPropertyChanged("Money");
+            }
+        }
+
+        private List<ItemForSale> soldItems;
+        public List<ItemForSale> SoldItems
+        {
+            get { return soldItems; }
+            set
+            {
+                soldItems = value;
+                NotifyPropertyChanged("SoldItems");
+            }
+        }
+
+        private List<Seller> sellers;
+        public List<Seller> Sellers
+        {
+            get { return sellers; }
+            set
+            {
+                sellers = value;
+                NotifyPropertyChanged("Sellers");
+            }
+        }
+
+        private Seller selectedSeller;
+        public Seller SelectedSeller
+        {
+            get { return selectedSeller; }
+            set
+            {
+                selectedSeller = value;
+                NotifyPropertyChanged("SelectedSeller");
+            }
+        }
+
+        public ICommand cmdCountMoney { get; private set; }
+        public void getSellers()
+        {
+            using (DBContext db = new DBContext())
+            {
+                Sellers = db.Sellers.ToList();
+            }
+        }
+
+        void CountMoney()
+        {
+            if (StartDate > FinalDate)
+            {
+                MessageBox.Show("Final date should be later then start date");
+                return;
+            }
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    List<OrderCart> carts = db.OrderCarts.Where(c => c.Date.Date <= FinalDate && c.Date.Date >= StartDate.Date).ToList();
+                    double count = 0;
+                    SoldItems = new List<ItemForSale>();
+                    foreach (OrderCart cart in carts)
+                    {
+                        foreach (ItemForSale item in cart.Items)
+                        {
+                            count += item.Quantity * item.Item.Price;
+                            bool find = false;
+                            foreach (ItemForSale i in SoldItems)
+                            {
+                                if (i.Item.Name.Equals(item.Item.Name))
+                                {
+                                    i.Quantity += item.Quantity;
+                                    find = true;
+                                }
+                            }
+                            if (!find)
+                            {
+                                SoldItems.Add(item);
+                            }
+                        }
+                    }
+                    Money = count;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        #endregion
+
+
+        #region customers
+
+        private List<Customer> customers;
+        public List<Customer> Customers
+        {
+            get { return customers; }
+            set
+            {
+                customers = value;
+                NotifyPropertyChanged("Customers");
+            }
+        }
+
+        private Customer selectedCustomer;
+        public Customer SelectedCustomer
+        {
+            get { return selectedCustomer; }
+            set
+            {
+                selectedCustomer = value;
+                NotifyPropertyChanged(nameof(SelectedCustomer));
+            }
+        }
+
+        private Customer selectCustomer;
+        public Customer SelectCustomer
+        {
+            get { return selectCustomer; }
+            set
+            {
+                selectCustomer = value;
+                NotifyPropertyChanged(nameof(SelectCustomer));
+            }
+        }
+
+        private List<Customer> customersList = new List<Customer>();
+        public List<Customer> CustomersList
+        {
+            get { return customersList; }
+            set
+            {
+                customersList = value;
+                NotifyPropertyChanged("CustomersList");
+            }
+        }
+        public void getCustomers()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    Customers = db.Customers.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        public void getCustomersList()
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    CustomersList = db.Customers.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public ICommand cmdEditCustomer { get; private set; }
+        public void EditCustomer()
+        {
+            windowService.openCustomerWindow(new CustomerViewModel(SelectedCustomer));
+            getCustomers();
+            getCustomersList();
+        }
+
+        public ICommand cmdAddCustomer { get; private set; }
+        public void AddCustomer()
+        {
+            windowService.openCustomerWindow(new CustomerViewModel());
+            getCustomers();
+            getCustomersList();
+        }
+
+        public ICommand cmdDeleteCustomer { get; private set; }
+        public void DeleteCustomer()
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this customer?", "Delete Customer", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    using (DBContext db = new DBContext())
+                    {
+                        db.Remove(SelectedCustomer);
+                        db.SaveChanges();
+                        getCustomersList();
+                        getCustomers();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+        #endregion
+
+
+        #region discount
+        public ICommand cmdMakeDiscount { get; private set; }
+        void MakeDiscount()
+        {
+            windowService.OpenDiscountWindow(new DiscountViewModel(tabIndex));
+            getComputers();
+            getComputerDetails();
+            getPeripherals();
+        }
+
+        private int tabIndex;
+        public int TabIndex
+        {
+            get { return tabIndex; }
+            set
+            {
+                tabIndex = value;
+                NotifyPropertyChanged(nameof(TabIndex));
+            }
+        }
+        #endregion
+
+       
     }
 }
+
+
